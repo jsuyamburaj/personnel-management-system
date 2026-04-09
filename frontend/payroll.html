@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payroll Management</title>
+</head>
+<body>
+    <div>
+        <h2 class="mb-4">Payroll</h2>
+        
+        <!-- Salary Summary Card -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="dashboard-widget">
+                    <h5>Current Month Salary</h5>
+                    <div id="currentSalary">
+                        <div class="spinner-border"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Payroll History -->
+        <div class="dashboard-widget">
+            <h5 class="mb-3">Payroll History</h5>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr><th>Month</th><th>Basic Salary</th><th>Allowances</th><th>Deductions</th><th>Net Salary</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="payrollHistory">
+                        <tr><td colspan="6" class="text-center">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function loadMyPayroll() {
+            try {
+                const response = await fetch('http://localhost:8000/api/payroll/my-payroll', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const payrolls = await response.json();
+                    const tbody = document.getElementById('payrollHistory');
+                    
+                    if (payrolls.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="6" class="text-center">No payroll records found</td></tr>';
+                        document.getElementById('currentSalary').innerHTML = '<p class="text-muted">No salary data available</p>';
+                        return;
+                    }
+                    
+                    // Show current month (first record)
+                    const latest = payrolls[0];
+                    document.getElementById('currentSalary').innerHTML = `
+                        <h3>$${latest.net_salary?.toLocaleString() || 0}</h3>
+                        <small class="text-muted">${latest.month}</small>
+                    `;
+                    
+                    tbody.innerHTML = payrolls.map(p => `
+                        <tr>
+                            <td>${p.month}</td>
+                            <td>$${p.basic_salary?.toLocaleString() || 0}</td>
+                            <td>$${p.allowances?.toLocaleString() || 0}</td>
+                            <td>$${p.deductions?.toLocaleString() || 0}</td>
+                            <td><strong>$${p.net_salary?.toLocaleString() || 0}</strong></td>
+                            <td><span class="badge bg-${p.status === 'Paid' ? 'success' : 'warning'}">${p.status}</span></td>
+                         </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading payroll:', error);
+                document.getElementById('payrollHistory').innerHTML = '<tr><td colspan="6" class="text-danger">Failed to load payroll data</td></tr>';
+            }
+        }
+        
+        loadMyPayroll();
+    </script>
+</body>
+</html>

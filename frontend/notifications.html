@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+</head>
+<body>
+    <div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Notifications</h2>
+            <button class="btn btn-outline-primary" onclick="markAllRead()">
+                <i class="fas fa-check-double"></i> Mark All Read
+            </button>
+        </div>
+        
+        <div class="dashboard-widget">
+            <div id="notificationsList">
+                <div class="text-center py-5"><div class="spinner-border"></div> Loading...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function loadNotifications() {
+            try {
+                const response = await fetch('http://localhost:8000/api/notifications/', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const notifs = await response.json();
+                    const container = document.getElementById('notificationsList');
+                    if (notifs.length === 0) {
+                        container.innerHTML = '<div class="text-center py-5 text-muted">No notifications</div>';
+                        return;
+                    }
+                    container.innerHTML = notifs.map(notif => `
+                        <div class="notification-item p-3 border-bottom ${!notif.is_read ? 'bg-light' : ''}">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <div>
+                                    <h6 class="mb-1">${notif.title}</h6>
+                                    <p class="mb-1">${notif.message}</p>
+                                    <small class="text-muted">${new Date(notif.created_at).toLocaleString()}</small>
+                                </div>
+                                ${!notif.is_read ? `<button class="btn btn-sm btn-link" onclick="markRead('${notif.id}')">Mark Read</button>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading notifications:', error);
+            }
+        }
+        
+        async function markRead(id) {
+            await fetch(`http://localhost:8000/api/notifications/${id}/read`, {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            loadNotifications();
+        }
+        
+        async function markAllRead() {
+            await fetch('http://localhost:8000/api/notifications/read-all', {
+                method: 'PUT',
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            });
+            loadNotifications();
+        }
+        
+        loadNotifications();
+    </script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile</title>
+</head>
+<body>
+    <div>
+        <h2 class="mb-4">My Profile</h2>
+        
+        <div class="row">
+            <div class="col-md-4">
+                <div class="dashboard-widget text-center">
+                    <div class="user-avatar-lg mx-auto mb-3" style="width: 100px; height: 100px; font-size: 48px; line-height: 100px;">
+                        <i class="fas fa-user-circle fa-4x text-primary"></i>
+                    </div>
+                    <h4 id="profileName">Loading...</h4>
+                    <p class="text-muted" id="profileRole"></p>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="dashboard-widget">
+                    <form id="profileForm">
+                        <div class="mb-3">
+                            <label>Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Email</label>
+                            <input type="email" class="form-control" id="email" readonly>
+                        </div>
+                        <div class="mb-3">
+                            <label>Department</label>
+                            <input type="text" class="form-control" id="department">
+                        </div>
+                        <div class="mb-3">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" id="phone">
+                        </div>
+                        <div class="mb-3">
+                            <label>Skills (comma separated)</label>
+                            <input type="text" class="form-control" id="skills">
+                        </div>
+                        <button type="button" class="btn btn-primary" onclick="updateProfile()">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function loadProfile() {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            document.getElementById('profileName').innerText = user.full_name || user.email;
+            document.getElementById('profileRole').innerText = user.role || 'Employee';
+            document.getElementById('fullName').value = user.full_name || '';
+            document.getElementById('email').value = user.email || '';
+            document.getElementById('department').value = user.department || '';
+            
+            // Load additional employee details
+            try {
+                const response = await fetch('http://localhost:8000/api/employees/', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const employees = await response.json();
+                const myData = employees.find(e => e.email === user.email);
+                if (myData) {
+                    document.getElementById('phone').value = myData.phone || '';
+                    document.getElementById('skills').value = myData.skills?.join(', ') || '';
+                }
+            } catch (error) {
+                console.error('Error loading profile details:', error);
+            }
+        }
+        
+        async function updateProfile() {
+            const data = {
+                full_name: document.getElementById('fullName').value,
+                phone: document.getElementById('phone').value,
+                skills: document.getElementById('skills').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/employees/update-profile', {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    showNotification('Profile updated successfully!', 'success');
+                    // Update local storage
+                    const user = JSON.parse(localStorage.getItem('user') || '{}');
+                    user.full_name = data.full_name;
+                    localStorage.setItem('user', JSON.stringify(user));
+                    document.getElementById('profileName').innerText = data.full_name;
+                } else {
+                    showNotification('Update failed', 'error');
+                }
+            } catch (error) {
+                showNotification('Error updating profile', 'error');
+            }
+        }
+        
+        loadProfile();
+    </script>
+</body>
+</html>

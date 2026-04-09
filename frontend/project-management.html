@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management</title>
+</head>
+<body>
+    <div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Project Management</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal" onclick="openAddProjectModal()">
+                <i class="fas fa-plus"></i> New Project
+            </button>
+        </div>
+        
+        <!-- Project Cards Grid -->
+        <div class="row" id="projectsGrid">
+            <div class="col-12 text-center py-5">Loading projects...</div>
+        </div>
+    </div>
+    
+    <!-- Project Modal -->
+    <div class="modal fade" id="projectModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="projectModalTitle">Add Project</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="projectForm">
+                        <input type="hidden" id="projectId">
+                        <div class="mb-3">
+                            <label>Project Name</label>
+                            <input type="text" class="form-control" id="projectName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label>Description</label>
+                            <textarea class="form-control" id="projectDesc" rows="3"></textarea>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>Start Date</label>
+                                <input type="date" class="form-control" id="startDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>End Date</label>
+                                <input type="date" class="form-control" id="endDate">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Status</label>
+                            <select class="form-select" id="projectStatus">
+                                <option>Planning</option><option>Active</option><option>Completed</option><option>On Hold</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label>Progress (%)</label>
+                            <input type="range" class="form-range" id="progress" min="0" max="100" value="0">
+                            <span id="progressValue">0%</span>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProject()">Save Project</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let projects = [];
+        
+        async function loadProjects() {
+            try {
+                const response = await fetch('http://localhost:8000/api/projects/', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    projects = await response.json();
+                    renderProjects();
+                }
+            } catch (error) {
+                document.getElementById('projectsGrid').innerHTML = '<div class="col-12 text-center text-danger">Failed to load projects</div>';
+            }
+        }
+        
+        function renderProjects() {
+            const grid = document.getElementById('projectsGrid');
+            if (projects.length === 0) {
+                grid.innerHTML = '<div class="col-12 text-center py-5">No projects found. Create your first project!</div>';
+                return;
+            }
+            
+            grid.innerHTML = projects.map(proj => `
+                <div class="col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title">${proj.name}</h5>
+                                <div class="dropdown">
+                                    <button class="btn btn-sm btn-link" data-bs-toggle="dropdown"><i class="fas fa-ellipsis-v"></i></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" onclick="editProject('${proj.id}')">Edit</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#" onclick="deleteProject('${proj.id}')">Delete</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted small">${proj.description?.substring(0, 100) || 'No description'}</p>
+                            <div class="mb-2">
+                                <div class="progress" style="height: 8px;">
+                                    <div class="progress-bar bg-success" style="width: ${proj.progress || 0}%"></div>
+                                </div>
+                                <small class="text-muted">Progress: ${proj.progress || 0}%</small>
+                            </div>
+                            <div class="d-flex justify-content-between small text-muted">
+                                <span><i class="fas fa-calendar"></i> Start: ${proj.start_date?.split('T')[0] || 'N/A'}</span>
+                                <span><span class="badge bg-${proj.status === 'Active' ? 'success' : proj.status === 'Completed' ? 'info' : 'secondary'}">${proj.status}</span></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function openAddProjectModal() {
+            document.getElementById('projectModalTitle').innerText = 'Add Project';
+            document.getElementById('projectForm').reset();
+            document.getElementById('projectId').value = '';
+            new bootstrap.Modal(document.getElementById('projectModal')).show();
+        }
+        
+        function editProject(id) {
+            const proj = projects.find(p => p.id === id);
+            if (proj) {
+                document.getElementById('projectModalTitle').innerText = 'Edit Project';
+                document.getElementById('projectId').value = proj.id;
+                document.getElementById('projectName').value = proj.name;
+                document.getElementById('projectDesc').value = proj.description || '';
+                document.getElementById('startDate').value = proj.start_date?.split('T')[0] || '';
+                document.getElementById('endDate').value = proj.end_date?.split('T')[0] || '';
+                document.getElementById('projectStatus').value = proj.status;
+                document.getElementById('progress').value = proj.progress || 0;
+                document.getElementById('progressValue').innerText = `${proj.progress || 0}%`;
+                new bootstrap.Modal(document.getElementById('projectModal')).show();
+            }
+        }
+        
+        async function saveProject() {
+            const id = document.getElementById('projectId').value;
+            const data = {
+                name: document.getElementById('projectName').value,
+                description: document.getElementById('projectDesc').value,
+                start_date: document.getElementById('startDate').value,
+                end_date: document.getElementById('endDate').value,
+                status: document.getElementById('projectStatus').value,
+                progress: parseInt(document.getElementById('progress').value)
+            };
+            
+            try {
+                const url = id ? `http://localhost:8000/api/projects/${id}` : 'http://localhost:8000/api/projects/';
+                const method = id ? 'PUT' : 'POST';
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
+                    loadProjects();
+                    showNotification('Project saved!', 'success');
+                }
+            } catch (error) {
+                showNotification('Error saving project', 'error');
+            }
+        }
+        
+        async function deleteProject(id) {
+            if (confirm('Delete this project?')) {
+                await fetch(`http://localhost:8000/api/projects/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                loadProjects();
+                showNotification('Project deleted', 'success');
+            }
+        }
+        
+        document.getElementById('progress')?.addEventListener('input', (e) => {
+            document.getElementById('progressValue').innerText = `${e.target.value}%`;
+        });
+        
+        loadProjects();
+    </script>
+</body>
+</html>

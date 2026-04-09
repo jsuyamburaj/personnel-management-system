@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics</title>
+</head>
+<body>
+    <div>
+        <h2 class="mb-4">Reports & Analytics</h2>
+        
+        <!-- Report Filters -->
+        <div class="dashboard-widget mb-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label>Report Type</label>
+                    <select class="form-select" id="reportType">
+                        <option value="attendance">Attendance Report</option>
+                        <option value="performance">Performance Report</option>
+                        <option value="project">Project Progress</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>From Date</label>
+                    <input type="month" class="form-control" id="fromMonth">
+                </div>
+                <div class="col-md-3">
+                    <label>To Date</label>
+                    <input type="month" class="form-control" id="toMonth">
+                </div>
+                <div class="col-md-3">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary w-100" onclick="generateReport()">Generate Report</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Report Output -->
+        <div class="dashboard-widget" id="reportOutput">
+            <div class="text-center py-5">
+                <i class="fas fa-chart-line fa-3x text-muted mb-3"></i>
+                <p>Select report type and date range to generate analytics</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Charts for Analytics -->
+    <div class="row g-4 mt-2">
+        <div class="col-md-6">
+            <div class="dashboard-widget">
+                <h5>Attendance Overview</h5>
+                <canvas id="attendanceReportChart" height="250"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="dashboard-widget">
+                <h5>Task Completion Rate</h5>
+                <canvas id="taskReportChart" height="250"></canvas>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        async function generateReport() {
+            const type = document.getElementById('reportType').value;
+            const from = document.getElementById('fromMonth').value;
+            const to = document.getElementById('toMonth').value;
+            
+            const output = document.getElementById('reportOutput');
+            output.innerHTML = '<div class="text-center py-5"><div class="spinner-border"></div> Generating report...</div>';
+            
+            try {
+                if (type === 'attendance') {
+                    const response = await fetch(`http://localhost:8000/api/analytics/dashboard`, {
+                        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                    });
+                    const data = await response.json();
+                    
+                    output.innerHTML = `
+                        <h5>Attendance Report ${from ? `(${from} - ${to})` : ''}</h5>
+                        <p>Total Employees: ${data.total_employees}</p>
+                        <p>Average Daily Attendance: ${(data.attendance_trend?.reduce((a,b) => a + b.present, 0) / (data.attendance_trend?.length || 1)).toFixed(1)}</p>
+                        <button class="btn btn-sm btn-success" onclick="exportReport()">Export to CSV</button>
+                    `;
+                    
+                    // Update chart
+                    const ctx = document.getElementById('attendanceReportChart').getContext('2d');
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: data.attendance_trend?.map(d => d.date) || [],
+                            datasets: [{ label: 'Present', data: data.attendance_trend?.map(d => d.present) || [], borderColor: '#667eea' }]
+                        }
+                    });
+                } else if (type === 'performance') {
+                    const response = await fetch(`http://localhost:8000/api/performance/team`, {
+                        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                    });
+                    const team = await response.json();
+                    
+                    output.innerHTML = `
+                        <h5>Team Performance Report</h5>
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead><tr><th>Employee</th><th>Average Rating</th></tr></thead>
+                                <tbody>
+                                    ${team.map(m => `<tr><td>${m.name || m.email}</td><td>${m.average_rating || 0}/5</td></tr>`).join('')}
+                                </tbody>
+                            </table>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                output.innerHTML = '<div class="alert alert-danger">Failed to generate report</div>';
+            }
+        }
+        
+        function exportReport() {
+            alert('CSV export feature - would download report data');
+        }
+        
+        // Load default charts
+        async function loadDefaultCharts() {
+            const analytics = await fetch('http://localhost:8000/api/analytics/dashboard', {
+                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+            }).then(res => res.json()).catch(() => null);
+            
+            if (analytics) {
+                new Chart(document.getElementById('attendanceReportChart'), {
+                    type: 'line',
+                    data: {
+                        labels: analytics.attendance_trend?.slice(-7).map(d => d.date) || [],
+                        datasets: [{ label: 'Present', data: analytics.attendance_trend?.slice(-7).map(d => d.present) || [] }]
+                    }
+                });
+                
+                const taskRes = await fetch('http://localhost:8000/api/tasks/my-tasks', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                const tasks = await taskRes.json();
+                const statusCount = { Pending: 0, 'In Progress': 0, Completed: 0 };
+                tasks.forEach(t => statusCount[t.status]++);
+                
+                new Chart(document.getElementById('taskReportChart'), {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(statusCount),
+                        datasets: [{ data: Object.values(statusCount), backgroundColor: ['#f56565', '#ed8936', '#48bb78'] }]
+                    }
+                });
+            }
+        }
+        
+        loadDefaultCharts();
+    </script>
+</body>
+</html>

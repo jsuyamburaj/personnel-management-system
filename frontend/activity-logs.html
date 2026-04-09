@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Logs</title>
+</head>
+<body>
+    <div>
+        <h2 class="mb-4">Activity Logs</h2>
+        
+        <!-- Filters -->
+        <div class="dashboard-widget mb-4">
+            <div class="row g-3">
+                <div class="col-md-3">
+                    <label>Action Type</label>
+                    <select class="form-select" id="actionFilter">
+                        <option value="">All</option>
+                        <option>login</option><option>create_employee</option><option>update_task</option><option>check_in</option><option>check_out</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>From Date</label>
+                    <input type="date" class="form-control" id="fromDate">
+                </div>
+                <div class="col-md-3">
+                    <label>To Date</label>
+                    <input type="date" class="form-control" id="toDate">
+                </div>
+                <div class="col-md-3">
+                    <label>&nbsp;</label>
+                    <button class="btn btn-primary w-100" onclick="loadActivityLogs()">Filter</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Logs Table -->
+        <div class="dashboard-widget">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr><th>User</th><th>Action</th><th>Details</th><th>Timestamp</th></tr>
+                    </thead>
+                    <tbody id="logsTable">
+                        <tr><td colspan="4" class="text-center">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function loadActivityLogs() {
+            const action = document.getElementById('actionFilter').value;
+            const from = document.getElementById('fromDate').value;
+            const to = document.getElementById('toDate').value;
+            
+            let url = 'http://localhost:8000/api/activity-logs/me?limit=100';
+            if (action) url += `&action=${action}`;
+            if (from) url += `&from_date=${from}`;
+            if (to) url += `&to_date=${to}`;
+            
+            try {
+                const response = await fetch(url, {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const logs = await response.json();
+                    const tbody = document.getElementById('logsTable');
+                    if (logs.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="4" class="text-center">No activity logs found</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = logs.map(log => `
+                        <tr>
+                            <td>${log.user_email}</td>
+                            <td><span class="badge bg-secondary">${log.action}</span></td>
+                            <td>${log.details}</td>
+                            <td>${new Date(log.timestamp).toLocaleString()}</td>
+                         </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading logs:', error);
+                document.getElementById('logsTable').innerHTML = '<tr><td colspan="4" class="text-danger">Failed to load logs</td></tr>';
+            }
+        }
+        
+        loadActivityLogs();
+    </script>
+</body>
+</html>

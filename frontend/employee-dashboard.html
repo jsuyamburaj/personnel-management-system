@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Dashboard</title>
+    <style>
+        .dashboard-widget {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            height: 100%;
+            transition: transform 0.2s;
+        }
+        .dashboard-widget:hover {
+            transform: translateY(-3px);
+        }
+        .task-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .task-item:last-child {
+            border-bottom: none;
+        }
+        .leave-status-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+        .status-approved { background: #dcfce7; color: #15803d; }
+        .status-pending { background: #fef3c7; color: #b45309; }
+        .status-rejected { background: #fee2e2; color: #dc2626; }
+        .announcement-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+        .announcement-item:last-child { border-bottom: none; }
+        .attendance-time {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2d3748;
+        }
+        .btn-outline-custom {
+            border-radius: 30px;
+            padding: 6px 16px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            transition: all 0.2s;
+        }
+        .btn-outline-custom:hover {
+            background: #f8f9fc;
+            border-color: #cbd5e0;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .spinner-small {
+            width: 1.2rem;
+            height: 1.2rem;
+            border-width: 0.15em;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <!-- Welcome Row -->
+    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+        <div>
+            <h2 class="mb-1">Welcome, <span id="userNameDisplay">Loading...</span>!</h2>
+            <p class="text-muted mb-0">Here's what's happening with your work today.</p>
+        </div>
+        <div class="d-flex gap-2">
+            <button class="btn btn-outline-custom" onclick="window.location.href='notifications.html'">
+                <i class="fas fa-bell me-1"></i> Notifications
+            </button>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Left Column: My Tasks + Leave Requests -->
+        <div class="col-lg-7">
+            <!-- My Tasks Widget -->
+            <div class="dashboard-widget mb-4">
+                <div class="section-title">
+                    <span><i class="fas fa-tasks me-2 text-primary"></i> My Tasks</span>
+                    <a href="task-management.html" class="text-decoration-none">View All Tasks <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div id="tasksList">
+                    <div class="text-center py-3"><div class="spinner-border spinner-small" role="status"></div> Loading tasks...</div>
+                </div>
+            </div>
+
+            <!-- Leave Requests Widget (with table) -->
+            <div class="dashboard-widget">
+                <div class="section-title">
+                    <span><i class="fas fa-calendar-alt me-2 text-warning"></i> Recent Leave Requests</span>
+                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#leaveModal" onclick="openLeaveRequestModal()">Request Leave</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr><th>From</th><th>To</th><th>Type</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="leaveRequestsTable">
+                            <tr><td colspan="4" class="text-center"><div class="spinner-border spinner-small" role="status"></div> Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column: Leave Balance + Announcements + Attendance -->
+        <div class="col-lg-5">
+            <!-- Leave Balance Widget -->
+            <div class="dashboard-widget mb-4 text-center">
+                <i class="fas fa-umbrella-beach fa-2x text-info mb-2"></i>
+                <h3 id="leaveBalanceValue" class="mb-1">--</h3>
+                <p class="text-muted mb-0">Days Available</p>
+            </div>
+
+            <!-- Announcements Widget -->
+            <div class="dashboard-widget mb-4">
+                <div class="section-title">
+                    <span><i class="fas fa-bullhorn me-2 text-danger"></i> Announcements</span>
+                </div>
+                <div id="announcementsList">
+                    <div class="text-center py-3"><div class="spinner-border spinner-small" role="status"></div> Loading announcements...</div>
+                </div>
+            </div>
+
+            <!-- My Attendance Widget -->
+            <div class="dashboard-widget">
+                <div class="section-title">
+                    <span><i class="fas fa-clock me-2 text-success"></i> My Attendance</span>
+                    <a href="attendance.html" class="text-decoration-none">View All <i class="fas fa-arrow-right ms-1"></i></a>
+                </div>
+                <div class="text-center">
+                    <div class="mb-3">
+                        <small class="text-muted">Checked In</small>
+                        <div class="attendance-time" id="checkInTime">--:-- --</div>
+                    </div>
+                    <div>
+                        <small class="text-muted">Checked Out</small>
+                        <div class="attendance-time" id="checkOutTime">--:-- --</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Leave Request Modal (same as before, but will POST to API) -->
+<div class="modal fade" id="leaveModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request Leave</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="leaveRequestForm">
+                    <div class="mb-3">
+                        <label>Leave Type</label>
+                        <select class="form-select" id="leaveType" required>
+                            <option>Annual</option><option>Sick</option><option>Personal</option><option>Unpaid</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3"><label>From Date</label><input type="date" class="form-control" id="leaveFrom" required></div>
+                        <div class="col-md-6 mb-3"><label>To Date</label><input type="date" class="form-control" id="leaveTo" required></div>
+                    </div>
+                    <div class="mb-3"><label>Reason</label><textarea class="form-control" id="leaveReason" rows="2"></textarea></div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitLeaveRequest()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = 'http://localhost:8000/api';
+    let currentUser = null;
+
+    async function fetchWithAuth(endpoint, options = {}) {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_BASE}${endpoint}`, {
+            ...options,
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+    }
+
+    async function loadDashboard() {
+        try {
+            // Get user info from localStorage
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            document.getElementById('userNameDisplay').innerText = user.full_name || user.email?.split('@')[0] || 'Employee';
+            currentUser = user;
+
+            // Load tasks
+            const tasks = await fetchWithAuth('/tasks/my-tasks');
+            const tasksContainer = document.getElementById('tasksList');
+            if (tasks.length === 0) {
+                tasksContainer.innerHTML = '<div class="text-muted text-center py-3">No tasks assigned.</div>';
+            } else {
+                tasksContainer.innerHTML = tasks.slice(0, 3).map(task => `
+                    <div class="task-item">
+                        <div class="task-check"></div>
+                        <div class="flex-grow-1">${escapeHtml(task.title)}</div>
+                        <span class="badge bg-${task.priority === 'High' ? 'danger' : task.priority === 'Medium' ? 'warning' : 'success'}">${task.priority}</span>
+                    </div>
+                `).join('');
+                if (tasks.length > 3) {
+                    tasksContainer.innerHTML += '<div class="text-center mt-2"><small class="text-muted">+ ' + (tasks.length-3) + ' more tasks</small></div>';
+                }
+            }
+
+            // Load leave balance
+            const balance = await fetchWithAuth('/leaves/balance');
+            document.getElementById('leaveBalanceValue').innerText = balance.available ?? 0;
+
+            // Load leave requests
+            const leaves = await fetchWithAuth('/leaves/my-requests');
+            const leavesTable = document.getElementById('leaveRequestsTable');
+            if (leaves.length === 0) {
+                leavesTable.innerHTML = '<tr><td colspan="4" class="text-muted text-center">No leave requests found.</td></tr>';
+            } else {
+                leavesTable.innerHTML = leaves.slice(0, 3).map(leave => `
+                    <tr>
+                        <td>${formatDate(leave.start_date)}</td>
+                        <td>${formatDate(leave.end_date)}</td>
+                        <td>${leave.leave_type}</td>
+                        <td><span class="leave-status-badge status-${leave.status.toLowerCase()}">${leave.status}</span></td>
+                    </tr>
+                `).join('');
+            }
+
+            // Load announcements
+            const announcements = await fetchWithAuth('/announcements');
+            const annContainer = document.getElementById('announcementsList');
+            if (announcements.length === 0) {
+                annContainer.innerHTML = '<div class="text-muted text-center py-3">No announcements at the moment.</div>';
+            } else {
+                annContainer.innerHTML = announcements.map(ann => `
+                    <div class="announcement-item">
+                        <i class="fas fa-bullhorn text-danger mt-1"></i>
+                        <div>${escapeHtml(ann.message)}<br><small class="text-muted">${formatDate(ann.created_at)}</small></div>
+                    </div>
+                `).join('');
+            }
+
+            // Load today's attendance
+            const attendance = await fetchWithAuth('/attendance/today');
+            document.getElementById('checkInTime').innerText = attendance.check_in ? new Date(attendance.check_in).toLocaleTimeString() : 'Not checked in';
+            document.getElementById('checkOutTime').innerText = attendance.check_out ? new Date(attendance.check_out).toLocaleTimeString() : 'Not checked out';
+
+        } catch (error) {
+            console.error('Dashboard load error:', error);
+            // Show friendly error messages in each widget
+            document.getElementById('tasksList').innerHTML = '<div class="alert alert-warning">Could not load tasks. Please try again later.</div>';
+            document.getElementById('leaveBalanceValue').innerText = '--';
+            document.getElementById('leaveRequestsTable').innerHTML = '<tr><td colspan="4" class="text-danger">Error loading leaves</td></tr>';
+            document.getElementById('announcementsList').innerHTML = '<div class="alert alert-warning">Announcements unavailable</div>';
+        }
+    }
+
+    async function submitLeaveRequest() {
+        const data = {
+            leave_type: document.getElementById('leaveType').value,
+            start_date: document.getElementById('leaveFrom').value,
+            end_date: document.getElementById('leaveTo').value,
+            reason: document.getElementById('leaveReason').value
+        };
+        try {
+            await fetchWithAuth('/leaves/', { method: 'POST', body: JSON.stringify(data) });
+            bootstrap.Modal.getInstance(document.getElementById('leaveModal')).hide();
+            showNotification('Leave request submitted successfully!', 'success');
+            loadDashboard(); // refresh
+        } catch (err) {
+            showNotification('Failed to submit leave request.', 'error');
+        }
+    }
+
+    function openLeaveRequestModal() {
+        document.getElementById('leaveRequestForm').reset();
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        return new Date(dateStr).toLocaleDateString();
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function showNotification(msg, type) {
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type === 'error' ? 'danger' : 'success'} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
+        alertDiv.style.zIndex = '9999';
+        alertDiv.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
+        document.body.appendChild(alertDiv);
+        setTimeout(() => alertDiv.remove(), 3000);
+    }
+
+    loadDashboard();
+</script>
+</body>
+</html>

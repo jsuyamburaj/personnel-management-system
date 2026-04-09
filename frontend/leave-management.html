@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Management</title>
+</head>
+<body>
+    <div>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Leave Management</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leaveModal" onclick="openRequestModal()">
+                <i class="fas fa-plus"></i> Request Leave
+            </button>
+        </div>
+        
+        <!-- Leave Balance Card -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="dashboard-widget text-center">
+                    <h3 id="leaveBalance">--</h3>
+                    <p class="text-muted">Available Leave Days</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Leave Requests Table -->
+        <div class="dashboard-widget">
+            <h5 class="mb-3">My Leave Requests</h5>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr><th>From</th><th>To</th><th>Type</th><th>Reason</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="leaveRequests">
+                        <tr><td colspan="5" class="text-center">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Leave Request Modal -->
+    <div class="modal fade" id="leaveModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Request Leave</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="leaveForm">
+                        <div class="mb-3">
+                            <label>Leave Type</label>
+                            <select class="form-select" id="leaveType" required>
+                                <option>Annual</option><option>Sick</option><option>Personal</option><option>Unpaid</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label>From Date</label>
+                                <input type="date" class="form-control" id="startDate" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label>To Date</label>
+                                <input type="date" class="form-control" id="endDate" required>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label>Reason</label>
+                            <textarea class="form-control" id="reason" rows="3"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="submitLeave()">Submit Request</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function loadLeaveBalance() {
+            try {
+                const response = await fetch('http://localhost:8000/api/leaves/balance', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    document.getElementById('leaveBalance').innerText = data.available || 0;
+                }
+            } catch (error) {
+                document.getElementById('leaveBalance').innerText = '12';
+            }
+        }
+        
+        async function loadLeaveRequests() {
+            try {
+                const response = await fetch('http://localhost:8000/api/leaves/my-requests', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const leaves = await response.json();
+                    const tbody = document.getElementById('leaveRequests');
+                    if (leaves.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No leave requests</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = leaves.map(leave => `
+                        <tr>
+                            <td>${new Date(leave.start_date).toLocaleDateString()}</td>
+                            <td>${new Date(leave.end_date).toLocaleDateString()}</td>
+                            <td>${leave.leave_type}</td>
+                            <td>${leave.reason || '-'}</td>
+                            <td><span class="badge bg-${leave.status === 'Approved' ? 'success' : leave.status === 'Rejected' ? 'danger' : 'warning'}">${leave.status}</span></td>
+                        </tr>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading leaves:', error);
+            }
+        }
+        
+        async function submitLeave() {
+            const data = {
+                leave_type: document.getElementById('leaveType').value,
+                start_date: document.getElementById('startDate').value,
+                end_date: document.getElementById('endDate').value,
+                reason: document.getElementById('reason').value
+            };
+            
+            try {
+                const response = await fetch('http://localhost:8000/api/leaves/', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                if (response.ok) {
+                    bootstrap.Modal.getInstance(document.getElementById('leaveModal')).hide();
+                    showNotification('Leave request submitted!', 'success');
+                    loadLeaveRequests();
+                    loadLeaveBalance();
+                } else {
+                    showNotification('Failed to submit', 'error');
+                }
+            } catch (error) {
+                showNotification('Error submitting request', 'error');
+            }
+        }
+        
+        function openRequestModal() {
+            document.getElementById('leaveForm').reset();
+        }
+        
+        loadLeaveBalance();
+        loadLeaveRequests();
+    </script>
+</body>
+</html>

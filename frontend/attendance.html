@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Management</title>
+</head>
+<body>
+    <div>
+        <h2 class="mb-4">Attendance Management</h2>
+        
+        <!-- Quick Actions -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="dashboard-widget text-center">
+                    <h4>Today's Status</h4>
+                    <div id="todayStatus" class="mb-3">
+                        <div class="spinner-border"></div>
+                    </div>
+                    <div class="d-flex gap-2 justify-content-center">
+                        <button class="btn btn-success" onclick="checkIn()" id="checkInBtn">
+                            <i class="fas fa-sign-in-alt"></i> Check In
+                        </button>
+                        <button class="btn btn-danger" onclick="checkOut()" id="checkOutBtn">
+                            <i class="fas fa-sign-out-alt"></i> Check Out
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="dashboard-widget">
+                    <h5>Quick Stats</h5>
+                    <div id="attendanceStats">
+                        <p>This Month: <span id="monthDays">-</span> days</p>
+                        <p>Total Hours: <span id="totalHours">-</span> hrs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Attendance History Table -->
+        <div class="dashboard-widget">
+            <h5 class="mb-3">Attendance History</h5>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr><th>Date</th><th>Check In</th><th>Check Out</th><th>Total Hours</th><th>Status</th></tr>
+                    </thead>
+                    <tbody id="attendanceHistory">
+                        <tr><td colspan="5" class="text-center">Loading...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        async function loadTodayAttendance() {
+            try {
+                const response = await fetch('http://localhost:8000/api/attendance/today', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    const statusDiv = document.getElementById('todayStatus');
+                    if (data.check_in) {
+                        statusDiv.innerHTML = `<div class="alert alert-success">Checked in at ${new Date(data.check_in).toLocaleTimeString()}</div>`;
+                        document.getElementById('checkInBtn').disabled = true;
+                    }
+                    if (data.check_out) {
+                        statusDiv.innerHTML += `<div class="alert alert-info">Checked out at ${new Date(data.check_out).toLocaleTimeString()}</div>`;
+                        document.getElementById('checkOutBtn').disabled = true;
+                    }
+                    if (!data.check_in && !data.check_out) {
+                        statusDiv.innerHTML = '<div class="alert alert-warning">Not checked in today</div>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading today attendance:', error);
+            }
+        }
+        
+        async function loadAttendanceHistory() {
+            try {
+                const response = await fetch('http://localhost:8000/api/attendance/history', {
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const history = await response.json();
+                    const tbody = document.getElementById('attendanceHistory');
+                    if (history.length === 0) {
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records</td></tr>';
+                        return;
+                    }
+                    tbody.innerHTML = history.map(record => `
+                        <tr>
+                            <td>${record.date}</td>
+                            <td>${record.check_in ? new Date(record.check_in).toLocaleTimeString() : '-'}</td>
+                            <td>${record.check_out ? new Date(record.check_out).toLocaleTimeString() : '-'}</td>
+                            <td>${record.total_hours || 0}</td>
+                            <td><span class="badge bg-${record.status === 'Present' ? 'success' : 'secondary'}">${record.status}</span></td>
+                        </tr>
+                    `).join('');
+                    
+                    // Calculate stats
+                    const totalHours = history.reduce((sum, r) => sum + (r.total_hours || 0), 0);
+                    document.getElementById('totalHours').innerText = totalHours.toFixed(1);
+                    document.getElementById('monthDays').innerText = history.length;
+                }
+            } catch (error) {
+                console.error('Error loading history:', error);
+            }
+        }
+        
+        async function checkIn() {
+            try {
+                const response = await fetch('http://localhost:8000/api/attendance/check-in', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    showNotification('Checked in successfully!', 'success');
+                    loadTodayAttendance();
+                    loadAttendanceHistory();
+                }
+            } catch (error) {
+                showNotification('Check-in failed', 'error');
+            }
+        }
+        
+        async function checkOut() {
+            try {
+                const response = await fetch('http://localhost:8000/api/attendance/check-out', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    const data = await response.json();
+                    showNotification(`Checked out! Total hours: ${data.total_hours}`, 'success');
+                    loadTodayAttendance();
+                    loadAttendanceHistory();
+                }
+            } catch (error) {
+                showNotification('Check-out failed', 'error');
+            }
+        }
+        
+        loadTodayAttendance();
+        loadAttendanceHistory();
+    </script>
+</body>
+</html>
