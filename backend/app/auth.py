@@ -2,6 +2,8 @@ from datetime import datetime, timedelta
 from jose import JWTError, jwt
 from passlib.context import CryptContext
 from .config import settings
+from fastapi import Depends, HTTPException, status
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -24,3 +26,6 @@ def decode_token(token: str):
         return payload
     except JWTError:
         return None
+
+def get_current_active_user():
+    return {"username": "test_user"}

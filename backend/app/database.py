@@ -13,10 +13,10 @@ class Database:
         self.db = self.client[settings.database_name]
         logger.info(f"Connected to database: {settings.database_name}")
         
-        # Create indexes
-        await self.db.users.create_index("email", unique=True)
-        await self.db.activity_logs.create_index("timestamp")
-        await self.db.notifications.create_index("user_email")
+        # ✅ Correct collection access
+        await self.db["users"].create_index("email", unique=True)
+        await self.db["activity_logs"].create_index("timestamp")
+        await self.db["notifications"].create_index("user_email")
         
     async def close(self):
         if self.client:
@@ -28,6 +28,5 @@ class Database:
 
 db = Database()
 
-# Helper to get collection
 def get_collection(name):
     return db.db[name]
