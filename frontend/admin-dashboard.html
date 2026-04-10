@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | SPMS</title>
+    <title>Admin Dashboard | Glass Theme</title>
     <style>
         /* Modern CSS Reset & Base Styles */
         * {
@@ -14,9 +14,10 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #1a202c;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
             line-height: 1.5;
+            min-height: 100vh;
         }
 
         /* Smooth Scroll */
@@ -36,12 +37,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #5a67d8, #6b46a0);
+            background: linear-gradient(135deg, #3a8fd6, #00d4e0);
         }
 
         /* Dashboard Container */
@@ -58,7 +59,7 @@
         .dashboard-header h2 {
             font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -66,11 +67,11 @@
         }
 
         .dashboard-header p {
-            color: #4a5568;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.95rem;
         }
 
-        /* Stats Row - Modern Cards */
+        /* Stats Row - Glass Cards */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -79,11 +80,11 @@
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
             border-radius: 24px;
             padding: 24px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
@@ -97,7 +98,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -107,7 +108,7 @@
 
         .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
         .stat-card .stat-label {
@@ -115,14 +116,17 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            color: #718096;
+            color: rgba(255, 255, 255, 0.7);
             margin-bottom: 8px;
         }
 
         .stat-card .stat-value {
             font-size: 2.5rem;
             font-weight: 800;
-            color: #2d3748;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             margin-bottom: 4px;
         }
 
@@ -136,40 +140,40 @@
             font-size: 1.5rem;
         }
 
-        .stat-icon.primary { background: linear-gradient(135deg, #667eea20, #764ba220); color: #667eea; }
-        .stat-icon.success { background: linear-gradient(135deg, #48bb7820, #38a16920); color: #48bb78; }
-        .stat-icon.info { background: linear-gradient(135deg, #4299e120, #3182ce20); color: #4299e1; }
-        .stat-icon.warning { background: linear-gradient(135deg, #ed893620, #dd6b2020); color: #ed8936; }
+        .stat-icon.primary { background: rgba(79, 172, 254, 0.2); color: #4facfe; }
+        .stat-icon.success { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
+        .stat-icon.info { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
+        .stat-icon.warning { background: rgba(237, 137, 54, 0.2); color: #ed8936; }
 
-        /* Chart Containers */
+        /* Chart Containers - Glass */
         .chart-container {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
             border-radius: 24px;
             padding: 24px;
             margin-bottom: 24px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .chart-container:hover {
             transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
         .chart-container h5 {
             font-size: 1.1rem;
             font-weight: 600;
             margin-bottom: 20px;
-            color: #2d3748;
+            color: white;
             display: flex;
             align-items: center;
             gap: 10px;
         }
 
         .chart-container h5 i {
-            color: #667eea;
+            color: #4facfe;
             font-size: 1.2rem;
         }
 
@@ -184,7 +188,7 @@
             padding: 14px;
             border-radius: 16px;
             margin-bottom: 12px;
-            background: rgba(247, 250, 252, 0.8);
+            background: rgba(255, 255, 255, 0.08);
             transition: all 0.3s;
             display: flex;
             align-items: center;
@@ -193,9 +197,8 @@
         }
 
         .activity-item:hover {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(79, 172, 254, 0.2);
             transform: translateX(5px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .activity-icon {
@@ -208,11 +211,11 @@
             font-size: 1.2rem;
         }
 
-        .activity-icon.bg-success-light { background: linear-gradient(135deg, #48bb7820, #38a16920); color: #48bb78; }
-        .activity-icon.bg-info-light { background: linear-gradient(135deg, #4299e120, #3182ce20); color: #4299e1; }
-        .activity-icon.bg-warning-light { background: linear-gradient(135deg, #ed893620, #dd6b2020); color: #ed8936; }
-        .activity-icon.bg-primary-light { background: linear-gradient(135deg, #667eea20, #764ba220); color: #667eea; }
-        .activity-icon.bg-secondary-light { background: linear-gradient(135deg, #71809620, #4a556820); color: #718096; }
+        .activity-icon.bg-success-light { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
+        .activity-icon.bg-info-light { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
+        .activity-icon.bg-warning-light { background: rgba(237, 137, 54, 0.2); color: #ed8936; }
+        .activity-icon.bg-primary-light { background: rgba(79, 172, 254, 0.2); color: #4facfe; }
+        .activity-icon.bg-secondary-light { background: rgba(113, 128, 150, 0.2); color: #a0aec0; }
 
         .activity-content {
             flex: 1;
@@ -220,13 +223,13 @@
 
         .activity-text {
             font-weight: 500;
-            color: #2d3748;
+            color: white;
             margin-bottom: 4px;
         }
 
         .activity-time {
             font-size: 0.75rem;
-            color: #a0aec0;
+            color: rgba(255, 255, 255, 0.6);
         }
 
         /* Loading State */
@@ -234,9 +237,9 @@
             display: inline-block;
             width: 40px;
             height: 40px;
-            border: 3px solid rgba(102, 126, 234, 0.2);
+            border: 3px solid rgba(79, 172, 254, 0.2);
             border-radius: 50%;
-            border-top-color: #667eea;
+            border-top-color: #4facfe;
             animation: spin 0.8s linear infinite;
         }
 
@@ -293,27 +296,42 @@
             }
         }
 
-        /* Project Progress Chart Container */
-        .full-width-chart {
-            margin-top: 8px;
+        /* Utility Classes */
+        .text-muted {
+            color: rgba(255, 255, 255, 0.6) !important;
         }
-
-        /* Glassmorphism Effect */
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+        
+        .text-center {
+            text-align: center;
         }
-
-        /* Hover Effects */
-        .hover-lift {
-            transition: transform 0.3s, box-shadow 0.3s;
+        
+        .py-3 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
         }
-
-        .hover-lift:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+        
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+        
+        .d-flex {
+            display: flex;
+        }
+        
+        .justify-content-between {
+            justify-content: space-between;
+        }
+        
+        .align-items-start {
+            align-items: flex-start;
+        }
+        
+        .align-items-center {
+            align-items: center;
+        }
+        
+        .gap-2 {
+            gap: 0.5rem;
         }
     </style>
 </head>
@@ -321,15 +339,14 @@
     <div class="dashboard-container">
         <div class="dashboard-header">
             <h2>
-                <i class="fas fa-chart-line" style="background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent;"></i>
-                Admin Dashboard
+                <i class="fas fa-chart-line"></i> Admin Dashboard
             </h2>
             <p>Welcome back! Here's what's happening with your organization today.</p>
         </div>
         
         <!-- Stats Cards Row -->
         <div class="stats-row">
-            <div class="stat-card hover-lift">
+            <div class="stat-card">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Total Employees</div>
@@ -342,7 +359,7 @@
                 </div>
             </div>
             
-            <div class="stat-card hover-lift">
+            <div class="stat-card">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Active Projects</div>
@@ -355,7 +372,7 @@
                 </div>
             </div>
             
-            <div class="stat-card hover-lift">
+            <div class="stat-card">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Tasks Completed</div>
@@ -368,7 +385,7 @@
                 </div>
             </div>
             
-            <div class="stat-card hover-lift">
+            <div class="stat-card">
                 <div class="d-flex justify-content-between align-items-start">
                     <div>
                         <div class="stat-label">Present Today</div>
@@ -384,7 +401,7 @@
         
         <!-- Charts Grid -->
         <div class="charts-grid">
-            <div class="chart-container hover-lift">
+            <div class="chart-container">
                 <h5>
                     <i class="fas fa-building"></i>
                     Employee Distribution by Department
@@ -392,7 +409,7 @@
                 <canvas id="deptChart" height="250"></canvas>
             </div>
             
-            <div class="chart-container hover-lift">
+            <div class="chart-container">
                 <h5>
                     <i class="fas fa-tasks"></i>
                     Task Status Overview
@@ -402,7 +419,7 @@
         </div>
         
         <div class="charts-grid">
-            <div class="chart-container hover-lift">
+            <div class="chart-container">
                 <h5>
                     <i class="fas fa-chart-line"></i>
                     Monthly Attendance Trend
@@ -410,7 +427,7 @@
                 <canvas id="attendanceTrendChart" height="220"></canvas>
             </div>
             
-            <div class="chart-container hover-lift">
+            <div class="chart-container">
                 <h5>
                     <i class="fas fa-history"></i>
                     Recent Activity
@@ -424,7 +441,7 @@
             </div>
         </div>
         
-        <div class="chart-container full-width-chart hover-lift">
+        <div class="chart-container">
             <h5>
                 <i class="fas fa-chart-bar"></i>
                 Project Progress Overview
@@ -435,6 +452,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
             await loadDashboardStats();
@@ -488,7 +506,7 @@
         }
         
         async function loadCharts() {
-            // Department Chart - Modern Styling
+            // Department Chart - Glass Theme Colors
             const deptCtx = document.getElementById('deptChart').getContext('2d');
             new Chart(deptCtx, {
                 type: 'doughnut',
@@ -497,12 +515,12 @@
                     datasets: [{
                         data: [65, 28, 12, 8, 15, 10],
                         backgroundColor: [
-                            'rgba(102, 126, 234, 0.85)',
-                            'rgba(72, 187, 120, 0.85)',
-                            'rgba(237, 137, 54, 0.85)',
-                            'rgba(66, 153, 225, 0.85)',
-                            'rgba(159, 122, 234, 0.85)',
-                            'rgba(245, 101, 101, 0.85)'
+                            'rgba(79, 172, 254, 0.8)',
+                            'rgba(72, 187, 120, 0.8)',
+                            'rgba(237, 137, 54, 0.8)',
+                            'rgba(66, 153, 225, 0.8)',
+                            'rgba(159, 122, 234, 0.8)',
+                            'rgba(245, 101, 101, 0.8)'
                         ],
                         borderWidth: 0,
                         hoverOffset: 8
@@ -518,7 +536,8 @@
                                 font: { size: 12, family: 'Inter' },
                                 padding: 15,
                                 usePointStyle: true,
-                                pointStyle: 'circle'
+                                pointStyle: 'circle',
+                                color: 'white'
                             }
                         },
                         tooltip: {
@@ -552,7 +571,7 @@
                     plugins: {
                         legend: {
                             position: 'bottom',
-                            labels: { font: { size: 12 }, usePointStyle: true, pointStyle: 'circle' }
+                            labels: { font: { size: 12 }, usePointStyle: true, pointStyle: 'circle', color: 'white' }
                         }
                     },
                     cutout: '60%'
@@ -562,8 +581,8 @@
             // Attendance Trend - Line Chart with Gradient
             const attendCtx = document.getElementById('attendanceTrendChart').getContext('2d');
             const gradient = attendCtx.createLinearGradient(0, 0, 0, 250);
-            gradient.addColorStop(0, 'rgba(102, 126, 234, 0.4)');
-            gradient.addColorStop(1, 'rgba(102, 126, 234, 0.02)');
+            gradient.addColorStop(0, 'rgba(79, 172, 254, 0.4)');
+            gradient.addColorStop(1, 'rgba(79, 172, 254, 0.02)');
             
             new Chart(attendCtx, {
                 type: 'line',
@@ -572,12 +591,12 @@
                     datasets: [{
                         label: 'Present Days',
                         data: [85, 88, 92, 90],
-                        borderColor: '#667eea',
+                        borderColor: '#4facfe',
                         backgroundColor: gradient,
                         borderWidth: 3,
                         tension: 0.4,
                         fill: true,
-                        pointBackgroundColor: '#667eea',
+                        pointBackgroundColor: '#4facfe',
                         pointBorderColor: '#fff',
                         pointBorderWidth: 2,
                         pointRadius: 5,
@@ -588,24 +607,29 @@
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
-                        legend: { position: 'top' },
+                        legend: { 
+                            position: 'top',
+                            labels: { color: 'white' }
+                        },
                         tooltip: { mode: 'index', intersect: false }
                     },
                     scales: {
                         y: {
                             beginAtZero: true,
-                            grid: { color: 'rgba(0,0,0,0.05)' },
-                            title: { display: true, text: 'Attendance %', font: { size: 11 } }
+                            grid: { color: 'rgba(255,255,255,0.1)' },
+                            title: { display: true, text: 'Attendance %', font: { size: 11 }, color: 'white' },
+                            ticks: { color: 'white' }
                         },
                         x: {
                             grid: { display: false },
-                            title: { display: true, text: 'Month', font: { size: 11 } }
+                            title: { display: true, text: 'Month', font: { size: 11 }, color: 'white' },
+                            ticks: { color: 'white' }
                         }
                     }
                 }
             });
             
-            // Project Progress - ApexCharts with Modern Theme
+            // Project Progress - ApexCharts with Glass Theme
             const options = {
                 series: [{
                     name: 'Completion Rate',
@@ -615,7 +639,8 @@
                     type: 'bar',
                     height: 350,
                     toolbar: { show: false },
-                    animations: { enabled: true, easing: 'easeinout', speed: 800 }
+                    animations: { enabled: true, easing: 'easeinout', speed: 800 },
+                    background: 'transparent'
                 },
                 plotOptions: {
                     bar: {
@@ -629,33 +654,33 @@
                 dataLabels: {
                     enabled: true,
                     offsetY: -20,
-                    style: { fontSize: '12px', colors: ['#304758'] }
+                    style: { fontSize: '12px', colors: ['white'] }
                 },
                 xaxis: {
                     categories: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta'],
-                    labels: { style: { fontSize: '12px', fontWeight: 500 } }
+                    labels: { style: { fontSize: '12px', fontWeight: 500, colors: 'white' } }
                 },
                 yaxis: {
-                    title: { text: 'Progress (%)', style: { fontSize: '12px' } },
+                    title: { text: 'Progress (%)', style: { fontSize: '12px', color: 'white' } },
                     max: 100,
-                    labels: { formatter: (val) => `${val}%` }
+                    labels: { formatter: (val) => `${val}%`, style: { colors: 'white' } }
                 },
-                colors: ['#667eea'],
+                colors: ['#4facfe'],
                 fill: {
                     type: 'gradient',
                     gradient: {
                         shade: 'light',
                         type: 'vertical',
                         shadeIntensity: 0.3,
-                        gradientToColors: ['#764ba2'],
+                        gradientToColors: ['#00f2fe'],
                         inverseColors: false,
                         opacityFrom: 0.85,
                         opacityTo: 0.95
                     }
                 },
                 grid: {
-                    borderColor: '#e7e7e7',
-                    row: { colors: ['#f3f3f3', 'transparent'], opacity: 0.5 }
+                    borderColor: 'rgba(255,255,255,0.1)',
+                    row: { colors: ['rgba(255,255,255,0.05)', 'transparent'], opacity: 0.5 }
                 },
                 tooltip: {
                     theme: 'dark',
@@ -670,7 +695,6 @@
         async function loadRecentActivity() {
             const container = document.getElementById('recentActivity');
             
-            // Try to fetch real activities from backend
             try {
                 const token = localStorage.getItem('token');
                 const response = await fetch('http://localhost:8000/api/activity-logs/me?limit=5', {
@@ -700,8 +724,7 @@
                 { icon: 'fa-check-circle', text: 'Project "Mobile App" completed successfully', time: '5 hours ago', color: 'info' },
                 { icon: 'fa-calendar-alt', text: 'Leave request approved for Sarah Williams', time: '1 day ago', color: 'warning' },
                 { icon: 'fa-edit', text: 'Task "Update documentation" status changed to Completed', time: '1 day ago', color: 'primary' },
-                { icon: 'fa-chart-line', text: 'Monthly performance report generated', time: '2 days ago', color: 'secondary' },
-                { icon: 'fa-code-branch', text: 'New branch "feature/auth" created for Project Alpha', time: '2 days ago', color: 'info' }
+                { icon: 'fa-chart-line', text: 'Monthly performance report generated', time: '2 days ago', color: 'secondary' }
             ];
             renderActivities(container, activities);
         }

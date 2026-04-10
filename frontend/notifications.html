@@ -3,24 +3,318 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications</title>
+    <title>Notifications | Glass Theme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            line-height: 1.5;
+        }
+
+        /* Glass Widget */
+        .dashboard-widget {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 0;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            overflow: hidden;
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Buttons */
+        .btn-outline-primary {
+            background: rgba(79, 172, 254, 0.2);
+            border: 1px solid #4facfe;
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: #4facfe;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-outline-primary:hover {
+            background: #4facfe;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .btn-link {
+            background: rgba(79, 172, 254, 0.2);
+            border: none;
+            border-radius: 20px;
+            padding: 5px 12px;
+            color: #4facfe;
+            font-size: 0.75rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-link:hover {
+            background: #4facfe;
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* Notification Items */
+        .notification-item {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notification-item:last-child {
+            border-bottom: none;
+        }
+
+        .notification-item:hover {
+            background: rgba(79, 172, 254, 0.1);
+            transform: translateX(5px);
+        }
+
+        .notification-item.unread {
+            background: rgba(79, 172, 254, 0.15);
+            border-left: 3px solid #4facfe;
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, rgba(79, 172, 254, 0.05), transparent);
+            pointer-events: none;
+        }
+
+        /* Notification Icon */
+        .notification-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: rgba(79, 172, 254, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .notification-icon i {
+            font-size: 1.2rem;
+            color: #4facfe;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+            color: white;
+        }
+
+        .notification-message {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-time {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Unread Badge */
+        .unread-badge {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4facfe;
+            margin-left: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(79, 172, 254, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 6px rgba(79, 172, 254, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(79, 172, 254, 0);
+            }
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(79, 172, 254, 0.2);
+            border-radius: 50%;
+            border-top-color: #4facfe;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Utility Classes */
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .align-items-start {
+            align-items: flex-start;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .me-2 {
+            margin-right: 0.5rem;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        .py-5 {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4facfe;
+            border-radius: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .notification-item {
+                padding: 1rem;
+            }
+            
+            .notification-icon {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .notification-title {
+                font-size: 0.9rem;
+            }
+            
+            .notification-message {
+                font-size: 0.75rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .btn-outline-primary {
+                padding: 8px 16px;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div>
         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h2>Notifications</h2>
-            <button class="btn btn-outline-primary" onclick="markAllRead()">
-                <i class="fas fa-check-double"></i> Mark All Read
+            <h2><i class="fas fa-bell me-2"></i> Notifications</h2>
+            <button class="btn-outline-primary" onclick="markAllRead()">
+                <i class="fas fa-check-double me-2"></i> Mark All Read
             </button>
         </div>
         
         <div class="dashboard-widget">
             <div id="notificationsList">
-                <div class="text-center py-5"><div class="spinner-border"></div> Loading...</div>
+                <div class="text-center py-5">
+                    <div class="loading-spinner"></div>
+                    <p class="mt-3 text-muted">Loading notifications...</p>
+                </div>
             </div>
         </div>
     </div>
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         async function loadNotifications() {
             try {
@@ -30,45 +324,167 @@
                 if (response.ok) {
                     const notifs = await response.json();
                     const container = document.getElementById('notificationsList');
+                    
                     if (notifs.length === 0) {
-                        container.innerHTML = '<div class="text-center py-5 text-muted">No notifications</div>';
+                        container.innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-bell-slash"></i>
+                                <p>No notifications yet</p>
+                                <small class="text-muted">When you receive notifications, they will appear here</small>
+                            </div>
+                        `;
                         return;
                     }
-                    container.innerHTML = notifs.map(notif => `
-                        <div class="notification-item p-3 border-bottom ${!notif.is_read ? 'bg-light' : ''}">
-                            <div class="d-flex justify-content-between align-items-start">
-                                <div>
-                                    <h6 class="mb-1">${notif.title}</h6>
-                                    <p class="mb-1">${notif.message}</p>
-                                    <small class="text-muted">${new Date(notif.created_at).toLocaleString()}</small>
+                    
+                    // Separate unread and read notifications
+                    const unreadNotifs = notifs.filter(n => !n.is_read);
+                    const readNotifs = notifs.filter(n => n.is_read);
+                    const allNotifs = [...unreadNotifs, ...readNotifs];
+                    
+                    container.innerHTML = allNotifs.map(notif => {
+                        // Determine icon based on notification type
+                        let icon = 'fa-bell';
+                        let iconColor = '#4facfe';
+                        
+                        if (notif.type === 'success') {
+                            icon = 'fa-check-circle';
+                            iconColor = '#48bb78';
+                        } else if (notif.type === 'warning') {
+                            icon = 'fa-exclamation-triangle';
+                            iconColor = '#ed8936';
+                        } else if (notif.type === 'danger') {
+                            icon = 'fa-times-circle';
+                            iconColor = '#f56565';
+                        } else if (notif.title.toLowerCase().includes('leave')) {
+                            icon = 'fa-calendar-alt';
+                        } else if (notif.title.toLowerCase().includes('task')) {
+                            icon = 'fa-tasks';
+                        } else if (notif.title.toLowerCase().includes('project')) {
+                            icon = 'fa-project-diagram';
+                        }
+                        
+                        return `
+                            <div class="notification-item ${!notif.is_read ? 'unread' : ''}">
+                                <div class="d-flex align-items-start">
+                                    <div class="notification-icon" style="background: rgba(${iconColor === '#4facfe' ? '79,172,254' : iconColor === '#48bb78' ? '72,187,120' : iconColor === '#ed8936' ? '237,137,54' : '245,101,101'}, 0.2);">
+                                        <i class="fas ${icon}" style="color: ${iconColor};"></i>
+                                    </div>
+                                    <div class="notification-content">
+                                        <div class="notification-title">
+                                            ${notif.title}
+                                            ${!notif.is_read ? '<span class="unread-badge"></span>' : ''}
+                                        </div>
+                                        <div class="notification-message">${notif.message}</div>
+                                        <div class="notification-time">
+                                            <i class="far fa-clock me-1"></i>${formatTime(notif.created_at)}
+                                        </div>
+                                    </div>
+                                    ${!notif.is_read ? `
+                                        <button class="btn-link ms-2" onclick="markRead('${notif.id}')">
+                                            <i class="fas fa-check me-1"></i> Mark Read
+                                        </button>
+                                    ` : ''}
                                 </div>
-                                ${!notif.is_read ? `<button class="btn btn-sm btn-link" onclick="markRead('${notif.id}')">Mark Read</button>` : ''}
                             </div>
-                        </div>
-                    `).join('');
+                        `;
+                    }).join('');
                 }
             } catch (error) {
                 console.error('Error loading notifications:', error);
+                document.getElementById('notificationsList').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle" style="color: #f56565;"></i>
+                        <p class="text-danger">Failed to load notifications</p>
+                        <small class="text-muted">Please check your connection</small>
+                    </div>
+                `;
             }
         }
         
+        function formatTime(dateString) {
+            const date = new Date(dateString);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffHours = Math.floor(diffMs / 3600000);
+            const diffDays = Math.floor(diffMs / 86400000);
+            
+            if (diffMins < 1) return 'Just now';
+            if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
+            if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+            if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
+            return date.toLocaleDateString();
+        }
+        
         async function markRead(id) {
-            await fetch(`http://localhost:8000/api/notifications/${id}/read`, {
-                method: 'PUT',
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-            });
-            loadNotifications();
+            try {
+                const response = await fetch(`http://localhost:8000/api/notifications/${id}/read`, {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    loadNotifications();
+                    showToast('Notification marked as read', 'success');
+                }
+            } catch (error) {
+                console.error('Error marking as read:', error);
+                showToast('Failed to mark as read', 'error');
+            }
         }
         
         async function markAllRead() {
-            await fetch('http://localhost:8000/api/notifications/read-all', {
-                method: 'PUT',
-                headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-            });
-            loadNotifications();
+            try {
+                const response = await fetch('http://localhost:8000/api/notifications/read-all', {
+                    method: 'PUT',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                if (response.ok) {
+                    loadNotifications();
+                    showToast('All notifications marked as read', 'success');
+                }
+            } catch (error) {
+                console.error('Error marking all as read:', error);
+                showToast('Failed to mark all as read', 'error');
+            }
         }
         
+        function showToast(message, type) {
+            const toastDiv = document.createElement('div');
+            toastDiv.className = 'position-fixed top-0 end-0 p-3';
+            toastDiv.style.zIndex = '9999';
+            toastDiv.innerHTML = `
+                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px; background: rgba(15,32,39,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(79,172,254,0.3); border-radius: 16px; color: white;">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toastDiv);
+            setTimeout(() => toastDiv.remove(), 3000);
+        }
+        
+        // Add toast styles if not exists
+        const style = document.createElement('style');
+        style.textContent = `
+            .toast-glass {
+                background: rgba(15, 32, 39, 0.95);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(79, 172, 254, 0.3);
+                border-radius: 16px;
+                color: white;
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Load notifications on page load
         loadNotifications();
+        
+        // Auto-refresh notifications every 30 seconds
+        setInterval(loadNotifications, 30000);
     </script>
 </body>
 </html>

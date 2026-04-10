@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard | SPMS</title>
+    <title>Employee Dashboard | Glass Theme</title>
     <style>
         /* Modern CSS Reset & Base Styles */
         * {
@@ -14,8 +14,8 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #1a202c;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
             line-height: 1.5;
             min-height: 100vh;
         }
@@ -37,12 +37,12 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #5a67d8, #6b46a0);
+            background: linear-gradient(135deg, #3a8fd6, #00d4e0);
         }
 
         /* Dashboard Container */
@@ -59,7 +59,7 @@
         .dashboard-header h2 {
             font-size: 2rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #fff, #e0e0e0);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -67,17 +67,17 @@
         }
 
         .dashboard-header p {
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 0.95rem;
         }
 
-        /* Widget Styles */
+        /* Widget Styles - Glass */
         .dashboard-widget {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
             border-radius: 24px;
             padding: 1.5rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -92,7 +92,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
             transition: left 0.5s;
         }
 
@@ -102,7 +102,7 @@
 
         .dashboard-widget:hover {
             transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         }
 
         /* Section Title */
@@ -113,19 +113,19 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: #2d3748;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            color: white;
+            border-bottom: 2px solid rgba(79, 172, 254, 0.3);
             padding-bottom: 10px;
         }
 
         .section-title i {
-            color: #667eea;
+            color: #4facfe;
         }
 
         /* Task Items */
         .task-item {
             padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
             gap: 12px;
@@ -133,7 +133,7 @@
         }
 
         .task-item:hover {
-            background: rgba(102, 126, 234, 0.05);
+            background: rgba(79, 172, 254, 0.1);
             border-radius: 12px;
             padding-left: 10px;
         }
@@ -146,15 +146,15 @@
             width: 20px;
             height: 20px;
             border-radius: 6px;
-            border: 2px solid #cbd5e0;
-            background: white;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.1);
             cursor: pointer;
             transition: all 0.2s;
         }
 
         .task-check:hover {
-            border-color: #667eea;
-            background: rgba(102, 126, 234, 0.1);
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.2);
         }
 
         /* Leave Status Badges */
@@ -164,14 +164,14 @@
             border-radius: 20px;
             font-weight: 500;
         }
-        .status-approved { background: linear-gradient(135deg, #48bb7820, #38a16920); color: #15803d; }
-        .status-pending { background: linear-gradient(135deg, #ed893620, #dd6b2020); color: #b45309; }
-        .status-rejected { background: linear-gradient(135deg, #f5656520, #dc262620); color: #dc2626; }
+        .status-approved { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
+        .status-pending { background: rgba(237, 137, 54, 0.2); color: #ed8936; }
+        .status-rejected { background: rgba(245, 101, 101, 0.2); color: #f56565; }
 
         /* Announcement Items */
         .announcement-item {
             padding: 12px 0;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             gap: 12px;
             align-items: flex-start;
@@ -179,7 +179,7 @@
         }
 
         .announcement-item:hover {
-            background: rgba(102, 126, 234, 0.05);
+            background: rgba(79, 172, 254, 0.1);
             border-radius: 12px;
             padding-left: 10px;
         }
@@ -190,7 +190,7 @@
         .attendance-time {
             font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -201,7 +201,7 @@
             border-radius: 30px;
             padding: 8px 20px;
             border: 1px solid rgba(255, 255, 255, 0.3);
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(5px);
             color: white;
             transition: all 0.3s;
@@ -209,79 +209,74 @@
         }
 
         .btn-outline-custom:hover {
-            background: white;
-            color: #667eea;
-            border-color: white;
+            background: rgba(79, 172, 254, 0.3);
+            border-color: #4facfe;
             transform: translateY(-2px);
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             border: none;
             padding: 6px 16px;
             border-radius: 20px;
             font-size: 0.85rem;
             font-weight: 500;
+            color: white;
             transition: all 0.3s;
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.9);
-            color: #4a5568;
-            border: 1px solid #e2e8f0;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
             padding: 6px 16px;
             border-radius: 20px;
             transition: all 0.3s;
         }
 
         .btn-secondary:hover {
-            background: white;
+            background: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
         }
 
         /* Table Styles */
         .table {
             margin-bottom: 0;
+            color: white;
         }
 
         .table-sm th {
             font-size: 0.75rem;
             font-weight: 600;
-            color: #718096;
+            color: #4facfe;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            border-bottom: 2px solid rgba(79, 172, 254, 0.3);
         }
 
         .table-sm td {
             font-size: 0.85rem;
             padding: 10px 8px;
             vertical-align: middle;
+            border-color: rgba(255, 255, 255, 0.1);
         }
 
         /* Links */
         .text-decoration-none {
-            color: #667eea;
+            color: #4facfe;
             font-weight: 500;
             transition: all 0.3s;
         }
 
         .text-decoration-none:hover {
-            color: #764ba2;
+            color: #00f2fe;
             transform: translateX(3px);
             display: inline-block;
-        }
-
-        /* Spinner */
-        .spinner-small {
-            width: 1.2rem;
-            height: 1.2rem;
-            border-width: 0.15em;
         }
 
         /* Loading State */
@@ -289,9 +284,9 @@
             display: inline-block;
             width: 40px;
             height: 40px;
-            border: 3px solid rgba(102, 126, 234, 0.2);
+            border: 3px solid rgba(79, 172, 254, 0.2);
             border-radius: 50%;
-            border-top-color: #667eea;
+            border-top-color: #4facfe;
             animation: spin 0.8s linear infinite;
         }
 
@@ -319,13 +314,21 @@
         }
 
         .alert-warning {
-            background: linear-gradient(135deg, #fef3c7, #fde68a);
-            color: #92400e;
+            background: rgba(237, 137, 54, 0.2);
+            color: #ed8936;
+            border: 1px solid rgba(237, 137, 54, 0.3);
         }
 
         .alert-danger {
-            background: linear-gradient(135deg, #fee2e2, #fecaca);
-            color: #991b1b;
+            background: rgba(245, 101, 101, 0.2);
+            color: #f56565;
+            border: 1px solid rgba(245, 101, 101, 0.3);
+        }
+
+        .alert-success {
+            background: rgba(72, 187, 120, 0.2);
+            color: #48bb78;
+            border: 1px solid rgba(72, 187, 120, 0.3);
         }
 
         /* Responsive Design */
@@ -359,6 +362,31 @@
             margin-left: -1rem;
         }
 
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .col-lg-7 {
+            flex: 0 0 auto;
+            width: 58.333%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+
+        .col-lg-5 {
+            flex: 0 0 auto;
+            width: 41.666%;
+            padding-right: 1rem;
+            padding-left: 1rem;
+        }
+
+        @media (max-width: 992px) {
+            .col-lg-7, .col-lg-5 {
+                width: 100%;
+            }
+        }
+
         /* Badge Styles */
         .badge {
             padding: 4px 10px;
@@ -372,42 +400,146 @@
         .bg-success { background: linear-gradient(135deg, #48bb78, #38a169); color: white; }
 
         /* Text Colors */
-        .text-primary { color: #667eea !important; }
+        .text-primary { color: #4facfe !important; }
         .text-warning { color: #ed8936 !important; }
         .text-danger { color: #f56565 !important; }
         .text-success { color: #48bb78 !important; }
         .text-info { color: #4299e1 !important; }
-        .text-muted { color: #718096 !important; }
+        .text-muted { color: rgba(255, 255, 255, 0.6) !important; }
 
-        /* Modal Styles */
+        /* Modal Styles - Glass */
         .modal-content {
+            background: rgba(15, 32, 39, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 24px;
-            border: none;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
+            color: white;
         }
 
         .modal-header {
-            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
             padding: 1.2rem 1.5rem;
         }
 
         .modal-footer {
-            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding: 1rem 1.5rem;
         }
 
+        .modal-title {
+            color: white;
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
         .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 12px;
-            border: 1px solid #e2e8f0;
             padding: 10px 15px;
+            color: white;
             transition: all 0.2s;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
             outline: none;
+            color: white;
+        }
+
+        .form-label {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 0.5rem;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Utility Classes */
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .flex-wrap {
+            flex-wrap: wrap;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .text-uppercase {
+            text-transform: uppercase;
+        }
+
+        .mb-0 {
+            margin-bottom: 0;
+        }
+
+        .mb-1 {
+            margin-bottom: 0.25rem;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+
+        .me-1 {
+            margin-right: 0.25rem;
+        }
+
+        .me-2 {
+            margin-right: 0.5rem;
+        }
+
+        .ms-1 {
+            margin-left: 0.25rem;
+        }
+
+        .ms-2 {
+            margin-left: 0.5rem;
+        }
+
+        .py-3 {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+        }
+
+        .gap-2 {
+            gap: 0.5rem;
+        }
+
+        .gap-3 {
+            gap: 1rem;
         }
 
         /* Hover Effects */
@@ -417,15 +549,7 @@
 
         .hover-lift:hover {
             transform: translateY(-4px);
-            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
-        }
-
-        /* Glass Effect for Cards */
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
@@ -482,7 +606,7 @@
                                 <p class="mt-2 text-muted">Loading...</p>
                             </td></tr>
                         </tbody>
-                     </table>
+                    </table>
                 </div>
             </div>
         </div>
@@ -491,10 +615,10 @@
         <div class="col-lg-5">
             <!-- Leave Balance Widget -->
             <div class="dashboard-widget hover-lift mb-4 text-center">
-                <div class="stat-icon" style="width: 60px; height: 60px; margin: 0 auto 15px; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 30px; display: flex; align-items: center; justify-content: center;">
+                <div class="stat-icon" style="width: 60px; height: 60px; margin: 0 auto 15px; background: rgba(79, 172, 254, 0.2); border-radius: 30px; display: flex; align-items: center; justify-content: center;">
                     <i class="fas fa-umbrella-beach fa-2x text-info"></i>
                 </div>
-                <h3 id="leaveBalanceValue" style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent;">--</h3>
+                <h3 id="leaveBalanceValue" style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #4facfe, #00f2fe); -webkit-background-clip: text; background-clip: text; color: transparent;">--</h3>
                 <p class="text-muted mb-0">Days Available</p>
             </div>
 
@@ -581,6 +705,7 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
 <script>
     const API_BASE = 'http://localhost:8000/api';
     let currentUser = null;
@@ -600,7 +725,6 @@
 
     async function loadDashboard() {
         try {
-            // Get user info from localStorage
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             document.getElementById('userNameDisplay').innerText = user.full_name || user.email?.split('@')[0] || 'Employee';
             currentUser = user;
@@ -740,7 +864,7 @@
         alertDiv.style.zIndex = '9999';
         alertDiv.style.minWidth = '300px';
         alertDiv.style.borderRadius = '16px';
-        alertDiv.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        alertDiv.style.boxShadow = '0 8px 20px rgba(0,0,0,0.2)';
         alertDiv.innerHTML = `
             <div class="d-flex align-items-center">
                 <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'} me-2"></i>

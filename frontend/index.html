@@ -3,88 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPMS - Login</title>
+    <title>SPMS Login | Glass Blue</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
         }
-        .login-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            padding: 40px;
+
+        /* Glassmorphism card */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             width: 100%;
             max-width: 450px;
-            animation: fadeInUp 0.6s ease;
+            transition: transform 0.3s;
         }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
         }
+
         .login-header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
         }
+
+        .login-header i {
+            font-size: 3rem;
+            color: #4facfe;
+            text-shadow: 0 0 10px rgba(79, 172, 254, 0.5);
+        }
+
         .login-header h2 {
-            color: #333;
+            color: white;
             font-weight: 600;
+            margin-top: 1rem;
         }
+
         .login-header p {
-            color: #666;
+            color: rgba(255, 255, 255, 0.7);
         }
-        .form-control {
-            border-radius: 10px;
-            padding: 12px 15px;
-            border: 1px solid #e0e0e0;
+
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            color: white;
+            padding: 12px 16px;
         }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.3);
+            color: white;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-label {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+        }
+
         .btn-login {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             border: none;
+            border-radius: 40px;
             padding: 12px;
-            border-radius: 10px;
             font-weight: 600;
             width: 100%;
             color: white;
+            transition: all 0.3s;
         }
+
         .btn-login:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
         }
+
         .role-badge {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 0.75rem;
             margin: 2px;
+        }
+
+        .text-muted-custom {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .alert-glass {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(8px);
+            border: none;
+            color: white;
+            border-radius: 16px;
         }
     </style>
 </head>
 <body>
-    <div class="login-card">
+    <div class="glass-card">
         <div class="login-header">
-            <i class="fas fa-users fa-3x" style="color: #667eea;"></i>
-            <h2 class="mt-3">SPMS Login</h2>
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h2>SPMS Login</h2>
             <p>Software Personnel Management System</p>
         </div>
-        
         <div id="alertBox"></div>
-        
         <form id="loginForm">
             <div class="mb-3">
-                <label class="form-label">Email Address</label>
+                <label class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" placeholder="admin@spms.com" required>
             </div>
             <div class="mb-3">
@@ -92,7 +142,7 @@
                 <input type="password" class="form-control" id="password" placeholder="••••••" required>
             </div>
             <div class="mb-3">
-                <label class="form-label">Select Role (Demo)</label>
+                <label class="form-label">Demo Role</label>
                 <select class="form-select" id="roleSelect">
                     <option value="admin">Admin</option>
                     <option value="manager">Manager</option>
@@ -100,60 +150,45 @@
                     <option value="hr">HR</option>
                     <option value="employee">Employee</option>
                 </select>
-                <small class="text-muted">Demo credentials: any email, password "password123"</small>
+                <small class="text-muted-custom">Demo: any email + password "password123"</small>
             </div>
             <button type="submit" class="btn btn-login mt-3">Login <i class="fas fa-arrow-right ms-2"></i></button>
         </form>
-        
         <div class="text-center mt-4">
-            <small class="text-muted">Demo Accounts:</small><br>
-            <span class="role-badge bg-primary text-white">admin@spms.com</span>
-            <span class="role-badge bg-success text-white">manager@spms.com</span>
-            <span class="role-badge bg-info text-white">hr@spms.com</span>
+            <small class="text-muted-custom">Demo accounts: admin@spms.com, manager@spms.com, hr@spms.com</small>
         </div>
     </div>
 
     <script>
         const API_BASE = 'http://localhost:8000/api';
-        
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const role = document.getElementById('roleSelect').value;
-            
             try {
-                const response = await fetch(`${API_BASE}/auth/login`, {
+                const res = await fetch(`${API_BASE}/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password, role })
                 });
-                
-                if (response.ok) {
-                    const data = await response.json();
+                if (res.ok) {
+                    const data = await res.json();
                     localStorage.setItem('token', data.access_token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     localStorage.setItem('role', data.user.role);
-                    
-                    // Redirect based on role
-                    if (data.user.role === 'admin') {
-                        window.location.href = 'admin-dashboard.html';
-                    } else {
-                        window.location.href = 'employee-dashboard.html';
-                    }
+                    window.location.href = data.user.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
                 } else {
-                    showAlert('Invalid credentials. Use any email with password "password123"', 'danger');
+                    showAlert('Invalid credentials. Use password: password123', 'danger');
                 }
-            } catch (error) {
-                console.error('Login error:', error);
-                showAlert('Backend not running? Start FastAPI server first.', 'danger');
+            } catch (err) {
+                showAlert('Backend not running? Start FastAPI server on port 8000', 'danger');
             }
         });
-        
-        function showAlert(message, type) {
-            const alertBox = document.getElementById('alertBox');
-            alertBox.innerHTML = `<div class="alert alert-${type} alert-dismissible fade show" role="alert">${message}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>`;
-            setTimeout(() => alertBox.innerHTML = '', 3000);
+        function showAlert(msg, type) {
+            const box = document.getElementById('alertBox');
+            box.innerHTML = `<div class="alert alert-glass alert-dismissible fade show" role="alert">${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>`;
+            setTimeout(() => box.innerHTML = '', 3000);
         }
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

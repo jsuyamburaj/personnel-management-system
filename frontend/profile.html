@@ -3,71 +3,354 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile</title>
+    <title>My Profile | Glass Theme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            line-height: 1.5;
+        }
+
+        /* Glass Widget */
+        .dashboard-widget {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        /* User Avatar */
+        .user-avatar-lg {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.3), rgba(0, 242, 254, 0.3));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid rgba(79, 172, 254, 0.5);
+            transition: all 0.3s;
+        }
+
+        .user-avatar-lg:hover {
+            transform: scale(1.05);
+            border-color: #4facfe;
+        }
+
+        .user-avatar-lg i {
+            font-size: 4rem;
+            color: #4facfe;
+        }
+
+        /* Form Controls */
+        .form-control {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            color: white;
+            padding: 12px 16px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+            color: white;
+            outline: none;
+        }
+
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-control[readonly] {
+            background: rgba(255, 255, 255, 0.08);
+            cursor: not-allowed;
+            opacity: 0.8;
+        }
+
+        label {
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border: none;
+            border-radius: 40px;
+            padding: 12px 28px;
+            font-weight: 600;
+            color: white;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        /* Grid System */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -0.75rem;
+            margin-left: -0.75rem;
+        }
+
+        .col-md-4 {
+            flex: 0 0 auto;
+            width: 33.333%;
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        .col-md-8 {
+            flex: 0 0 auto;
+            width: 66.666%;
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-4, .col-md-8 {
+                width: 100%;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        .mb-2 {
+            margin-bottom: 0.5rem;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mt-3 {
+            margin-top: 1rem;
+        }
+
+        .mx-auto {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Role Badge */
+        .role-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            background: rgba(79, 172, 254, 0.2);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #4facfe;
+            margin-top: 0.5rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4facfe;
+            border-radius: 10px;
+        }
+
+        /* Toast Notification */
+        .toast-glass {
+            background: rgba(15, 32, 39, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 16px;
+            color: white;
+        }
+
+        /* Divider */
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(79, 172, 254, 0.5), transparent);
+            margin: 1rem 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-widget {
+                padding: 1rem;
+            }
+            
+            .user-avatar-lg {
+                width: 80px;
+                height: 80px;
+            }
+            
+            .user-avatar-lg i {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            .btn-primary {
+                width: 100%;
+            }
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-widget {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
 </head>
 <body>
     <div>
-        <h2 class="mb-4">My Profile</h2>
+        <h2><i class="fas fa-user-circle me-2"></i> My Profile</h2>
         
         <div class="row">
             <div class="col-md-4">
                 <div class="dashboard-widget text-center">
-                    <div class="user-avatar-lg mx-auto mb-3" style="width: 100px; height: 100px; font-size: 48px; line-height: 100px;">
-                        <i class="fas fa-user-circle fa-4x text-primary"></i>
+                    <div class="user-avatar-lg mx-auto mb-3">
+                        <i class="fas fa-user-circle"></i>
                     </div>
                     <h4 id="profileName">Loading...</h4>
-                    <p class="text-muted" id="profileRole"></p>
+                    <div class="role-badge" id="profileRole"></div>
+                    <div class="divider"></div>
+                    <div class="text-muted">
+                        <small><i class="fas fa-calendar-alt me-1"></i> Member since 2024</small>
+                    </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="dashboard-widget">
+                    <h5 class="mb-3"><i class="fas fa-edit me-2"></i> Edit Profile</h5>
                     <form id="profileForm">
                         <div class="mb-3">
-                            <label>Full Name</label>
-                            <input type="text" class="form-control" id="fullName" required>
+                            <label><i class="fas fa-user me-2"></i> Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required placeholder="Enter your full name">
                         </div>
                         <div class="mb-3">
-                            <label>Email</label>
-                            <input type="email" class="form-control" id="email" readonly>
+                            <label><i class="fas fa-envelope me-2"></i> Email Address</label>
+                            <input type="email" class="form-control" id="email" readonly placeholder="Email cannot be changed">
                         </div>
                         <div class="mb-3">
-                            <label>Department</label>
-                            <input type="text" class="form-control" id="department">
+                            <label><i class="fas fa-building me-2"></i> Department</label>
+                            <input type="text" class="form-control" id="department" readonly placeholder="Department">
                         </div>
                         <div class="mb-3">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" id="phone">
+                            <label><i class="fas fa-phone me-2"></i> Phone Number</label>
+                            <input type="text" class="form-control" id="phone" placeholder="+1 234 567 8900">
                         </div>
                         <div class="mb-3">
-                            <label>Skills (comma separated)</label>
-                            <input type="text" class="form-control" id="skills">
+                            <label><i class="fas fa-code me-2"></i> Skills (comma separated)</label>
+                            <input type="text" class="form-control" id="skills" placeholder="React, Python, MongoDB, AWS">
                         </div>
-                        <button type="button" class="btn btn-primary" onclick="updateProfile()">Update Profile</button>
+                        <button type="button" class="btn-primary" onclick="updateProfile()">
+                            <i class="fas fa-save me-2"></i> Update Profile
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         async function loadProfile() {
             const user = JSON.parse(localStorage.getItem('user') || '{}');
-            document.getElementById('profileName').innerText = user.full_name || user.email;
-            document.getElementById('profileRole').innerText = user.role || 'Employee';
+            const userName = user.full_name || user.email?.split('@')[0] || 'Employee';
+            document.getElementById('profileName').innerText = userName;
+            
+            const roleText = user.role || 'Employee';
+            const roleDisplay = roleText.charAt(0).toUpperCase() + roleText.slice(1);
+            document.getElementById('profileRole').innerHTML = `<i class="fas fa-briefcase me-1"></i>${roleDisplay}`;
+            
             document.getElementById('fullName').value = user.full_name || '';
             document.getElementById('email').value = user.email || '';
-            document.getElementById('department').value = user.department || '';
+            document.getElementById('department').value = user.department || 'Not specified';
             
             // Load additional employee details
             try {
                 const response = await fetch('http://localhost:8000/api/employees/', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                 });
-                const employees = await response.json();
-                const myData = employees.find(e => e.email === user.email);
-                if (myData) {
-                    document.getElementById('phone').value = myData.phone || '';
-                    document.getElementById('skills').value = myData.skills?.join(', ') || '';
+                if (response.ok) {
+                    const employees = await response.json();
+                    const myData = employees.find(e => e.email === user.email);
+                    if (myData) {
+                        document.getElementById('phone').value = myData.phone || '';
+                        const skillsValue = Array.isArray(myData.skills) ? myData.skills.join(', ') : (myData.skills || '');
+                        document.getElementById('skills').value = skillsValue;
+                        if (myData.department) {
+                            document.getElementById('department').value = myData.department;
+                        }
+                    }
                 }
             } catch (error) {
                 console.error('Error loading profile details:', error);
@@ -75,11 +358,23 @@
         }
         
         async function updateProfile() {
+            const fullName = document.getElementById('fullName').value.trim();
+            if (!fullName) {
+                showNotification('Please enter your full name', 'error');
+                return;
+            }
+            
             const data = {
-                full_name: document.getElementById('fullName').value,
+                full_name: fullName,
                 phone: document.getElementById('phone').value,
                 skills: document.getElementById('skills').value
             };
+            
+            // Show loading state on button
+            const btn = event.target;
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Updating...';
+            btn.disabled = true;
             
             try {
                 const response = await fetch('http://localhost:8000/api/employees/update-profile', {
@@ -99,13 +394,54 @@
                     localStorage.setItem('user', JSON.stringify(user));
                     document.getElementById('profileName').innerText = data.full_name;
                 } else {
-                    showNotification('Update failed', 'error');
+                    const error = await response.json();
+                    showNotification(error.detail || 'Update failed', 'error');
                 }
             } catch (error) {
-                showNotification('Error updating profile', 'error');
+                console.error('Error updating profile:', error);
+                showNotification('Error updating profile. Please try again.', 'error');
+            } finally {
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         }
         
+        function showNotification(message, type) {
+            const toastDiv = document.createElement('div');
+            toastDiv.className = 'position-fixed top-0 end-0 p-3';
+            toastDiv.style.zIndex = '9999';
+            toastDiv.innerHTML = `
+                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px;">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toastDiv);
+            setTimeout(() => toastDiv.remove(), 3000);
+        }
+        
+        // Add toast styles if not exists
+        if (!document.querySelector('#toast-styles')) {
+            const style = document.createElement('style');
+            style.id = 'toast-styles';
+            style.textContent = `
+                .toast-glass {
+                    background: rgba(15, 32, 39, 0.95);
+                    backdrop-filter: blur(12px);
+                    border: 1px solid rgba(79, 172, 254, 0.3);
+                    border-radius: 16px;
+                    color: white;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Load profile on page load
         loadProfile();
     </script>
 </body>

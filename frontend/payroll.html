@@ -3,19 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payroll Management</title>
+    <title>Payroll Management | Glass Theme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: transparent;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            line-height: 1.5;
+        }
+
+        /* Glass Widget */
+        .dashboard-widget {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .dashboard-widget:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        }
+
+        h2 {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        h3 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        h5 {
+            color: white;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        /* Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        .table {
+            width: 100%;
+            color: white;
+            border-collapse: collapse;
+        }
+
+        .table thead th {
+            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #4facfe;
+        }
+
+        .table tbody td {
+            padding: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            vertical-align: middle;
+        }
+
+        .table tbody tr:hover {
+            background: rgba(79, 172, 254, 0.1);
+        }
+
+        /* Badge Styles */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .bg-success {
+            background: rgba(72, 187, 120, 0.3);
+            color: #48bb78;
+        }
+
+        .bg-warning {
+            background: rgba(237, 137, 54, 0.3);
+            color: #ed8936;
+        }
+
+        /* Grid System */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-right: -0.75rem;
+            margin-left: -0.75rem;
+        }
+
+        .col-md-6 {
+            flex: 0 0 auto;
+            width: 50%;
+            padding-right: 0.75rem;
+            padding-left: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .col-md-6 {
+                width: 100%;
+            }
+        }
+
+        /* Utility Classes */
+        .d-flex {
+            display: flex;
+        }
+
+        .justify-content-between {
+            justify-content: space-between;
+        }
+
+        .align-items-center {
+            align-items: center;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mb-3 {
+            margin-bottom: 1rem;
+        }
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
+        }
+
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
+        .me-2 {
+            margin-right: 0.5rem;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        /* Salary Card Specific */
+        .salary-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .salary-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(79, 172, 254, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .salary-amount {
+            position: relative;
+            z-index: 1;
+        }
+
+        .salary-label {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(79, 172, 254, 0.2);
+            border-radius: 50%;
+            border-top-color: #4facfe;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4facfe;
+            border-radius: 10px;
+        }
+
+        /* Amount Highlight */
+        .amount-highlight {
+            font-weight: 700;
+            color: #4facfe;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard-widget {
+                padding: 1rem;
+            }
+            
+            h3 {
+                font-size: 1.8rem;
+            }
+            
+            .table thead th,
+            .table tbody td {
+                padding: 8px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
     <div>
-        <h2 class="mb-4">Payroll</h2>
+        <h2><i class="fas fa-money-bill-wave me-2"></i> Payroll Management</h2>
         
         <!-- Salary Summary Card -->
         <div class="row mb-4">
             <div class="col-md-6">
-                <div class="dashboard-widget">
-                    <h5>Current Month Salary</h5>
-                    <div id="currentSalary">
-                        <div class="spinner-border"></div>
+                <div class="dashboard-widget salary-card">
+                    <div class="salary-label">
+                        <h5><i class="fas fa-calendar-alt me-2"></i> Current Month Salary</h5>
+                    </div>
+                    <div id="currentSalary" class="salary-amount">
+                        <div class="d-flex justify-content-center">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <p class="mt-2 text-muted">Loading salary data...</p>
                     </div>
                 </div>
             </div>
@@ -23,61 +289,222 @@
         
         <!-- Payroll History -->
         <div class="dashboard-widget">
-            <h5 class="mb-3">Payroll History</h5>
+            <h5 class="mb-3"><i class="fas fa-history me-2"></i> Payroll History</h5>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
-                        <tr><th>Month</th><th>Basic Salary</th><th>Allowances</th><th>Deductions</th><th>Net Salary</th><th>Status</th></tr>
+                        <tr>
+                            <th><i class="fas fa-calendar-alt me-1"></i> Month</th>
+                            <th><i class="fas fa-dollar-sign me-1"></i> Basic Salary</th>
+                            <th><i class="fas fa-plus-circle me-1"></i> Allowances</th>
+                            <th><i class="fas fa-minus-circle me-1"></i> Deductions</th>
+                            <th><i class="fas fa-chart-line me-1"></i> Net Salary</th>
+                            <th><i class="fas fa-tag me-1"></i> Status</th>
+                        </tr>
                     </thead>
                     <tbody id="payrollHistory">
-                        <tr><td colspan="6" class="text-center">Loading...</td></tr>
+                        <tr>
+                            <td colspan="6" class="text-center">
+                                <div class="loading-spinner"></div>
+                                <p class="mt-2">Loading payroll records...</p>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         async function loadMyPayroll() {
             try {
                 const response = await fetch('http://localhost:8000/api/payroll/my-payroll', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                 });
+                
                 if (response.ok) {
                     const payrolls = await response.json();
                     const tbody = document.getElementById('payrollHistory');
                     
                     if (payrolls.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="6" class="text-center">No payroll records found</td></tr>';
-                        document.getElementById('currentSalary').innerHTML = '<p class="text-muted">No salary data available</p>';
+                        tbody.innerHTML = `
+                            <tr>
+                                <td colspan="6" class="text-center">
+                                    <div class="empty-state">
+                                        <i class="fas fa-receipt"></i>
+                                        <p>No payroll records found</p>
+                                        <small class="text-muted">Payroll data will appear here once processed</small>
+                                    </div>
+                                </td>
+                            </tr>
+                        `;
+                        document.getElementById('currentSalary').innerHTML = `
+                            <div class="empty-state">
+                                <i class="fas fa-dollar-sign"></i>
+                                <p>No salary data available</p>
+                                <small class="text-muted">Your current month salary will appear here</small>
+                            </div>
+                        `;
                         return;
                     }
                     
                     // Show current month (first record)
                     const latest = payrolls[0];
+                    const formattedNetSalary = formatCurrency(latest.net_salary || 0);
+                    const formattedBasic = formatCurrency(latest.basic_salary || 0);
+                    
                     document.getElementById('currentSalary').innerHTML = `
-                        <h3>$${latest.net_salary?.toLocaleString() || 0}</h3>
-                        <small class="text-muted">${latest.month}</small>
+                        <div class="salary-amount">
+                            <h3>${formattedNetSalary}</h3>
+                            <small class="text-muted">
+                                <i class="fas fa-calendar-week me-1"></i>${latest.month}
+                            </small>
+                            <div class="mt-3">
+                                <small class="text-muted">
+                                    <i class="fas fa-chart-line me-1"></i>
+                                    Basic: ${formatCurrency(latest.basic_salary || 0)}
+                                </small>
+                            </div>
+                        </div>
                     `;
                     
-                    tbody.innerHTML = payrolls.map(p => `
-                        <tr>
-                            <td>${p.month}</td>
-                            <td>$${p.basic_salary?.toLocaleString() || 0}</td>
-                            <td>$${p.allowances?.toLocaleString() || 0}</td>
-                            <td>$${p.deductions?.toLocaleString() || 0}</td>
-                            <td><strong>$${p.net_salary?.toLocaleString() || 0}</strong></td>
-                            <td><span class="badge bg-${p.status === 'Paid' ? 'success' : 'warning'}">${p.status}</span></td>
-                         </tr>
-                    `).join('');
+                    // Animate the salary number
+                    animateValue('currentSalaryAmount', 0, latest.net_salary || 0, 1000);
+                    
+                    tbody.innerHTML = payrolls.map(p => {
+                        let statusIcon = '';
+                        let statusClass = '';
+                        if (p.status === 'Paid') {
+                            statusIcon = 'fa-check-circle';
+                            statusClass = 'bg-success';
+                        } else if (p.status === 'Processed') {
+                            statusIcon = 'fa-spinner';
+                            statusClass = 'bg-warning';
+                        } else {
+                            statusIcon = 'fa-clock';
+                            statusClass = 'bg-warning';
+                        }
+                        
+                        return `
+                            <tr>
+                                <td>
+                                    <i class="fas fa-calendar-alt me-1" style="color: #4facfe;"></i>
+                                    ${p.month}
+                                </td>
+                                <td>
+                                    <span class="amount-highlight">${formatCurrency(p.basic_salary || 0)}</span>
+                                </td>
+                                <td>${formatCurrency(p.allowances || 0)}</td>
+                                <td>${formatCurrency(p.deductions || 0)}</td>
+                                <td>
+                                    <strong style="color: #4facfe;">${formatCurrency(p.net_salary || 0)}</strong>
+                                </td>
+                                <td>
+                                    <span class="badge ${statusClass}">
+                                        <i class="fas ${statusIcon} me-1"></i>${p.status}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                    }).join('');
+                } else {
+                    throw new Error('Failed to fetch payroll data');
                 }
             } catch (error) {
                 console.error('Error loading payroll:', error);
-                document.getElementById('payrollHistory').innerHTML = '<tr><td colspan="6" class="text-danger">Failed to load payroll data</td></tr>';
+                document.getElementById('payrollHistory').innerHTML = `
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            <div class="empty-state">
+                                <i class="fas fa-exclamation-triangle" style="color: #f56565;"></i>
+                                <p class="text-danger">Failed to load payroll data</p>
+                                <small class="text-muted">Please check your connection and try again</small>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                document.getElementById('currentSalary').innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-exclamation-triangle" style="color: #f56565;"></i>
+                        <p class="text-danger">Unable to load salary data</p>
+                        <small class="text-muted">Please try again later</small>
+                    </div>
+                `;
             }
         }
         
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            }).format(amount);
+        }
+        
+        function animateValue(elementId, start, end, duration) {
+            // This is a placeholder - the actual salary display doesn't have a specific element ID
+            // We'll animate the text content of the h3 element
+            const h3Element = document.querySelector('#currentSalary h3');
+            if (!h3Element) return;
+            
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    h3Element.innerText = formatCurrency(end);
+                    clearInterval(timer);
+                } else {
+                    h3Element.innerText = formatCurrency(Math.round(current));
+                }
+            }, 16);
+        }
+        
+        // Helper function to show toast notifications (optional)
+        function showNotification(message, type) {
+            const toastDiv = document.createElement('div');
+            toastDiv.className = 'position-fixed top-0 end-0 p-3';
+            toastDiv.style.zIndex = '9999';
+            toastDiv.innerHTML = `
+                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px; background: rgba(15,32,39,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(79,172,254,0.3); border-radius: 16px; color: white;">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
+                            ${message}
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(toastDiv);
+            setTimeout(() => toastDiv.remove(), 3000);
+        }
+        
+        // Add toast styles if not exists
+        if (!document.querySelector('#toast-styles')) {
+            const style = document.createElement('style');
+            style.id = 'toast-styles';
+            style.textContent = `
+                .toast-glass {
+                    background: rgba(15, 32, 39, 0.95);
+                    backdrop-filter: blur(12px);
+                    border: 1px solid rgba(79, 172, 254, 0.3);
+                    border-radius: 16px;
+                    color: white;
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // Load payroll data on page load
         loadMyPayroll();
+        
+        // Auto-refresh every 60 seconds
+        setInterval(loadMyPayroll, 60000);
     </script>
 </body>
 </html>
