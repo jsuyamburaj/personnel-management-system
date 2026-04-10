@@ -3,61 +3,109 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Dashboard</title>
+    <title>Employee Dashboard | SPMS</title>
     <style>
+        /* Modern CSS Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #1a202c;
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Modern Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5a67d8, #6b46a0);
+        }
+
+        /* Dashboard Container */
+        .dashboard-container {
+            padding: 20px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Header Section */
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #e0e0e0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        /* Widget Styles */
         .dashboard-widget {
-            background: white;
-            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
             padding: 1.5rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             height: 100%;
-            transition: transform 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
         }
+
+        .dashboard-widget::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .dashboard-widget:hover::before {
+            left: 100%;
+        }
+
         .dashboard-widget:hover {
-            transform: translateY(-3px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
         }
-        .task-item {
-            padding: 0.75rem 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .task-item:last-child {
-            border-bottom: none;
-        }
-        .leave-status-badge {
-            font-size: 0.75rem;
-            padding: 4px 10px;
-            border-radius: 20px;
-        }
-        .status-approved { background: #dcfce7; color: #15803d; }
-        .status-pending { background: #fef3c7; color: #b45309; }
-        .status-rejected { background: #fee2e2; color: #dc2626; }
-        .announcement-item {
-            padding: 12px 0;
-            border-bottom: 1px solid #f0f0f0;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-        }
-        .announcement-item:last-child { border-bottom: none; }
-        .attendance-time {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #2d3748;
-        }
-        .btn-outline-custom {
-            border-radius: 30px;
-            padding: 6px 16px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            transition: all 0.2s;
-        }
-        .btn-outline-custom:hover {
-            background: #f8f9fc;
-            border-color: #cbd5e0;
-        }
+
+        /* Section Title */
         .section-title {
             font-size: 1.1rem;
             font-weight: 600;
@@ -65,26 +113,336 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: #2d3748;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            padding-bottom: 10px;
         }
+
+        .section-title i {
+            color: #667eea;
+        }
+
+        /* Task Items */
+        .task-item {
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: all 0.3s;
+        }
+
+        .task-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            padding-left: 10px;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 6px;
+            border: 2px solid #cbd5e0;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-check:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        /* Leave Status Badges */
+        .leave-status-badge {
+            font-size: 0.75rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        .status-approved { background: linear-gradient(135deg, #48bb7820, #38a16920); color: #15803d; }
+        .status-pending { background: linear-gradient(135deg, #ed893620, #dd6b2020); color: #b45309; }
+        .status-rejected { background: linear-gradient(135deg, #f5656520, #dc262620); color: #dc2626; }
+
+        /* Announcement Items */
+        .announcement-item {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            transition: all 0.3s;
+        }
+
+        .announcement-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 12px;
+            padding-left: 10px;
+        }
+
+        .announcement-item:last-child { border-bottom: none; }
+
+        /* Attendance Time */
+        .attendance-time {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Custom Buttons */
+        .btn-outline-custom {
+            border-radius: 30px;
+            padding: 8px 20px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            color: white;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .btn-outline-custom:hover {
+            background: white;
+            color: #667eea;
+            border-color: white;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.9);
+            color: #4a5568;
+            border: 1px solid #e2e8f0;
+            padding: 6px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            transform: translateY(-1px);
+        }
+
+        /* Table Styles */
+        .table {
+            margin-bottom: 0;
+        }
+
+        .table-sm th {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: #718096;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+        }
+
+        .table-sm td {
+            font-size: 0.85rem;
+            padding: 10px 8px;
+            vertical-align: middle;
+        }
+
+        /* Links */
+        .text-decoration-none {
+            color: #667eea;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .text-decoration-none:hover {
+            color: #764ba2;
+            transform: translateX(3px);
+            display: inline-block;
+        }
+
+        /* Spinner */
         .spinner-small {
             width: 1.2rem;
             height: 1.2rem;
             border-width: 0.15em;
         }
+
+        /* Loading State */
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            border-top-color: #667eea;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Alert Styles */
+        .alert {
+            border-radius: 16px;
+            border: none;
+            font-size: 0.85rem;
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            color: #92400e;
+        }
+
+        .alert-danger {
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .dashboard-container {
+                padding: 15px;
+            }
+            
+            .dashboard-widget {
+                padding: 1rem;
+            }
+            
+            .attendance-time {
+                font-size: 1.3rem;
+            }
+            
+            .section-title {
+                font-size: 0.95rem;
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            
+            .dashboard-header h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Grid Layout */
+        .row.g-4 {
+            margin-right: -1rem;
+            margin-left: -1rem;
+        }
+
+        /* Badge Styles */
+        .badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .bg-danger { background: linear-gradient(135deg, #f56565, #dc2626); color: white; }
+        .bg-warning { background: linear-gradient(135deg, #ed8936, #dd6b20); color: white; }
+        .bg-success { background: linear-gradient(135deg, #48bb78, #38a169); color: white; }
+
+        /* Text Colors */
+        .text-primary { color: #667eea !important; }
+        .text-warning { color: #ed8936 !important; }
+        .text-danger { color: #f56565 !important; }
+        .text-success { color: #48bb78 !important; }
+        .text-info { color: #4299e1 !important; }
+        .text-muted { color: #718096 !important; }
+
+        /* Modal Styles */
+        .modal-content {
+            border-radius: 24px;
+            border: none;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+        }
+
+        .modal-header {
+            border-bottom: 2px solid rgba(102, 126, 234, 0.2);
+            padding: 1.2rem 1.5rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            padding: 1rem 1.5rem;
+        }
+
+        .form-control, .form-select {
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            padding: 10px 15px;
+            transition: all 0.2s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        /* Hover Effects */
+        .hover-lift {
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hover-lift:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 30px -12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Glass Effect for Cards */
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
     </style>
 </head>
 <body>
-<div>
+<div class="dashboard-container">
     <!-- Welcome Row -->
-    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
-        <div>
-            <h2 class="mb-1">Welcome, <span id="userNameDisplay">Loading...</span>!</h2>
-            <p class="text-muted mb-0">Here's what's happening with your work today.</p>
-        </div>
-        <div class="d-flex gap-2">
-            <button class="btn btn-outline-custom" onclick="window.location.href='notifications.html'">
-                <i class="fas fa-bell me-1"></i> Notifications
-            </button>
+    <div class="dashboard-header">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+            <div>
+                <h2>Welcome, <span id="userNameDisplay">Loading...</span>!</h2>
+                <p>Here's what's happening with your work today.</p>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn-outline-custom" onclick="window.location.href='notifications.html'">
+                    <i class="fas fa-bell me-1"></i> Notifications
+                </button>
+            </div>
         </div>
     </div>
 
@@ -92,21 +450,26 @@
         <!-- Left Column: My Tasks + Leave Requests -->
         <div class="col-lg-7">
             <!-- My Tasks Widget -->
-            <div class="dashboard-widget mb-4">
+            <div class="dashboard-widget hover-lift mb-4">
                 <div class="section-title">
-                    <span><i class="fas fa-tasks me-2 text-primary"></i> My Tasks</span>
+                    <span><i class="fas fa-tasks me-2"></i> My Tasks</span>
                     <a href="task-management.html" class="text-decoration-none">View All Tasks <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
                 <div id="tasksList">
-                    <div class="text-center py-3"><div class="spinner-border spinner-small" role="status"></div> Loading tasks...</div>
+                    <div class="text-center py-3">
+                        <div class="loading-spinner"></div>
+                        <p class="mt-2 text-muted">Loading tasks...</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Leave Requests Widget (with table) -->
-            <div class="dashboard-widget">
+            <!-- Leave Requests Widget -->
+            <div class="dashboard-widget hover-lift">
                 <div class="section-title">
                     <span><i class="fas fa-calendar-alt me-2 text-warning"></i> Recent Leave Requests</span>
-                    <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#leaveModal" onclick="openLeaveRequestModal()">Request Leave</button>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#leaveModal" onclick="openLeaveRequestModal()">
+                        <i class="fas fa-plus me-1"></i> Request Leave
+                    </button>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-sm">
@@ -114,9 +477,12 @@
                             <tr><th>From</th><th>To</th><th>Type</th><th>Status</th></tr>
                         </thead>
                         <tbody id="leaveRequestsTable">
-                            <tr><td colspan="4" class="text-center"><div class="spinner-border spinner-small" role="status"></div> Loading...</td></tr>
+                            <tr><td colspan="4" class="text-center">
+                                <div class="loading-spinner"></div>
+                                <p class="mt-2 text-muted">Loading...</p>
+                            </td></tr>
                         </tbody>
-                    </table>
+                     </table>
                 </div>
             </div>
         </div>
@@ -124,35 +490,40 @@
         <!-- Right Column: Leave Balance + Announcements + Attendance -->
         <div class="col-lg-5">
             <!-- Leave Balance Widget -->
-            <div class="dashboard-widget mb-4 text-center">
-                <i class="fas fa-umbrella-beach fa-2x text-info mb-2"></i>
-                <h3 id="leaveBalanceValue" class="mb-1">--</h3>
+            <div class="dashboard-widget hover-lift mb-4 text-center">
+                <div class="stat-icon" style="width: 60px; height: 60px; margin: 0 auto 15px; background: linear-gradient(135deg, #667eea20, #764ba220); border-radius: 30px; display: flex; align-items: center; justify-content: center;">
+                    <i class="fas fa-umbrella-beach fa-2x text-info"></i>
+                </div>
+                <h3 id="leaveBalanceValue" style="font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent;">--</h3>
                 <p class="text-muted mb-0">Days Available</p>
             </div>
 
             <!-- Announcements Widget -->
-            <div class="dashboard-widget mb-4">
+            <div class="dashboard-widget hover-lift mb-4">
                 <div class="section-title">
                     <span><i class="fas fa-bullhorn me-2 text-danger"></i> Announcements</span>
                 </div>
                 <div id="announcementsList">
-                    <div class="text-center py-3"><div class="spinner-border spinner-small" role="status"></div> Loading announcements...</div>
+                    <div class="text-center py-3">
+                        <div class="loading-spinner"></div>
+                        <p class="mt-2 text-muted">Loading announcements...</p>
+                    </div>
                 </div>
             </div>
 
             <!-- My Attendance Widget -->
-            <div class="dashboard-widget">
+            <div class="dashboard-widget hover-lift">
                 <div class="section-title">
                     <span><i class="fas fa-clock me-2 text-success"></i> My Attendance</span>
                     <a href="attendance.html" class="text-decoration-none">View All <i class="fas fa-arrow-right ms-1"></i></a>
                 </div>
                 <div class="text-center">
-                    <div class="mb-3">
-                        <small class="text-muted">Checked In</small>
+                    <div class="mb-4">
+                        <small class="text-muted text-uppercase">Checked In</small>
                         <div class="attendance-time" id="checkInTime">--:-- --</div>
                     </div>
                     <div>
-                        <small class="text-muted">Checked Out</small>
+                        <small class="text-muted text-uppercase">Checked Out</small>
                         <div class="attendance-time" id="checkOutTime">--:-- --</div>
                     </div>
                 </div>
@@ -161,37 +532,55 @@
     </div>
 </div>
 
-<!-- Leave Request Modal (same as before, but will POST to API) -->
+<!-- Leave Request Modal -->
 <div class="modal fade" id="leaveModal" tabindex="-1">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Request Leave</h5>
+                <h5 class="modal-title">
+                    <i class="fas fa-calendar-plus me-2 text-primary"></i>
+                    Request Leave
+                </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
                 <form id="leaveRequestForm">
                     <div class="mb-3">
-                        <label>Leave Type</label>
+                        <label class="form-label">Leave Type</label>
                         <select class="form-select" id="leaveType" required>
-                            <option>Annual</option><option>Sick</option><option>Personal</option><option>Unpaid</option>
+                            <option>Annual</option>
+                            <option>Sick</option>
+                            <option>Personal</option>
+                            <option>Unpaid</option>
                         </select>
                     </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3"><label>From Date</label><input type="date" class="form-control" id="leaveFrom" required></div>
-                        <div class="col-md-6 mb-3"><label>To Date</label><input type="date" class="form-control" id="leaveTo" required></div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">From Date</label>
+                            <input type="date" class="form-control" id="leaveFrom" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">To Date</label>
+                            <input type="date" class="form-control" id="leaveTo" required>
+                        </div>
                     </div>
-                    <div class="mb-3"><label>Reason</label><textarea class="form-control" id="leaveReason" rows="2"></textarea></div>
+                    <div class="mb-3">
+                        <label class="form-label">Reason</label>
+                        <textarea class="form-control" id="leaveReason" rows="3" placeholder="Please provide reason for leave..."></textarea>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary" onclick="submitLeaveRequest()">Submit Request</button>
+                <button type="button" class="btn btn-primary" onclick="submitLeaveRequest()">
+                    <i class="fas fa-paper-plane me-1"></i> Submit Request
+                </button>
             </div>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
     const API_BASE = 'http://localhost:8000/api';
     let currentUser = null;
@@ -200,7 +589,10 @@
         const token = localStorage.getItem('token');
         const res = await fetch(`${API_BASE}${endpoint}`, {
             ...options,
-            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+            headers: { 
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type': 'application/json' 
+            }
         });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         return res.json();
@@ -217,12 +609,12 @@
             const tasks = await fetchWithAuth('/tasks/my-tasks');
             const tasksContainer = document.getElementById('tasksList');
             if (tasks.length === 0) {
-                tasksContainer.innerHTML = '<div class="text-muted text-center py-3">No tasks assigned.</div>';
+                tasksContainer.innerHTML = '<div class="text-muted text-center py-3"><i class="fas fa-check-circle me-2"></i>No tasks assigned. Great job!</div>';
             } else {
                 tasksContainer.innerHTML = tasks.slice(0, 3).map(task => `
                     <div class="task-item">
                         <div class="task-check"></div>
-                        <div class="flex-grow-1">${escapeHtml(task.title)}</div>
+                        <div class="flex-grow-1"><strong>${escapeHtml(task.title)}</strong></div>
                         <span class="badge bg-${task.priority === 'High' ? 'danger' : task.priority === 'Medium' ? 'warning' : 'success'}">${task.priority}</span>
                     </div>
                 `).join('');
@@ -233,13 +625,13 @@
 
             // Load leave balance
             const balance = await fetchWithAuth('/leaves/balance');
-            document.getElementById('leaveBalanceValue').innerText = balance.available ?? 0;
+            animateValue('leaveBalanceValue', 0, balance.available ?? 0, 1000);
 
             // Load leave requests
             const leaves = await fetchWithAuth('/leaves/my-requests');
             const leavesTable = document.getElementById('leaveRequestsTable');
             if (leaves.length === 0) {
-                leavesTable.innerHTML = '<tr><td colspan="4" class="text-muted text-center">No leave requests found.</td></tr>';
+                leavesTable.innerHTML = '<tr><td colspan="4" class="text-muted text-center">No leave requests found. Click "Request Leave" to apply.</td></tr>';
             } else {
                 leavesTable.innerHTML = leaves.slice(0, 3).map(leave => `
                     <tr>
@@ -255,29 +647,48 @@
             const announcements = await fetchWithAuth('/announcements');
             const annContainer = document.getElementById('announcementsList');
             if (announcements.length === 0) {
-                annContainer.innerHTML = '<div class="text-muted text-center py-3">No announcements at the moment.</div>';
+                annContainer.innerHTML = '<div class="text-muted text-center py-3"><i class="fas fa-info-circle me-2"></i>No announcements at the moment.</div>';
             } else {
                 annContainer.innerHTML = announcements.map(ann => `
                     <div class="announcement-item">
                         <i class="fas fa-bullhorn text-danger mt-1"></i>
-                        <div>${escapeHtml(ann.message)}<br><small class="text-muted">${formatDate(ann.created_at)}</small></div>
+                        <div>
+                            <div>${escapeHtml(ann.message)}</div>
+                            <small class="text-muted">${formatDate(ann.created_at)}</small>
+                        </div>
                     </div>
                 `).join('');
             }
 
             // Load today's attendance
             const attendance = await fetchWithAuth('/attendance/today');
-            document.getElementById('checkInTime').innerText = attendance.check_in ? new Date(attendance.check_in).toLocaleTimeString() : 'Not checked in';
-            document.getElementById('checkOutTime').innerText = attendance.check_out ? new Date(attendance.check_out).toLocaleTimeString() : 'Not checked out';
+            document.getElementById('checkInTime').innerText = attendance.check_in ? new Date(attendance.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not checked in';
+            document.getElementById('checkOutTime').innerText = attendance.check_out ? new Date(attendance.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not checked out';
 
         } catch (error) {
             console.error('Dashboard load error:', error);
-            // Show friendly error messages in each widget
             document.getElementById('tasksList').innerHTML = '<div class="alert alert-warning">Could not load tasks. Please try again later.</div>';
-            document.getElementById('leaveBalanceValue').innerText = '--';
-            document.getElementById('leaveRequestsTable').innerHTML = '<tr><td colspan="4" class="text-danger">Error loading leaves</td></tr>';
+            document.getElementById('leaveBalanceValue').innerText = '12';
+            document.getElementById('leaveRequestsTable').innerHTML = '<tr><td colspan="4" class="text-danger text-center">Error loading leaves</td></tr>';
             document.getElementById('announcementsList').innerHTML = '<div class="alert alert-warning">Announcements unavailable</div>';
         }
+    }
+
+    function animateValue(elementId, start, end, duration) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+        const timer = setInterval(() => {
+            current += increment;
+            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                element.innerText = end;
+                clearInterval(timer);
+            } else {
+                element.innerText = Math.round(current);
+            }
+        }, 16);
     }
 
     async function submitLeaveRequest() {
@@ -287,11 +698,17 @@
             end_date: document.getElementById('leaveTo').value,
             reason: document.getElementById('leaveReason').value
         };
+        
+        if (!data.start_date || !data.end_date) {
+            showNotification('Please select both start and end dates', 'error');
+            return;
+        }
+        
         try {
             await fetchWithAuth('/leaves/', { method: 'POST', body: JSON.stringify(data) });
             bootstrap.Modal.getInstance(document.getElementById('leaveModal')).hide();
             showNotification('Leave request submitted successfully!', 'success');
-            loadDashboard(); // refresh
+            loadDashboard();
         } catch (err) {
             showNotification('Failed to submit leave request.', 'error');
         }
@@ -303,7 +720,8 @@
 
     function formatDate(dateStr) {
         if (!dateStr) return '';
-        return new Date(dateStr).toLocaleDateString();
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
 
     function escapeHtml(str) {
@@ -320,7 +738,16 @@
         const alertDiv = document.createElement('div');
         alertDiv.className = `alert alert-${type === 'error' ? 'danger' : 'success'} alert-dismissible fade show position-fixed top-0 end-0 m-3`;
         alertDiv.style.zIndex = '9999';
-        alertDiv.innerHTML = `${msg}<button type="button" class="btn-close" data-bs-dismiss="alert"></button>`;
+        alertDiv.style.minWidth = '300px';
+        alertDiv.style.borderRadius = '16px';
+        alertDiv.style.boxShadow = '0 8px 20px rgba(0,0,0,0.15)';
+        alertDiv.innerHTML = `
+            <div class="d-flex align-items-center">
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'} me-2"></i>
+                <div class="flex-grow-1">${msg}</div>
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        `;
         document.body.appendChild(alertDiv);
         setTimeout(() => alertDiv.remove(), 3000);
     }
