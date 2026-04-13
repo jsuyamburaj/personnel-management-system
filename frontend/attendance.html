@@ -18,6 +18,34 @@
             line-height: 1.5;
         }
 
+        /* Header with Logout */
+        .header-with-logout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid rgba(245, 101, 101, 0.5);
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: #f56565;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(245, 101, 101, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+        }
+
         /* Glass Widget */
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
@@ -37,7 +65,7 @@
         h2 {
             color: white;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
@@ -228,6 +256,10 @@
             gap: 0.5rem;
         }
 
+        .me-2 {
+            margin-right: 0.5rem;
+        }
+
         /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
@@ -267,6 +299,11 @@
                 padding: 8px 16px;
                 font-size: 0.85rem;
             }
+            
+            .header-with-logout {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
 
         /* Animation */
@@ -288,7 +325,13 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <h2><i class="fas fa-calendar-check me-2"></i> Attendance Management</h2>
+        <!-- Header with Logout Button -->
+        <div class="header-with-logout">
+            <h2><i class="fas fa-calendar-check me-2"></i> Attendance Management</h2>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </button>
+        </div>
         
         <!-- Quick Actions -->
         <div class="row g-4 mb-4">
@@ -350,6 +393,11 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+        
         async function loadTodayAttendance() {
             try {
                 const response = await fetch('http://localhost:8000/api/attendance/today', {

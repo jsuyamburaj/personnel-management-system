@@ -18,10 +18,38 @@
             line-height: 1.5;
         }
 
+        /* Header with Logout */
+        .header-with-logout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid rgba(245, 101, 101, 0.5);
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: #f56565;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(245, 101, 101, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+        }
+
         h2 {
             color: white;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
@@ -31,34 +59,35 @@
         /* Kanban Board */
         .kanban-board {
             display: flex;
-            gap: 20px;
+            gap: 24px;
             overflow-x: auto;
-            padding: 10px 0;
-            min-height: 500px;
+            padding: 10px 0 20px;
+            min-height: 550px;
         }
 
         /* Kanban Column - Glass */
         .kanban-column {
             flex: 1;
             min-width: 320px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
+            border-radius: 20px;
             padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             transition: all 0.3s;
         }
 
         .kanban-column:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.08);
         }
 
         .kanban-header {
             font-weight: 600;
             padding-bottom: 12px;
-            margin-bottom: 15px;
-            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
+            margin-bottom: 16px;
+            border-bottom: 2px solid rgba(79, 172, 254, 0.4);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -66,17 +95,33 @@
             font-size: 1rem;
         }
 
-        /* Task Card - Glass */
+        .kanban-header span:first-child {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .column-badge {
+            background: rgba(79, 172, 254, 0.3);
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: #4facfe;
+        }
+
+        /* Task Card - Improved Styling */
         .task-card {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
             border-radius: 16px;
-            padding: 15px;
+            padding: 16px;
             margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             cursor: grab;
             transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            position: relative;
         }
 
         .task-card:active {
@@ -84,9 +129,9 @@
         }
 
         .task-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.18);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border-color: rgba(79, 172, 254, 0.3);
         }
 
@@ -95,33 +140,128 @@
             cursor: grabbing;
         }
 
-        /* Priority Badges */
+        /* Task Title */
+        .task-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: white;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        /* Task Description */
+        .task-description {
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
+
+        /* Priority Badges - Improved */
         .task-priority {
-            display: inline-block;
-            padding: 4px 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
             border-radius: 20px;
-            font-size: 11px;
+            font-size: 0.7rem;
             font-weight: 600;
         }
-        .priority-high { background: rgba(220, 38, 38, 0.2); color: #f56565; border: 1px solid rgba(220, 38, 38, 0.3); }
-        .priority-medium { background: rgba(217, 119, 6, 0.2); color: #ed8936; border: 1px solid rgba(217, 119, 6, 0.3); }
-        .priority-low { background: rgba(22, 163, 74, 0.2); color: #48bb78; border: 1px solid rgba(22, 163, 74, 0.3); }
+        .priority-high { 
+            background: rgba(220, 38, 38, 0.2); 
+            color: #f56565; 
+            border: 1px solid rgba(220, 38, 38, 0.3);
+        }
+        .priority-medium { 
+            background: rgba(237, 137, 54, 0.2); 
+            color: #ed8936; 
+            border: 1px solid rgba(237, 137, 54, 0.3);
+        }
+        .priority-low { 
+            background: rgba(72, 187, 120, 0.2); 
+            color: #48bb78; 
+            border: 1px solid rgba(72, 187, 120, 0.3);
+        }
+
+        /* Task Meta Info */
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .task-assignee {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .task-assignee i {
+            font-size: 0.65rem;
+            color: #4facfe;
+        }
+
+        .task-due {
+            font-size: 0.65rem;
+            color: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .task-due.overdue {
+            color: #f56565;
+        }
+
+        /* Task Actions Dropdown */
+        .task-actions {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+        }
+
+        .task-actions .dropdown-toggle {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .task-actions .dropdown-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
 
         /* Add Task Button */
         .add-task-btn {
             width: 100%;
             margin-top: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px dashed rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px dashed rgba(255, 255, 255, 0.25);
             border-radius: 40px;
             padding: 10px;
-            color: white;
+            color: rgba(255, 255, 255, 0.7);
             transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.85rem;
         }
 
         .add-task-btn:hover {
-            background: rgba(79, 172, 254, 0.3);
+            background: rgba(79, 172, 254, 0.2);
             border-color: #4facfe;
+            color: white;
             transform: translateY(-2px);
         }
 
@@ -134,6 +274,7 @@
             font-weight: 600;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
@@ -148,20 +289,12 @@
             padding: 8px 20px;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .btn-secondary:hover {
             background: rgba(255, 255, 255, 0.3);
             transform: translateY(-1px);
-        }
-
-        .btn-link {
-            color: rgba(255, 255, 255, 0.7);
-            transition: all 0.3s;
-        }
-
-        .btn-link:hover {
-            color: #4facfe;
         }
 
         /* Badge */
@@ -245,6 +378,7 @@
         .dropdown-item {
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .dropdown-item:hover {
@@ -289,6 +423,10 @@
             margin-bottom: 1.5rem;
         }
 
+        .me-1 {
+            margin-right: 0.25rem;
+        }
+
         .me-2 {
             margin-right: 0.5rem;
         }
@@ -297,12 +435,16 @@
             margin-left: 0.5rem;
         }
 
+        .mt-2 {
+            margin-top: 0.5rem;
+        }
+
         .text-muted {
             color: rgba(255, 255, 255, 0.6) !important;
         }
 
         .small {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
         }
 
         /* Custom Scrollbar */
@@ -343,13 +485,26 @@
             h2 {
                 font-size: 1.5rem;
             }
+            
+            .header-with-logout {
+                flex-direction: column;
+                align-items: flex-start;
+            }
         }
     </style>
 </head>
 <body>
     <div>
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Header with Logout Button -->
+        <div class="header-with-logout">
             <h2><i class="fas fa-tasks me-2"></i> Task Management</h2>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </button>
+        </div>
+        
+        <!-- New Task Button Row -->
+        <div class="d-flex justify-content-end mb-4">
             <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal" onclick="openAddTaskModal()">
                 <i class="fas fa-plus me-2"></i> New Task
             </button>
@@ -439,6 +594,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+        
         let tasks = [
             { id: 1, title: 'Design Homepage', description: 'Create responsive homepage design with modern UI', priority: 'High', status: 'Pending', assignee: 'John Doe', dueDate: '2024-12-20', project: 'Website Redesign' },
             { id: 2, title: 'API Integration', description: 'Integrate REST APIs for data fetching', priority: 'High', status: 'In Progress', assignee: 'Jane Smith', dueDate: '2024-12-18', project: 'Mobile App' },
@@ -454,51 +614,56 @@
             const board = document.getElementById('kanbanBoard');
             board.innerHTML = columns.map(status => {
                 const statusTasks = tasks.filter(t => t.status === status);
+                const icon = status === 'Pending' ? 'fa-clock' : status === 'In Progress' ? 'fa-spinner fa-pulse' : 'fa-check-circle';
                 return `
                     <div class="kanban-column" data-status="${status}">
                         <div class="kanban-header">
                             <span>
-                                <i class="fas ${status === 'Pending' ? 'fa-clock' : status === 'In Progress' ? 'fa-spinner fa-pulse' : 'fa-check-circle'} me-2"></i>
+                                <i class="fas ${icon} me-2"></i>
                                 ${status}
                             </span>
-                            <span class="badge bg-secondary">${statusTasks.length}</span>
+                            <span class="column-badge">${statusTasks.length}</span>
                         </div>
                         <div class="tasks-container" id="tasks-${status.replace(/\s/g, '')}">
-                            ${statusTasks.map(task => `
-                                <div class="task-card" draggable="true" data-task-id="${task.id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
-                                    <div class="d-flex justify-content-between align-items-start mb-2">
-                                        <strong style="color: white;">${escapeHtml(task.title)}</strong>
-                                        <div class="dropdown">
-                                            <button class="btn btn-link" data-bs-toggle="dropdown" style="padding: 0;">
-                                                <i class="fas fa-ellipsis-v" style="color: rgba(255,255,255,0.7);"></i>
-                                            </button>
-                                            <ul class="dropdown-menu dropdown-menu-end">
-                                                <li><a class="dropdown-item" href="#" onclick="editTask(${task.id})"><i class="fas fa-edit me-2"></i>Edit</a></li>
-                                                <li><hr class="dropdown-divider"></li>
-                                                <li><a class="dropdown-item text-danger" href="#" onclick="deleteTask(${task.id})"><i class="fas fa-trash me-2"></i>Delete</a></li>
-                                            </ul>
+                            ${statusTasks.map(task => {
+                                const isOverdue = new Date(task.dueDate) < new Date() && task.status !== 'Completed';
+                                const priorityIcon = task.priority === 'High' ? 'fa-arrow-up' : task.priority === 'Medium' ? 'fa-minus' : 'fa-arrow-down';
+                                return `
+                                    <div class="task-card" draggable="true" data-task-id="${task.id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
+                                        <div class="task-actions">
+                                            <div class="dropdown">
+                                                <button class="dropdown-toggle" data-bs-toggle="dropdown">
+                                                    <i class="fas fa-ellipsis-v"></i>
+                                                </button>
+                                                <ul class="dropdown-menu dropdown-menu-end">
+                                                    <li><a class="dropdown-item" href="#" onclick="editTask(${task.id})"><i class="fas fa-edit me-2"></i>Edit</a></li>
+                                                    <li><hr class="dropdown-divider"></li>
+                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteTask(${task.id})"><i class="fas fa-trash me-2"></i>Delete</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="task-title">${escapeHtml(task.title)}</div>
+                                        <div class="task-description">${escapeHtml(task.description.substring(0, 80))}${task.description.length > 80 ? '...' : ''}</div>
+                                        <div class="task-meta">
+                                            <span class="task-priority priority-${task.priority.toLowerCase()}">
+                                                <i class="fas ${priorityIcon} me-1"></i> ${task.priority}
+                                            </span>
+                                            <div class="task-assignee">
+                                                <i class="fas fa-user-circle"></i>
+                                                <span>${task.assignee}</span>
+                                            </div>
+                                        </div>
+                                        <div class="task-due ${isOverdue ? 'overdue' : ''}">
+                                            <i class="fas fa-calendar-alt"></i>
+                                            <span>Due: ${task.dueDate}</span>
+                                            ${isOverdue ? '<span class="ms-2">⚠️ Overdue</span>' : ''}
                                         </div>
                                     </div>
-                                    <p class="small text-muted mb-2">${escapeHtml(task.description.substring(0, 80))}${task.description.length > 80 ? '...' : ''}</p>
-                                    <div class="d-flex justify-content-between align-items-center mt-2">
-                                        <span class="task-priority priority-${task.priority.toLowerCase()}">
-                                            <i class="fas ${task.priority === 'High' ? 'fa-arrow-up' : task.priority === 'Medium' ? 'fa-minus' : 'fa-arrow-down'} me-1"></i>
-                                            ${task.priority}
-                                        </span>
-                                        <small><i class="fas fa-user me-1"></i> ${task.assignee}</small>
-                                    </div>
-                                    <div class="mt-2">
-                                        <small class="text-muted">
-                                            <i class="fas fa-calendar-alt me-1"></i> 
-                                            Due: ${task.dueDate}
-                                            ${new Date(task.dueDate) < new Date() && task.status !== 'Completed' ? ' <span style="color: #f56565;">(Overdue)</span>' : ''}
-                                        </small>
-                                    </div>
-                                </div>
-                            `).join('')}
+                                `;
+                            }).join('')}
                         </div>
                         <button class="add-task-btn" onclick="openAddTaskWithStatus('${status}')">
-                            <i class="fas fa-plus me-2"></i> Add Task
+                            <i class="fas fa-plus"></i> Add Task
                         </button>
                     </div>
                 `;

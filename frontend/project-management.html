@@ -18,10 +18,38 @@
             line-height: 1.5;
         }
 
+        /* Header with Logout */
+        .header-with-logout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid rgba(245, 101, 101, 0.5);
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: #f56565;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(245, 101, 101, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+        }
+
         h2 {
             color: white;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
@@ -229,6 +257,7 @@
             height: 6px;
             background: rgba(255, 255, 255, 0.2);
             border-radius: 5px;
+            appearance: none;
             -webkit-appearance: none;
         }
 
@@ -287,6 +316,11 @@
         @media (max-width: 768px) {
             .col-md-6, .col-lg-4 {
                 width: 100%;
+            }
+            
+            .header-with-logout {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
 
@@ -411,8 +445,16 @@
 </head>
 <body>
     <div>
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <!-- Header with Logout Button -->
+        <div class="header-with-logout">
             <h2><i class="fas fa-project-diagram me-2"></i> Project Management</h2>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </button>
+        </div>
+        
+        <!-- New Project Button Row -->
+        <div class="d-flex justify-content-end mb-4">
             <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal" onclick="openAddProjectModal()">
                 <i class="fas fa-plus me-2"></i> New Project
             </button>
@@ -486,6 +528,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+        
         let projects = [];
         
         async function loadProjects() {
