@@ -1,567 +1,623 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Project Management | Glass Theme</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
 
-        body {
-            background: transparent;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
-            line-height: 1.5;
-        }
+      body {
+        background: transparent;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+        color: white;
+        line-height: 1.5;
+      }
 
-        /* Header with Logout */
-        .header-with-logout {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
+      /* Header with Logout */
+      .header-with-logout {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
 
-        .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
-            border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
-            font-weight: 600;
-            transition: all 0.3s;
-            cursor: pointer;
-            font-size: 0.9rem;
-        }
+      .logout-btn {
+        background: rgba(245, 101, 101, 0.2);
+        border: 1px solid rgba(245, 101, 101, 0.5);
+        border-radius: 40px;
+        padding: 10px 24px;
+        color: #f56565;
+        font-weight: 600;
+        transition: all 0.3s;
+        cursor: pointer;
+        font-size: 0.9rem;
+      }
 
-        .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
-        }
+      .logout-btn:hover {
+        background: rgba(245, 101, 101, 0.4);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+      }
 
-        h2 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
+      h2 {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 0;
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
 
-        /* Glass Card */
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 1.2rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 100%;
-            position: relative;
-            overflow: hidden;
-        }
+      /* Glass Card */
+      .glass-card {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(12px);
+        border-radius: 24px;
+        padding: 1.2rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+      }
 
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-            transition: left 0.5s;
-        }
+      .glass-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.1),
+          transparent
+        );
+        transition: left 0.5s;
+      }
 
-        .glass-card:hover::before {
-            left: 100%;
-        }
+      .glass-card:hover::before {
+        left: 100%;
+      }
 
-        .glass-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
+      .glass-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      }
 
-        .card-title {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            font-size: 1.1rem;
-        }
+      .card-title {
+        color: white;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 1.1rem;
+      }
 
-        /* Buttons */
-        .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            border: none;
-            border-radius: 40px;
-            padding: 10px 24px;
-            font-weight: 600;
-            color: white;
-            transition: all 0.3s;
-        }
+      /* Buttons */
+      .btn-primary {
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        border: none;
+        border-radius: 40px;
+        padding: 10px 24px;
+        font-weight: 600;
+        color: white;
+        transition: all 0.3s;
+      }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
-        }
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+      }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: white;
-            transition: all 0.3s;
-        }
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 40px;
+        padding: 8px 20px;
+        color: white;
+        transition: all 0.3s;
+      }
 
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
+      .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-1px);
+      }
 
-        .btn-link {
-            color: rgba(255, 255, 255, 0.7);
-            transition: all 0.3s;
-        }
+      .btn-link {
+        color: rgba(255, 255, 255, 0.7);
+        transition: all 0.3s;
+      }
 
-        .btn-link:hover {
-            color: #4facfe;
-        }
+      .btn-link:hover {
+        color: #4facfe;
+      }
 
-        /* Dropdown Menu */
-        .dropdown-menu {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-        }
+      /* Dropdown Menu */
+      .dropdown-menu {
+        background: rgba(15, 32, 39, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+      }
 
-        .dropdown-item {
-            color: white;
-            transition: all 0.3s;
-        }
+      .dropdown-item {
+        color: white;
+        transition: all 0.3s;
+      }
 
-        .dropdown-item:hover {
-            background: rgba(79, 172, 254, 0.3);
-            color: white;
-        }
+      .dropdown-item:hover {
+        background: rgba(79, 172, 254, 0.3);
+        color: white;
+      }
 
-        .dropdown-item.text-danger:hover {
-            background: rgba(245, 101, 101, 0.3);
-        }
+      .dropdown-item.text-danger:hover {
+        background: rgba(245, 101, 101, 0.3);
+      }
 
-        /* Progress Bar */
-        .progress {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            height: 8px;
-            overflow: hidden;
-        }
+      /* Progress Bar */
+      .progress {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        height: 8px;
+        overflow: hidden;
+      }
 
-        .progress-bar {
-            background: linear-gradient(90deg, #4facfe, #00f2fe);
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
+      .progress-bar {
+        background: linear-gradient(90deg, #4facfe, #00f2fe);
+        border-radius: 10px;
+        transition: width 0.5s ease;
+      }
 
-        /* Badge */
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 500;
-        }
+      /* Badge */
+      .badge {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.7rem;
+        font-weight: 500;
+      }
 
-        .bg-success {
-            background: rgba(72, 187, 120, 0.3);
-            color: #48bb78;
-        }
+      .bg-success {
+        background: rgba(72, 187, 120, 0.3);
+        color: #48bb78;
+      }
 
-        .bg-info {
-            background: rgba(66, 153, 225, 0.3);
-            color: #4299e1;
-        }
+      .bg-info {
+        background: rgba(66, 153, 225, 0.3);
+        color: #4299e1;
+      }
 
-        .bg-secondary {
-            background: rgba(113, 128, 150, 0.3);
-            color: #a0aec0;
-        }
+      .bg-secondary {
+        background: rgba(113, 128, 150, 0.3);
+        color: #a0aec0;
+      }
 
-        /* Modal Styles - Glass */
-        .modal-content {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            color: white;
-        }
+      /* Modal Styles - Glass */
+      .modal-content {
+        background: rgba(15, 32, 39, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 24px;
+        color: white;
+      }
 
-        .modal-header {
-            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
-            padding: 1.2rem 1.5rem;
-        }
+      .modal-header {
+        border-bottom: 1px solid rgba(79, 172, 254, 0.3);
+        padding: 1.2rem 1.5rem;
+      }
 
-        .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 1.5rem;
-        }
+      .modal-footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 1.5rem;
+      }
 
-        .modal-title {
-            color: white;
-        }
+      .modal-title {
+        color: white;
+      }
 
-        .btn-close {
-            filter: invert(1);
-        }
+      .btn-close {
+        filter: invert(1);
+      }
 
-        /* Form Controls */
-        .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
-            transition: all 0.3s;
-        }
+      /* Form Controls */
+      .form-control,
+      .form-select {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 16px;
+        color: white;
+        padding: 10px 16px;
+        transition: all 0.3s;
+      }
 
-        .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
-            outline: none;
-        }
+      .form-control:focus,
+      .form-select:focus {
+        background: rgba(255, 255, 255, 0.25);
+        border-color: #4facfe;
+        box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+        color: white;
+        outline: none;
+      }
 
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
+      .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
 
-        .form-label {
-            color: rgba(255, 255, 255, 0.9);
-            font-weight: 500;
-            margin-bottom: 0.5rem;
-            display: block;
-        }
+      .form-label {
+        color: rgba(255, 255, 255, 0.9);
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        display: block;
+      }
 
-        /* Range Slider */
-        .form-range {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-            appearance: none;
-            -webkit-appearance: none;
-        }
+      /* Range Slider */
+      .form-range {
+        width: 100%;
+        height: 6px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 5px;
+        appearance: none;
+        -webkit-appearance: none;
+      }
 
-        .form-range:focus {
-            outline: none;
-        }
+      .form-range:focus {
+        outline: none;
+      }
 
-        .form-range::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #4facfe;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
+      .form-range::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #4facfe;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
 
-        .form-range::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            background: #00f2fe;
-        }
+      .form-range::-webkit-slider-thumb:hover {
+        transform: scale(1.2);
+        background: #00f2fe;
+      }
 
-        /* Grid System */
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-right: -0.75rem;
-            margin-left: -0.75rem;
-        }
+      /* Grid System */
+      .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-right: -0.75rem;
+        margin-left: -0.75rem;
+      }
 
-        .col-md-6 {
-            flex: 0 0 auto;
-            width: 50%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
-        }
+      .col-md-6 {
+        flex: 0 0 auto;
+        width: 50%;
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
+      }
 
+      .col-lg-4 {
+        flex: 0 0 auto;
+        width: 33.333%;
+        padding-right: 0.75rem;
+        padding-left: 0.75rem;
+      }
+
+      .col-12 {
+        flex: 0 0 auto;
+        width: 100%;
+      }
+
+      @media (max-width: 992px) {
         .col-lg-4 {
-            flex: 0 0 auto;
-            width: 33.333%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+          width: 50%;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .col-md-6,
+        .col-lg-4 {
+          width: 100%;
         }
 
-        .col-12 {
-            flex: 0 0 auto;
-            width: 100%;
+        .header-with-logout {
+          flex-direction: column;
+          align-items: flex-start;
         }
+      }
 
-        @media (max-width: 992px) {
-            .col-lg-4 {
-                width: 50%;
-            }
-        }
+      /* Utility Classes */
+      .d-flex {
+        display: flex;
+      }
 
-        @media (max-width: 768px) {
-            .col-md-6, .col-lg-4 {
-                width: 100%;
-            }
-            
-            .header-with-logout {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
+      .justify-content-between {
+        justify-content: space-between;
+      }
 
-        /* Utility Classes */
-        .d-flex {
-            display: flex;
-        }
+      .align-items-center {
+        align-items: center;
+      }
 
-        .justify-content-between {
-            justify-content: space-between;
-        }
+      .align-items-start {
+        align-items: flex-start;
+      }
 
-        .align-items-center {
-            align-items: center;
-        }
+      .text-center {
+        text-align: center;
+      }
 
-        .align-items-start {
-            align-items: flex-start;
-        }
+      .text-muted {
+        color: rgba(255, 255, 255, 0.6) !important;
+      }
 
-        .text-center {
-            text-align: center;
-        }
+      .mb-1 {
+        margin-bottom: 0.25rem;
+      }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
+      .mb-2 {
+        margin-bottom: 0.5rem;
+      }
 
-        .mb-1 {
-            margin-bottom: 0.25rem;
-        }
+      .mb-3 {
+        margin-bottom: 1rem;
+      }
 
-        .mb-2 {
-            margin-bottom: 0.5rem;
-        }
+      .mb-4 {
+        margin-bottom: 1.5rem;
+      }
 
-        .mb-3 {
-            margin-bottom: 1rem;
-        }
+      .mt-2 {
+        margin-top: 0.5rem;
+      }
 
-        .mb-4 {
-            margin-bottom: 1.5rem;
-        }
+      .me-1 {
+        margin-right: 0.25rem;
+      }
 
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
+      .me-2 {
+        margin-right: 0.5rem;
+      }
 
-        .me-1 {
-            margin-right: 0.25rem;
-        }
+      .ms-2 {
+        margin-left: 0.5rem;
+      }
 
-        .me-2 {
-            margin-right: 0.5rem;
-        }
+      .py-5 {
+        padding-top: 3rem;
+        padding-bottom: 3rem;
+      }
 
-        .ms-2 {
-            margin-left: 0.5rem;
-        }
+      .h-100 {
+        height: 100%;
+      }
 
-        .py-5 {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-        }
+      /* Loading Spinner */
+      .loading-spinner {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        border: 3px solid rgba(79, 172, 254, 0.2);
+        border-radius: 50%;
+        border-top-color: #4facfe;
+        animation: spin 0.8s linear infinite;
+      }
 
-        .h-100 {
-            height: 100%;
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
+      }
 
-        /* Loading Spinner */
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(79, 172, 254, 0.2);
-            border-radius: 50%;
-            border-top-color: #4facfe;
-            animation: spin 0.8s linear infinite;
-        }
+      /* Toast Notification */
+      .toast-glass {
+        background: rgba(15, 32, 39, 0.95);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(79, 172, 254, 0.3);
+        border-radius: 16px;
+        color: white;
+      }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
 
-        /* Toast Notification */
-        .toast-glass {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 16px;
-            color: white;
-        }
+      ::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
 
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
+      ::-webkit-scrollbar-thumb {
+        background: #4facfe;
+        border-radius: 10px;
+      }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
+      /* Empty State */
+      .empty-state {
+        text-align: center;
+        padding: 3rem;
+      }
 
-        ::-webkit-scrollbar-thumb {
-            background: #4facfe;
-            border-radius: 10px;
-        }
-
-        /* Empty State */
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-        }
-
-        .empty-state i {
-            font-size: 4rem;
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 1rem;
-        }
+      .empty-state i {
+        font-size: 4rem;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 1rem;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div>
-        <!-- Header with Logout Button -->
-        <div class="header-with-logout">
-            <h2><i class="fas fa-project-diagram me-2"></i> Project Management</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+      <!-- Header with Logout Button -->
+      <div class="header-with-logout">
+        <h2><i class="fas fa-project-diagram me-2"></i> Project Management</h2>
+        <button class="logout-btn" onclick="logout()">
+          <i class="fas fa-sign-out-alt me-2"></i> Logout
+        </button>
+      </div>
+
+      <!-- New Project Button Row -->
+      <div class="d-flex justify-content-end mb-4">
+        <button
+          class="btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#projectModal"
+          onclick="openAddProjectModal()"
+        >
+          <i class="fas fa-plus me-2"></i> New Project
+        </button>
+      </div>
+
+      <!-- Project Cards Grid -->
+      <div class="row" id="projectsGrid">
+        <div class="col-12 text-center py-5">
+          <div class="loading-spinner"></div>
+          <p class="mt-3 text-muted">Loading projects...</p>
         </div>
-        
-        <!-- New Project Button Row -->
-        <div class="d-flex justify-content-end mb-4">
-            <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal" onclick="openAddProjectModal()">
-                <i class="fas fa-plus me-2"></i> New Project
-            </button>
-        </div>
-        
-        <!-- Project Cards Grid -->
-        <div class="row" id="projectsGrid">
-            <div class="col-12 text-center py-5">
-                <div class="loading-spinner"></div>
-                <p class="mt-3 text-muted">Loading projects...</p>
-            </div>
-        </div>
+      </div>
     </div>
-    
+
     <!-- Project Modal -->
     <div class="modal fade" id="projectModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="projectModalTitle">
-                        <i class="fas fa-plus-circle me-2"></i> Add Project
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="projectModalTitle">
+              <i class="fas fa-plus-circle me-2"></i> Add Project
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <form id="projectForm">
+              <input type="hidden" id="projectId" />
+              <div class="mb-3">
+                <label class="form-label">Project Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="projectName"
+                  required
+                  placeholder="Enter project name"
+                />
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Description</label>
+                <textarea
+                  class="form-control"
+                  id="projectDesc"
+                  rows="3"
+                  placeholder="Project description..."
+                ></textarea>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">Start Date</label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="startDate"
+                    required
+                  />
                 </div>
-                <div class="modal-body">
-                    <form id="projectForm">
-                        <input type="hidden" id="projectId">
-                        <div class="mb-3">
-                            <label class="form-label">Project Name</label>
-                            <input type="text" class="form-control" id="projectName" required placeholder="Enter project name">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" id="projectDesc" rows="3" placeholder="Project description..."></textarea>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Start Date</label>
-                                <input type="date" class="form-control" id="startDate" required>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">End Date</label>
-                                <input type="date" class="form-control" id="endDate">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select class="form-select" id="projectStatus">
-                                <option>Planning</option>
-                                <option>Active</option>
-                                <option>Completed</option>
-                                <option>On Hold</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Progress: <span id="progressValue" style="color: #4facfe;">0</span>%</label>
-                            <input type="range" class="form-range" id="progress" min="0" max="100" value="0">
-                        </div>
-                    </form>
+                <div class="col-md-6 mb-3">
+                  <label class="form-label">End Date</label>
+                  <input type="date" class="form-control" id="endDate" />
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-primary" onclick="saveProject()">
-                        <i class="fas fa-save me-2"></i> Save Project
-                    </button>
-                </div>
-            </div>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" id="projectStatus">
+                  <option>Planning</option>
+                  <option>Active</option>
+                  <option>Completed</option>
+                  <option>On Hold</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label"
+                  >Progress:
+                  <span id="progressValue" style="color: #4facfe">0</span
+                  >%</label
+                >
+                <input
+                  type="range"
+                  class="form-range"
+                  id="progress"
+                  min="0"
+                  max="100"
+                  value="0"
+                />
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn-secondary" data-bs-dismiss="modal">
+              Cancel
+            </button>
+            <button type="button" class="btn-primary" onclick="saveProject()">
+              <i class="fas fa-save me-2"></i> Save Project
+            </button>
+          </div>
         </div>
+      </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
-        
-        let projects = [];
-        
-        async function loadProjects() {
-            try {
-                const response = await fetch('http://localhost:8000/api/projects/', {
-                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-                });
-                if (response.ok) {
-                    projects = await response.json();
-                    renderProjects();
-                } else {
-                    throw new Error('Failed to load projects');
-                }
-            } catch (error) {
-                console.error('Error loading projects:', error);
-                document.getElementById('projectsGrid').innerHTML = `
+      function logout() {
+        localStorage.clear();
+        window.location.href = "index.html";
+      }
+
+      let projects = [];
+
+      async function loadProjects() {
+        try {
+          const response = await fetch("http://localhost:8000/api/projects/", {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          });
+          if (response.ok) {
+            projects = await response.json();
+            renderProjects();
+          } else {
+            throw new Error("Failed to load projects");
+          }
+        } catch (error) {
+          console.error("Error loading projects:", error);
+          document.getElementById("projectsGrid").innerHTML = `
                     <div class="col-12 text-center py-5">
                         <i class="fas fa-exclamation-triangle fa-3x text-danger mb-3"></i>
                         <p class="text-danger">Failed to load projects</p>
                         <small class="text-muted">Please check your connection</small>
                     </div>
                 `;
-            }
         }
-        
-        function renderProjects() {
-            const grid = document.getElementById('projectsGrid');
-            if (projects.length === 0) {
-                grid.innerHTML = `
+      }
+
+      function renderProjects() {
+        const grid = document.getElementById("projectsGrid");
+        if (projects.length === 0) {
+          grid.innerHTML = `
                     <div class="col-12 text-center py-5">
                         <div class="empty-state">
                             <i class="fas fa-folder-open"></i>
@@ -570,27 +626,28 @@
                         </div>
                     </div>
                 `;
-                return;
+          return;
+        }
+
+        grid.innerHTML = projects
+          .map((proj) => {
+            let statusClass = "";
+            let statusIcon = "";
+            if (proj.status === "Active") {
+              statusClass = "bg-success";
+              statusIcon = "fa-play-circle";
+            } else if (proj.status === "Completed") {
+              statusClass = "bg-info";
+              statusIcon = "fa-check-circle";
+            } else if (proj.status === "On Hold") {
+              statusClass = "bg-secondary";
+              statusIcon = "fa-pause-circle";
+            } else {
+              statusClass = "bg-secondary";
+              statusIcon = "fa-clock";
             }
-            
-            grid.innerHTML = projects.map(proj => {
-                let statusClass = '';
-                let statusIcon = '';
-                if (proj.status === 'Active') {
-                    statusClass = 'bg-success';
-                    statusIcon = 'fa-play-circle';
-                } else if (proj.status === 'Completed') {
-                    statusClass = 'bg-info';
-                    statusIcon = 'fa-check-circle';
-                } else if (proj.status === 'On Hold') {
-                    statusClass = 'bg-secondary';
-                    statusIcon = 'fa-pause-circle';
-                } else {
-                    statusClass = 'bg-secondary';
-                    statusIcon = 'fa-clock';
-                }
-                
-                return `
+
+            return `
                     <div class="col-md-6 col-lg-4 mb-4">
                         <div class="glass-card">
                             <div class="d-flex justify-content-between align-items-start mb-2">
@@ -606,7 +663,7 @@
                                     </ul>
                                 </div>
                             </div>
-                            <p class="text-muted small mb-3">${escapeHtml(proj.description?.substring(0, 100) || 'No description')}</p>
+                            <p class="text-muted small mb-3">${escapeHtml(proj.description?.substring(0, 100) || "No description")}</p>
                             <div class="mb-2">
                                 <div class="progress">
                                     <div class="progress-bar" style="width: ${proj.progress || 0}%"></div>
@@ -619,7 +676,7 @@
                             <div class="d-flex justify-content-between align-items-center mt-3">
                                 <div class="d-flex align-items-center">
                                     <i class="fas fa-calendar-alt me-1" style="color: #4facfe; font-size: 0.7rem;"></i>
-                                    <small class="text-muted">${proj.start_date?.split('T')[0] || 'N/A'}</small>
+                                    <small class="text-muted">${proj.start_date?.split("T")[0] || "N/A"}</small>
                                 </div>
                                 <span class="badge ${statusClass}">
                                     <i class="fas ${statusIcon} me-1"></i>${proj.status}
@@ -628,144 +685,159 @@
                         </div>
                     </div>
                 `;
-            }).join('');
+          })
+          .join("");
+      }
+
+      function openAddProjectModal() {
+        document.getElementById("projectModalTitle").innerHTML =
+          '<i class="fas fa-plus-circle me-2"></i> Add Project';
+        document.getElementById("projectForm").reset();
+        document.getElementById("projectId").value = "";
+        document.getElementById("progress").value = 0;
+        document.getElementById("progressValue").innerText = "0";
+        new bootstrap.Modal(document.getElementById("projectModal")).show();
+      }
+
+      function editProject(id) {
+        const proj = projects.find((p) => p.id === id);
+        if (proj) {
+          document.getElementById("projectModalTitle").innerHTML =
+            '<i class="fas fa-edit me-2"></i> Edit Project';
+          document.getElementById("projectId").value = proj.id;
+          document.getElementById("projectName").value = proj.name;
+          document.getElementById("projectDesc").value = proj.description || "";
+          document.getElementById("startDate").value =
+            proj.start_date?.split("T")[0] || "";
+          document.getElementById("endDate").value =
+            proj.end_date?.split("T")[0] || "";
+          document.getElementById("projectStatus").value = proj.status;
+          document.getElementById("progress").value = proj.progress || 0;
+          document.getElementById("progressValue").innerText =
+            `${proj.progress || 0}`;
+          new bootstrap.Modal(document.getElementById("projectModal")).show();
         }
-        
-        function openAddProjectModal() {
-            document.getElementById('projectModalTitle').innerHTML = '<i class="fas fa-plus-circle me-2"></i> Add Project';
-            document.getElementById('projectForm').reset();
-            document.getElementById('projectId').value = '';
-            document.getElementById('progress').value = 0;
-            document.getElementById('progressValue').innerText = '0';
-            new bootstrap.Modal(document.getElementById('projectModal')).show();
+      }
+
+      async function saveProject() {
+        const id = document.getElementById("projectId").value;
+        const data = {
+          name: document.getElementById("projectName").value,
+          description: document.getElementById("projectDesc").value,
+          start_date: document.getElementById("startDate").value,
+          end_date: document.getElementById("endDate").value || null,
+          status: document.getElementById("projectStatus").value,
+          progress: parseInt(document.getElementById("progress").value),
+        };
+
+        if (!data.name) {
+          showNotification("Please enter a project name", "error");
+          return;
         }
-        
-        function editProject(id) {
-            const proj = projects.find(p => p.id === id);
-            if (proj) {
-                document.getElementById('projectModalTitle').innerHTML = '<i class="fas fa-edit me-2"></i> Edit Project';
-                document.getElementById('projectId').value = proj.id;
-                document.getElementById('projectName').value = proj.name;
-                document.getElementById('projectDesc').value = proj.description || '';
-                document.getElementById('startDate').value = proj.start_date?.split('T')[0] || '';
-                document.getElementById('endDate').value = proj.end_date?.split('T')[0] || '';
-                document.getElementById('projectStatus').value = proj.status;
-                document.getElementById('progress').value = proj.progress || 0;
-                document.getElementById('progressValue').innerText = `${proj.progress || 0}`;
-                new bootstrap.Modal(document.getElementById('projectModal')).show();
-            }
+
+        if (!data.start_date) {
+          showNotification("Please select a start date", "error");
+          return;
         }
-        
-        async function saveProject() {
-            const id = document.getElementById('projectId').value;
-            const data = {
-                name: document.getElementById('projectName').value,
-                description: document.getElementById('projectDesc').value,
-                start_date: document.getElementById('startDate').value,
-                end_date: document.getElementById('endDate').value || null,
-                status: document.getElementById('projectStatus').value,
-                progress: parseInt(document.getElementById('progress').value)
-            };
-            
-            if (!data.name) {
-                showNotification('Please enter a project name', 'error');
-                return;
-            }
-            
-            if (!data.start_date) {
-                showNotification('Please select a start date', 'error');
-                return;
-            }
-            
-            const btn = event.target;
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Saving...';
-            btn.disabled = true;
-            
-            try {
-                const url = id ? `http://localhost:8000/api/projects/${id}` : 'http://localhost:8000/api/projects/';
-                const method = id ? 'PUT' : 'POST';
-                const response = await fetch(url, {
-                    method: method,
-                    headers: {
-                        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.ok) {
-                    bootstrap.Modal.getInstance(document.getElementById('projectModal')).hide();
-                    loadProjects();
-                    showNotification('Project saved successfully!', 'success');
-                } else {
-                    const error = await response.json();
-                    showNotification(error.detail || 'Error saving project', 'error');
-                }
-            } catch (error) {
-                console.error('Error saving project:', error);
-                showNotification('Error saving project', 'error');
-            } finally {
-                btn.innerHTML = originalText;
-                btn.disabled = false;
-            }
+
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Saving...';
+        btn.disabled = true;
+
+        try {
+          const url = id
+            ? `http://localhost:8000/api/projects/${id}`
+            : "http://localhost:8000/api/projects/";
+          const method = id ? "PUT" : "POST";
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+            bootstrap.Modal.getInstance(
+              document.getElementById("projectModal"),
+            ).hide();
+            loadProjects();
+            showNotification("Project saved successfully!", "success");
+          } else {
+            const error = await response.json();
+            showNotification(error.detail || "Error saving project", "error");
+          }
+        } catch (error) {
+          console.error("Error saving project:", error);
+          showNotification("Error saving project", "error");
+        } finally {
+          btn.innerHTML = originalText;
+          btn.disabled = false;
         }
-        
-        async function deleteProject(id) {
-            if (confirm('Are you sure you want to delete this project?')) {
-                try {
-                    const response = await fetch(`http://localhost:8000/api/projects/${id}`, {
-                        method: 'DELETE',
-                        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
-                    });
-                    if (response.ok) {
-                        loadProjects();
-                        showNotification('Project deleted successfully', 'success');
-                    } else {
-                        showNotification('Failed to delete project', 'error');
-                    }
-                } catch (error) {
-                    showNotification('Error deleting project', 'error');
-                }
+      }
+
+      async function deleteProject(id) {
+        if (confirm("Are you sure you want to delete this project?")) {
+          try {
+            const response = await fetch(
+              `http://localhost:8000/api/projects/${id}`,
+              {
+                method: "DELETE",
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem("token")}`,
+                },
+              },
+            );
+            if (response.ok) {
+              loadProjects();
+              showNotification("Project deleted successfully", "success");
+            } else {
+              showNotification("Failed to delete project", "error");
             }
+          } catch (error) {
+            showNotification("Error deleting project", "error");
+          }
         }
-        
-        function showNotification(message, type) {
-            const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed top-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
+      }
+
+      function showNotification(message, type) {
+        const toastDiv = document.createElement("div");
+        toastDiv.className = "position-fixed top-0 end-0 p-3";
+        toastDiv.style.zIndex = "9999";
+        toastDiv.innerHTML = `
                 <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px;">
                     <div class="d-flex">
                         <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
+                            <i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"} me-2" style="color: ${type === "success" ? "#48bb78" : "#f56565"}"></i>
                             ${message}
                         </div>
                         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
                     </div>
                 </div>
             `;
-            document.body.appendChild(toastDiv);
-            setTimeout(() => toastDiv.remove(), 3000);
-        }
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
-        
-        // Progress bar live update
-        document.getElementById('progress')?.addEventListener('input', (e) => {
-            document.getElementById('progressValue').innerText = e.target.value;
+        document.body.appendChild(toastDiv);
+        setTimeout(() => toastDiv.remove(), 3000);
+      }
+
+      function escapeHtml(str) {
+        if (!str) return "";
+        return str.replace(/[&<>]/g, function (m) {
+          if (m === "&") return "&amp;";
+          if (m === "<") return "&lt;";
+          if (m === ">") return "&gt;";
+          return m;
         });
-        
-        // Load projects on page load
-        loadProjects();
+      }
+
+      // Progress bar live update
+      document.getElementById("progress")?.addEventListener("input", (e) => {
+        document.getElementById("progressValue").innerText = e.target.value;
+      });
+
+      // Load projects on page load
+      loadProjects();
     </script>
-</body>
+  </body>
 </html>
