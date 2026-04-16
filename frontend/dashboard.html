@@ -22,7 +22,7 @@
             top: 0;
             width: 260px;
             height: 100vh;
-            background: rgba(15, 32, 39, 0.7);
+            background: rgba(15, 32, 39, 0.85);
             backdrop-filter: blur(12px);
             border-right: 1px solid rgba(255,255,255,0.2);
             transition: all 0.3s;
@@ -46,7 +46,7 @@
         }
         
         .sidebar .nav-link {
-            color: rgba(255,255,255,0.8);
+            color: rgba(255,255,255,0.85);
             padding: 12px 20px;
             margin: 5px 10px;
             border-radius: 30px;
@@ -65,7 +65,7 @@
         }
         
         .top-navbar {
-            background: rgba(255,255,255,0.1);
+            background: rgba(15, 32, 39, 0.85);
             backdrop-filter: blur(10px);
             height: 60px;
             padding: 0 20px;
@@ -106,12 +106,21 @@
         .logout-nav-btn:hover {
             background: rgba(245, 101, 101, 0.4);
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(245, 101, 101, 0.2);
         }
         
         .page-content {
             padding: 20px;
             min-height: calc(100vh - 60px);
+        }
+        
+        /* FIX: Force all text to be white inside page content */
+        .page-content,
+        .page-content * {
+            color: whit;
+        }
+        
+        .page-content .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
         }
         
         ::-webkit-scrollbar { width: 6px; }
@@ -183,7 +192,6 @@
                         <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                     </ul>
                 </div>
-                <!-- Direct Logout Button -->
                 <button class="logout-nav-btn" onclick="logout()">
                     <i class="fas fa-sign-out-alt me-1"></i> Logout
                 </button>

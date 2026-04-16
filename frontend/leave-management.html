@@ -18,7 +18,16 @@
             line-height: 1.5;
         }
 
-        /* Header with Logout */
+        /* FIX: Ensure all text is white */
+        body, .dashboard-widget, .table, .modal-content, .form-control, .form-select,
+        h1, h2, h3, h4, h5, h6, p, span, div, label, .text-muted {
+            color: white;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -46,7 +55,6 @@
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
 
-        /* Glass Widget */
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -87,7 +95,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             border: none;
@@ -117,7 +124,6 @@
             transform: translateY(-1px);
         }
 
-        /* Table Styles */
         .table-responsive {
             overflow-x: auto;
         }
@@ -146,7 +152,6 @@
             background: rgba(79, 172, 254, 0.1);
         }
 
-        /* Badge Styles */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -170,7 +175,6 @@
             color: #ed8936;
         }
 
-        /* Modal Styles - Glass */
         .modal-content {
             background: rgba(15, 32, 39, 0.95);
             backdrop-filter: blur(12px);
@@ -197,7 +201,6 @@
             filter: invert(1);
         }
 
-        /* Form Controls */
         .form-control, .form-select {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -226,7 +229,6 @@
             display: block;
         }
 
-        /* Grid System */
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -253,14 +255,12 @@
                 width: 100%;
                 margin-bottom: 1rem;
             }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
 
-        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -271,6 +271,10 @@
 
         .align-items-center {
             align-items: center;
+        }
+
+        .justify-content-end {
+            justify-content: flex-end;
         }
 
         .text-center {
@@ -285,19 +289,10 @@
             margin-bottom: 1.5rem;
         }
 
-        .mt-3 {
-            margin-top: 1rem;
-        }
-
         .me-2 {
             margin-right: 0.5rem;
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
-
-        /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
             width: 40px;
@@ -312,7 +307,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Toast Notification */
         .toast-glass {
             background: rgba(15, 32, 39, 0.95);
             backdrop-filter: blur(12px);
@@ -321,7 +315,6 @@
             color: white;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -337,7 +330,6 @@
             border-radius: 10px;
         }
 
-        /* Leave Balance Icon */
         .balance-icon {
             width: 70px;
             height: 70px;
@@ -352,7 +344,6 @@
 </head>
 <body>
     <div>
-        <!-- Header with Logout Button -->
         <div class="header-with-logout">
             <h2><i class="fas fa-umbrella-beach me-2"></i> Leave Management</h2>
             <button class="logout-btn" onclick="logout()">
@@ -360,14 +351,12 @@
             </button>
         </div>
         
-        <!-- Request Leave Button Row -->
         <div class="d-flex justify-content-end mb-4">
             <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#leaveModal" onclick="openRequestModal()">
                 <i class="fas fa-plus me-2"></i> Request Leave
             </button>
         </div>
         
-        <!-- Leave Balance Card -->
         <div class="row mb-4">
             <div class="col-md-4">
                 <div class="dashboard-widget text-center">
@@ -380,7 +369,6 @@
             </div>
         </div>
         
-        <!-- Leave Requests Table -->
         <div class="dashboard-widget">
             <h5 class="mb-3"><i class="fas fa-list-alt me-2"></i> My Leave Requests</h5>
             <div class="table-responsive">
@@ -398,14 +386,13 @@
                         <tr><td colspan="5" class="text-center">
                             <div class="loading-spinner"></div>
                             <p class="mt-2">Loading leave requests...</p>
-                        </td
+                        </tr
                     </tbody>
-                </table>
+                </table
             </div>
         </div>
     </div>
     
-    <!-- Leave Request Modal -->
     <div class="modal fade" id="leaveModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -503,7 +490,7 @@
                     const leaves = await response.json();
                     const tbody = document.getElementById('leaveRequests');
                     if (leaves.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="5" class="text-center"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No leave requests found</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No leave requests found</tr';
                         return;
                     }
                     tbody.innerHTML = leaves.map(leave => {
@@ -521,18 +508,18 @@
                         }
                         return `
                             <tr>
-                                <td><i class="fas fa-calendar-day me-1"></i>${new Date(leave.start_date).toLocaleDateString()}</td>
-                                <td><i class="fas fa-calendar-day me-1"></i>${new Date(leave.end_date).toLocaleDateString()}</td>
-                                <td>${leave.leave_type}</td>
-                                <td>${leave.reason || '-'}</td>
-                                <td><span class="badge ${statusClass}"><i class="fas ${statusIcon} me-1"></i>${leave.status}</span></td>
+                                <td><i class="fas fa-calendar-day me-1"></i>${new Date(leave.start_date).toLocaleDateString()}</td
+                                <td><i class="fas fa-calendar-day me-1"></i>${new Date(leave.end_date).toLocaleDateString()}</td
+                                <td>${leave.leave_type}</td
+                                <td>${leave.reason || '-'}</td
+                                <td><span class="badge ${statusClass}"><i class="fas ${statusIcon} me-1"></i>${leave.status}</span></td
                             </tr>
                         `;
                     }).join('');
                 }
             } catch (error) {
                 console.error('Error loading leaves:', error);
-                document.getElementById('leaveRequests').innerHTML = '<tr><td colspan="5" class="text-center text-danger">Failed to load leave requests</td></tr>';
+                document.getElementById('leaveRequests').innerHTML = '<tr><td colspan="5" class="text-center text-danger">Failed to load leave requests</tr';
             }
         }
         
@@ -584,7 +571,6 @@
         
         function openRequestModal() {
             document.getElementById('leaveForm').reset();
-            // Set default dates
             const today = new Date().toISOString().split('T')[0];
             document.getElementById('startDate').value = today;
             const nextWeek = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
@@ -610,7 +596,6 @@
             setTimeout(() => toastDiv.remove(), 3000);
         }
         
-        // Load data on page load
         loadLeaveBalance();
         loadLeaveRequests();
     </script>

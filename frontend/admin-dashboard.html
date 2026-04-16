@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Glass Theme</title>
     <style>
-        /* Modern CSS Reset & Base Styles */
         * {
             margin: 0;
             padding: 0;
@@ -13,65 +12,23 @@
         }
 
         body {
+            background: transparent;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: white;
             line-height: 1.5;
             min-height: 100vh;
         }
 
-        /* Smooth Scroll */
-        html {
-            scroll-behavior: smooth;
+        /* FIX: Ensure all text is white */
+        body, .dashboard-container, .dashboard-header, .stat-card, .chart-container,
+        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted {
+            color: white;
         }
 
-        /* Modern Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
         }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #3a8fd6, #00d4e0);
-        }
-
-        /* Dashboard Container */
-        .dashboard-container {
-            padding: 20px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Header Section */
-        .dashboard-header {
-            margin-bottom: 30px;
-        }
-
-        .dashboard-header h2 {
-            font-size: 2rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 8px;
-        }
-
-        .dashboard-header p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
-        }
-
-        /* Header with Logout */
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -99,7 +56,41 @@
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
 
-        /* Stats Row - Glass Cards */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border-radius: 10px;
+        }
+
+        .dashboard-container {
+            padding: 20px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .dashboard-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .dashboard-header p {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+        }
+
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -173,7 +164,6 @@
         .stat-icon.info { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
         .stat-icon.warning { background: rgba(237, 137, 54, 0.2); color: #ed8936; }
 
-        /* Chart Containers - Glass */
         .chart-container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -205,7 +195,6 @@
             font-size: 1.2rem;
         }
 
-        /* Recent Activity List */
         .recent-activity {
             max-height: 350px;
             overflow-y: auto;
@@ -260,7 +249,6 @@
             color: rgba(255, 255, 255, 0.6);
         }
 
-        /* Loading State */
         .loading-spinner {
             display: inline-block;
             width: 40px;
@@ -275,7 +263,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Animations */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -287,35 +274,25 @@
             }
         }
 
-        /* Responsive Design */
         @media (max-width: 768px) {
             .stats-row {
                 gap: 16px;
             }
-            
             .stat-card {
                 padding: 18px;
             }
-            
             .stat-value {
                 font-size: 1.8rem;
             }
-            
             .chart-container {
                 padding: 18px;
             }
-            
-            .dashboard-header h2 {
-                font-size: 1.5rem;
-            }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
 
-        /* Grid Layout for Charts */
         .charts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
@@ -329,7 +306,6 @@
             }
         }
 
-        /* Utility Classes */
         .text-muted {
             color: rgba(255, 255, 255, 0.6) !important;
         }
@@ -376,9 +352,7 @@
     <div class="dashboard-container">
         <div class="header-with-logout">
             <div class="dashboard-header">
-                <h2>
-                    <i class="fas fa-chart-line"></i> Admin Dashboard
-                </h2>
+                <h2><i class="fas fa-chart-line"></i> Admin Dashboard</h2>
                 <p>Welcome back! Here's what's happening with your organization today.</p>
             </div>
             <button class="logout-btn" onclick="logout()">
@@ -386,7 +360,6 @@
             </button>
         </div>
         
-        <!-- Stats Cards Row -->
         <div class="stats-row">
             <div class="stat-card">
                 <div class="d-flex justify-content-between align-items-start">
@@ -441,39 +414,26 @@
             </div>
         </div>
         
-        <!-- Charts Grid -->
         <div class="charts-grid">
             <div class="chart-container">
-                <h5>
-                    <i class="fas fa-building"></i>
-                    Employee Distribution by Department
-                </h5>
+                <h5><i class="fas fa-building"></i> Employee Distribution by Department</h5>
                 <canvas id="deptChart" height="250"></canvas>
             </div>
             
             <div class="chart-container">
-                <h5>
-                    <i class="fas fa-tasks"></i>
-                    Task Status Overview
-                </h5>
+                <h5><i class="fas fa-tasks"></i> Task Status Overview</h5>
                 <canvas id="taskStatusChart" height="250"></canvas>
             </div>
         </div>
         
         <div class="charts-grid">
             <div class="chart-container">
-                <h5>
-                    <i class="fas fa-chart-line"></i>
-                    Monthly Attendance Trend
-                </h5>
+                <h5><i class="fas fa-chart-line"></i> Monthly Attendance Trend</h5>
                 <canvas id="attendanceTrendChart" height="220"></canvas>
             </div>
             
             <div class="chart-container">
-                <h5>
-                    <i class="fas fa-history"></i>
-                    Recent Activity
-                </h5>
+                <h5><i class="fas fa-history"></i> Recent Activity</h5>
                 <div class="recent-activity" id="recentActivity">
                     <div class="text-center text-muted py-3">
                         <div class="loading-spinner"></div>
@@ -484,10 +444,7 @@
         </div>
         
         <div class="chart-container">
-            <h5>
-                <i class="fas fa-chart-bar"></i>
-                Project Progress Overview
-            </h5>
+            <h5><i class="fas fa-chart-bar"></i> Project Progress Overview</h5>
             <div id="projectProgressChart"></div>
         </div>
     </div>
@@ -553,7 +510,6 @@
         }
         
         async function loadCharts() {
-            // Department Chart - Glass Theme Colors
             const deptCtx = document.getElementById('deptChart').getContext('2d');
             new Chart(deptCtx, {
                 type: 'doughnut',
@@ -561,14 +517,7 @@
                     labels: ['Development', 'Testing', 'HR', 'Management', 'Sales', 'Marketing'],
                     datasets: [{
                         data: [65, 28, 12, 8, 15, 10],
-                        backgroundColor: [
-                            'rgba(79, 172, 254, 0.8)',
-                            'rgba(72, 187, 120, 0.8)',
-                            'rgba(237, 137, 54, 0.8)',
-                            'rgba(66, 153, 225, 0.8)',
-                            'rgba(159, 122, 234, 0.8)',
-                            'rgba(245, 101, 101, 0.8)'
-                        ],
+                        backgroundColor: ['rgba(79, 172, 254, 0.8)', 'rgba(72, 187, 120, 0.8)', 'rgba(237, 137, 54, 0.8)', 'rgba(66, 153, 225, 0.8)', 'rgba(159, 122, 234, 0.8)', 'rgba(245, 101, 101, 0.8)'],
                         borderWidth: 0,
                         hoverOffset: 8
                     }]
@@ -577,55 +526,19 @@
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: {
-                                font: { size: 12, family: 'Inter' },
-                                padding: 15,
-                                usePointStyle: true,
-                                pointStyle: 'circle',
-                                color: 'white'
-                            }
-                        },
-                        tooltip: {
-                            backgroundColor: 'rgba(0,0,0,0.8)',
-                            titleFont: { size: 13 },
-                            bodyFont: { size: 12 },
-                            padding: 10,
-                            cornerRadius: 8
-                        }
+                        legend: { position: 'bottom', labels: { font: { size: 12 }, usePointStyle: true, pointStyle: 'circle', color: 'white' } }
                     },
                     cutout: '60%'
                 }
             });
             
-            // Task Status Chart
             const taskCtx = document.getElementById('taskStatusChart').getContext('2d');
             new Chart(taskCtx, {
                 type: 'doughnut',
-                data: {
-                    labels: ['Completed', 'In Progress', 'Pending'],
-                    datasets: [{
-                        data: [124, 67, 43],
-                        backgroundColor: ['#48bb78', '#4299e1', '#ed8936'],
-                        borderWidth: 0,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: {
-                            position: 'bottom',
-                            labels: { font: { size: 12 }, usePointStyle: true, pointStyle: 'circle', color: 'white' }
-                        }
-                    },
-                    cutout: '60%'
-                }
+                data: { labels: ['Completed', 'In Progress', 'Pending'], datasets: [{ data: [124, 67, 43], backgroundColor: ['#48bb78', '#4299e1', '#ed8936'], borderWidth: 0, hoverOffset: 8 }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { color: 'white', usePointStyle: true, pointStyle: 'circle' } } }, cutout: '60%' }
             });
             
-            // Attendance Trend - Line Chart with Gradient
             const attendCtx = document.getElementById('attendanceTrendChart').getContext('2d');
             const gradient = attendCtx.createLinearGradient(0, 0, 0, 250);
             gradient.addColorStop(0, 'rgba(79, 172, 254, 0.4)');
@@ -633,139 +546,43 @@
             
             new Chart(attendCtx, {
                 type: 'line',
-                data: {
-                    labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
-                    datasets: [{
-                        label: 'Present Days',
-                        data: [85, 88, 92, 90],
-                        borderColor: '#4facfe',
-                        backgroundColor: gradient,
-                        borderWidth: 3,
-                        tension: 0.4,
-                        fill: true,
-                        pointBackgroundColor: '#4facfe',
-                        pointBorderColor: '#fff',
-                        pointBorderWidth: 2,
-                        pointRadius: 5,
-                        pointHoverRadius: 7
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: { 
-                            position: 'top',
-                            labels: { color: 'white' }
-                        },
-                        tooltip: { mode: 'index', intersect: false }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: { color: 'rgba(255,255,255,0.1)' },
-                            title: { display: true, text: 'Attendance %', font: { size: 11 }, color: 'white' },
-                            ticks: { color: 'white' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            title: { display: true, text: 'Month', font: { size: 11 }, color: 'white' },
-                            ticks: { color: 'white' }
-                        }
-                    }
-                }
+                data: { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], datasets: [{ label: 'Present Days', data: [85, 88, 92, 90], borderColor: '#4facfe', backgroundColor: gradient, borderWidth: 3, tension: 0.4, fill: true, pointBackgroundColor: '#4facfe', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7 }] },
+                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top', labels: { color: 'white' } } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } } }
             });
             
-            // Project Progress - ApexCharts with Glass Theme
             const options = {
-                series: [{
-                    name: 'Completion Rate',
-                    data: [75, 45, 90, 60, 30, 85, 70]
-                }],
-                chart: {
-                    type: 'bar',
-                    height: 350,
-                    toolbar: { show: false },
-                    animations: { enabled: true, easing: 'easeinout', speed: 800 },
-                    background: 'transparent'
-                },
-                plotOptions: {
-                    bar: {
-                        borderRadius: 10,
-                        borderRadiusApplication: 'end',
-                        horizontal: false,
-                        columnWidth: '55%',
-                        dataLabels: { position: 'top' }
-                    }
-                },
-                dataLabels: {
-                    enabled: true,
-                    offsetY: -20,
-                    style: { fontSize: '12px', colors: ['white'] }
-                },
-                xaxis: {
-                    categories: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta'],
-                    labels: { style: { fontSize: '12px', fontWeight: 500, colors: 'white' } }
-                },
-                yaxis: {
-                    title: { text: 'Progress (%)', style: { fontSize: '12px', color: 'white' } },
-                    max: 100,
-                    labels: { formatter: (val) => `${val}%`, style: { colors: 'white' } }
-                },
+                series: [{ name: 'Completion Rate', data: [75, 45, 90, 60, 30, 85, 70] }],
+                chart: { type: 'bar', height: 350, toolbar: { show: false }, animations: { enabled: true, easing: 'easeinout', speed: 800 }, background: 'transparent' },
+                plotOptions: { bar: { borderRadius: 10, borderRadiusApplication: 'end', horizontal: false, columnWidth: '55%' } },
+                dataLabels: { enabled: true, offsetY: -20, style: { fontSize: '12px', colors: ['white'] } },
+                xaxis: { categories: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta'], labels: { style: { fontSize: '12px', fontWeight: 500, colors: 'white' } } },
+                yaxis: { title: { text: 'Progress (%)', style: { fontSize: '12px', color: 'white' } }, max: 100, labels: { formatter: (val) => `${val}%`, style: { colors: 'white' } } },
                 colors: ['#4facfe'],
-                fill: {
-                    type: 'gradient',
-                    gradient: {
-                        shade: 'light',
-                        type: 'vertical',
-                        shadeIntensity: 0.3,
-                        gradientToColors: ['#00f2fe'],
-                        inverseColors: false,
-                        opacityFrom: 0.85,
-                        opacityTo: 0.95
-                    }
-                },
-                grid: {
-                    borderColor: 'rgba(255,255,255,0.1)',
-                    row: { colors: ['rgba(255,255,255,0.05)', 'transparent'], opacity: 0.5 }
-                },
-                tooltip: {
-                    theme: 'dark',
-                    y: { formatter: (val) => `${val}% Complete` }
-                }
+                fill: { type: 'gradient', gradient: { shade: 'light', type: 'vertical', shadeIntensity: 0.3, gradientToColors: ['#00f2fe'], opacityFrom: 0.85, opacityTo: 0.95 } },
+                grid: { borderColor: 'rgba(255,255,255,0.1)' },
+                tooltip: { theme: 'dark', y: { formatter: (val) => `${val}% Complete` } }
             };
-            
             const chart = new ApexCharts(document.querySelector("#projectProgressChart"), options);
             chart.render();
         }
         
         async function loadRecentActivity() {
             const container = document.getElementById('recentActivity');
-            
             try {
                 const token = localStorage.getItem('token');
                 const response = await fetch('http://localhost:8000/api/activity-logs/me?limit=5', {
                     headers: { 'Authorization': `Bearer ${token}` }
                 });
-                
                 if (response.ok) {
                     const logs = await response.json();
                     if (logs && logs.length > 0) {
-                        const activities = logs.map(log => ({
-                            icon: getActivityIcon(log.action),
-                            text: log.details,
-                            time: getRelativeTime(log.timestamp),
-                            color: getActivityColor(log.action)
-                        }));
+                        const activities = logs.map(log => ({ icon: getActivityIcon(log.action), text: log.details, time: getRelativeTime(log.timestamp), color: getActivityColor(log.action) }));
                         renderActivities(container, activities);
                         return;
                     }
                 }
-            } catch (error) {
-                console.log('Using fallback activities');
-            }
+            } catch (error) {}
             
-            // Fallback activities
             const activities = [
                 { icon: 'fa-user-plus', text: 'New employee John Doe joined the team', time: '2 hours ago', color: 'success' },
                 { icon: 'fa-check-circle', text: 'Project "Mobile App" completed successfully', time: '5 hours ago', color: 'info' },
@@ -777,25 +594,12 @@
         }
         
         function getActivityIcon(action) {
-            const icons = {
-                'login': 'fa-sign-in-alt',
-                'create_employee': 'fa-user-plus',
-                'update_task': 'fa-edit',
-                'check_in': 'fa-clock',
-                'check_out': 'fa-clock',
-                'delete_project': 'fa-trash'
-            };
+            const icons = { 'login': 'fa-sign-in-alt', 'create_employee': 'fa-user-plus', 'update_task': 'fa-edit', 'check_in': 'fa-clock', 'check_out': 'fa-clock', 'delete_project': 'fa-trash' };
             return icons[action] || 'fa-bell';
         }
         
         function getActivityColor(action) {
-            const colors = {
-                'login': 'info',
-                'create_employee': 'success',
-                'update_task': 'primary',
-                'check_in': 'success',
-                'check_out': 'warning'
-            };
+            const colors = { 'login': 'info', 'create_employee': 'success', 'update_task': 'primary', 'check_in': 'success', 'check_out': 'warning' };
             return colors[action] || 'secondary';
         }
         
@@ -806,7 +610,6 @@
             const diffMins = Math.floor(diffMs / 60000);
             const diffHours = Math.floor(diffMs / 3600000);
             const diffDays = Math.floor(diffMs / 86400000);
-            
             if (diffMins < 1) return 'Just now';
             if (diffMins < 60) return `${diffMins} minute${diffMins > 1 ? 's' : ''} ago`;
             if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
@@ -815,17 +618,7 @@
         }
         
         function renderActivities(container, activities) {
-            container.innerHTML = activities.map(act => `
-                <div class="activity-item">
-                    <div class="activity-icon bg-${act.color}-light">
-                        <i class="fas ${act.icon}"></i>
-                    </div>
-                    <div class="activity-content">
-                        <div class="activity-text">${act.text}</div>
-                        <div class="activity-time">${act.time}</div>
-                    </div>
-                </div>
-            `).join('');
+            container.innerHTML = activities.map(act => `<div class="activity-item"><div class="activity-icon bg-${act.color}-light"><i class="fas ${act.icon}"></i></div><div class="activity-content"><div class="activity-text">${act.text}</div><div class="activity-time">${act.time}</div></div></div>`).join('');
         }
     </script>
 </body>

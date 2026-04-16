@@ -18,7 +18,43 @@
             line-height: 1.5;
         }
 
-        /* Glass Widget */
+        /* FIX: Ensure all text is white */
+        body, .dashboard-widget, .notification-item, .empty-state,
+        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted, .btn-link {
+            color: white;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
+        .header-with-logout {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            background: rgba(245, 101, 101, 0.2);
+            border: 1px solid rgba(245, 101, 101, 0.5);
+            border-radius: 40px;
+            padding: 10px 24px;
+            color: #f56565;
+            font-weight: 600;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .logout-btn:hover {
+            background: rgba(245, 101, 101, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+        }
+
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -38,14 +74,13 @@
         h2 {
             color: white;
             font-weight: 600;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0;
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        /* Buttons */
         .btn-outline-primary {
             background: rgba(79, 172, 254, 0.2);
             border: 1px solid #4facfe;
@@ -80,7 +115,6 @@
             transform: translateY(-1px);
         }
 
-        /* Notification Items */
         .notification-item {
             padding: 1.2rem 1.5rem;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -103,18 +137,6 @@
             border-left: 3px solid #4facfe;
         }
 
-        .notification-item.unread::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, rgba(79, 172, 254, 0.05), transparent);
-            pointer-events: none;
-        }
-
-        /* Notification Icon */
         .notification-icon {
             width: 45px;
             height: 45px;
@@ -153,7 +175,6 @@
             color: rgba(255, 255, 255, 0.5);
         }
 
-        /* Unread Badge */
         .unread-badge {
             display: inline-block;
             width: 8px;
@@ -165,18 +186,11 @@
         }
 
         @keyframes pulse {
-            0% {
-                box-shadow: 0 0 0 0 rgba(79, 172, 254, 0.7);
-            }
-            70% {
-                box-shadow: 0 0 0 6px rgba(79, 172, 254, 0);
-            }
-            100% {
-                box-shadow: 0 0 0 0 rgba(79, 172, 254, 0);
-            }
+            0% { box-shadow: 0 0 0 0 rgba(79, 172, 254, 0.7); }
+            70% { box-shadow: 0 0 0 6px rgba(79, 172, 254, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(79, 172, 254, 0); }
         }
 
-        /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
             width: 40px;
@@ -191,7 +205,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 3rem;
@@ -203,11 +216,6 @@
             margin-bottom: 1rem;
         }
 
-        .empty-state p {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -224,6 +232,10 @@
             align-items: flex-start;
         }
 
+        .justify-content-end {
+            justify-content: flex-end;
+        }
+
         .mb-1 {
             margin-bottom: 0.25rem;
         }
@@ -236,12 +248,12 @@
             margin-right: 0.5rem;
         }
 
-        .text-center {
-            text-align: center;
+        .ms-2 {
+            margin-left: 0.5rem;
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
+        .text-center {
+            text-align: center;
         }
 
         .py-5 {
@@ -249,7 +261,6 @@
             padding-bottom: 3rem;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -265,40 +276,44 @@
             border-radius: 10px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .notification-item {
                 padding: 1rem;
             }
-            
             .notification-icon {
                 width: 35px;
                 height: 35px;
             }
-            
             .notification-title {
                 font-size: 0.9rem;
             }
-            
             .notification-message {
                 font-size: 0.75rem;
             }
-            
             h2 {
                 font-size: 1.5rem;
             }
-            
             .btn-outline-primary {
                 padding: 8px 16px;
                 font-size: 0.85rem;
+            }
+            .header-with-logout {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
     </style>
 </head>
 <body>
     <div>
-        <div class="d-flex justify-content-between align-items-center mb-4">
+        <div class="header-with-logout">
             <h2><i class="fas fa-bell me-2"></i> Notifications</h2>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+            </button>
+        </div>
+        
+        <div class="d-flex justify-content-end mb-4">
             <button class="btn-outline-primary" onclick="markAllRead()">
                 <i class="fas fa-check-double me-2"></i> Mark All Read
             </button>
@@ -316,6 +331,11 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
+        function logout() {
+            localStorage.clear();
+            window.location.href = 'index.html';
+        }
+        
         async function loadNotifications() {
             try {
                 const response = await fetch('http://localhost:8000/api/notifications/', {
@@ -336,13 +356,11 @@
                         return;
                     }
                     
-                    // Separate unread and read notifications
                     const unreadNotifs = notifs.filter(n => !n.is_read);
                     const readNotifs = notifs.filter(n => n.is_read);
                     const allNotifs = [...unreadNotifs, ...readNotifs];
                     
                     container.innerHTML = allNotifs.map(notif => {
-                        // Determine icon based on notification type
                         let icon = 'fa-bell';
                         let iconColor = '#4facfe';
                         
@@ -355,11 +373,11 @@
                         } else if (notif.type === 'danger') {
                             icon = 'fa-times-circle';
                             iconColor = '#f56565';
-                        } else if (notif.title.toLowerCase().includes('leave')) {
+                        } else if (notif.title?.toLowerCase().includes('leave')) {
                             icon = 'fa-calendar-alt';
-                        } else if (notif.title.toLowerCase().includes('task')) {
+                        } else if (notif.title?.toLowerCase().includes('task')) {
                             icon = 'fa-tasks';
-                        } else if (notif.title.toLowerCase().includes('project')) {
+                        } else if (notif.title?.toLowerCase().includes('project')) {
                             icon = 'fa-project-diagram';
                         }
                         
@@ -467,23 +485,7 @@
             setTimeout(() => toastDiv.remove(), 3000);
         }
         
-        // Add toast styles if not exists
-        const style = document.createElement('style');
-        style.textContent = `
-            .toast-glass {
-                background: rgba(15, 32, 39, 0.95);
-                backdrop-filter: blur(12px);
-                border: 1px solid rgba(79, 172, 254, 0.3);
-                border-radius: 16px;
-                color: white;
-            }
-        `;
-        document.head.appendChild(style);
-        
-        // Load notifications on page load
         loadNotifications();
-        
-        // Auto-refresh notifications every 30 seconds
         setInterval(loadNotifications, 30000);
     </script>
 </body>

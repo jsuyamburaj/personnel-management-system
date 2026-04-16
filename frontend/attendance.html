@@ -18,7 +18,16 @@
             line-height: 1.5;
         }
 
-        /* Header with Logout */
+        /* FIX: Ensure all text is white */
+        body, .dashboard-widget, .table, .alert, .btn,
+        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted {
+            color: white;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -46,7 +55,6 @@
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
 
-        /* Glass Widget */
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -77,7 +85,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Grid System */
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -100,11 +107,6 @@
             margin-bottom: 1rem;
         }
 
-        .mt-3 {
-            margin-top: 1rem;
-        }
-
-        /* Buttons */
         .btn {
             padding: 10px 24px;
             border: none;
@@ -140,7 +142,6 @@
             transform: none;
         }
 
-        /* Alerts */
         .alert {
             padding: 12px 16px;
             border-radius: 16px;
@@ -166,7 +167,6 @@
             color: #ed8936;
         }
 
-        /* Table Styles */
         .table-responsive {
             overflow-x: auto;
         }
@@ -194,7 +194,6 @@
             background: rgba(79, 172, 254, 0.1);
         }
 
-        /* Badge Styles */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -213,7 +212,6 @@
             color: #a0aec0;
         }
 
-        /* Stats Text */
         #attendanceStats p {
             margin-bottom: 8px;
             color: rgba(255, 255, 255, 0.9);
@@ -224,7 +222,6 @@
             color: #4facfe;
         }
 
-        /* Loading Spinner */
         .spinner-border {
             display: inline-block;
             width: 40px;
@@ -239,7 +236,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Flex Utilities */
         .d-flex {
             display: flex;
         }
@@ -260,7 +256,6 @@
             margin-right: 0.5rem;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -276,37 +271,27 @@
             border-radius: 10px;
         }
 
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00f2fe;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .dashboard-widget {
                 padding: 1rem;
             }
-            
             .col-md-6 {
                 width: 100%;
                 margin-bottom: 1rem;
             }
-            
             h2 {
                 font-size: 1.5rem;
             }
-            
             .btn {
                 padding: 8px 16px;
                 font-size: 0.85rem;
             }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
 
-        /* Animation */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -325,7 +310,6 @@
 </head>
 <body>
     <div class="dashboard-container">
-        <!-- Header with Logout Button -->
         <div class="header-with-logout">
             <h2><i class="fas fa-calendar-check me-2"></i> Attendance Management</h2>
             <button class="logout-btn" onclick="logout()">
@@ -333,7 +317,6 @@
             </button>
         </div>
         
-        <!-- Quick Actions -->
         <div class="row g-4 mb-4">
             <div class="col-md-6">
                 <div class="dashboard-widget text-center">
@@ -364,7 +347,6 @@
             </div>
         </div>
         
-        <!-- Attendance History Table -->
         <div class="dashboard-widget">
             <h5 class="mb-3"><i class="fas fa-history me-2"></i> Attendance History</h5>
             <div class="table-responsive">
@@ -383,10 +365,10 @@
                             <td colspan="5" class="text-center">
                                 <div class="spinner-border"></div>
                                 <p class="mt-2">Loading attendance records...</p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                            </tr
+                        </tbody>
+                    </table
+                </div>
             </div>
         </div>
     </div>
@@ -422,7 +404,6 @@
                         statusDiv.innerHTML = '<div class="alert alert-warning"><i class="fas fa-exclamation-triangle me-2"></i> Not checked in today</div>';
                     }
                     if (data.check_in && !data.check_out) {
-                        // Calculate working hours so far
                         const now = new Date();
                         const checkIn = new Date(data.check_in);
                         const hoursWorked = ((now - checkIn) / 3600000).toFixed(1);
@@ -446,7 +427,7 @@
                     const history = await response.json();
                     const tbody = document.getElementById('attendanceHistory');
                     if (history.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records found</td></tr>';
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">No attendance records found</tr';
                         return;
                     }
                     tbody.innerHTML = history.map(record => {
@@ -459,19 +440,17 @@
                         } else {
                             statusBadge = '<span class="badge bg-secondary">Absent</span>';
                         }
-                        
                         return `
                             <tr>
-                                <td><i class="fas fa-calendar-day me-2"></i>${record.date}</td>
-                                <td>${record.check_in ? '<i class="fas fa-clock me-1"></i>' + new Date(record.check_in).toLocaleTimeString() : '-'}</td>
-                                <td>${record.check_out ? '<i class="fas fa-clock me-1"></i>' + new Date(record.check_out).toLocaleTimeString() : '-'}</td>
-                                <td><strong>${record.total_hours || 0}</strong> hrs</td>
-                                <td>${statusBadge}</td>
+                                <td><i class="fas fa-calendar-day me-2"></i>${record.date}</td
+                                <td>${record.check_in ? '<i class="fas fa-clock me-1"></i>' + new Date(record.check_in).toLocaleTimeString() : '-'}</td
+                                <td>${record.check_out ? '<i class="fas fa-clock me-1"></i>' + new Date(record.check_out).toLocaleTimeString() : '-'}</td
+                                <td><strong>${record.total_hours || 0}</strong> hrs</td
+                                <td>${statusBadge}</td
                             </tr>
                         `;
                     }).join('');
                     
-                    // Calculate stats
                     const totalHours = history.reduce((sum, r) => sum + (r.total_hours || 0), 0);
                     const presentDays = history.filter(r => r.status === 'Present').length;
                     document.getElementById('totalHours').innerText = totalHours.toFixed(1);
@@ -479,7 +458,7 @@
                 }
             } catch (error) {
                 console.error('Error loading history:', error);
-                document.getElementById('attendanceHistory').innerHTML = '<tr><td colspan="5" class="text-center text-danger">Failed to load attendance history</td></tr>';
+                document.getElementById('attendanceHistory').innerHTML = '<tr><td colspan="5" class="text-center text-danger">Failed to load attendance history</tr';
             }
         }
         
@@ -524,58 +503,24 @@
         }
         
         function showNotification(message, type) {
-            // Create notification element
             const notification = document.createElement('div');
-            notification.className = `notification notification-${type}`;
             notification.innerHTML = `
-                <div style="
-                    position: fixed;
-                    top: 20px;
-                    right: 20px;
-                    background: ${type === 'success' ? 'rgba(72, 187, 120, 0.95)' : 'rgba(245, 101, 101, 0.95)'};
-                    backdrop-filter: blur(10px);
-                    color: white;
-                    padding: 12px 20px;
-                    border-radius: 16px;
-                    z-index: 9999;
-                    animation: slideIn 0.3s ease;
-                    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-                ">
+                <div style="position: fixed; top: 20px; right: 20px; background: ${type === 'success' ? 'rgba(72, 187, 120, 0.95)' : 'rgba(245, 101, 101, 0.95)'}; backdrop-filter: blur(10px); color: white; padding: 12px 20px; border-radius: 16px; z-index: 9999; animation: slideIn 0.3s ease; box-shadow: 0 4px 12px rgba(0,0,0,0.2);">
                     ${message}
                 </div>
             `;
             document.body.appendChild(notification);
-            
-            // Add animation styles if not exists
             if (!document.querySelector('#notification-styles')) {
                 const style = document.createElement('style');
                 style.id = 'notification-styles';
-                style.textContent = `
-                    @keyframes slideIn {
-                        from {
-                            transform: translateX(100%);
-                            opacity: 0;
-                        }
-                        to {
-                            transform: translateX(0);
-                            opacity: 1;
-                        }
-                    }
-                `;
+                style.textContent = `@keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }`;
                 document.head.appendChild(style);
             }
-            
-            // Remove notification after 3 seconds
-            setTimeout(() => {
-                notification.remove();
-            }, 3000);
+            setTimeout(() => notification.remove(), 3000);
         }
         
-        // Load data on page load
         loadTodayAttendance();
         loadAttendanceHistory();
-        
-        // Auto-refresh every 30 seconds
         setInterval(() => {
             loadTodayAttendance();
             loadAttendanceHistory();

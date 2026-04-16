@@ -10,14 +10,24 @@
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             background: transparent;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: white;
+            line-height: 1.5;
+        }
+
+        /* FIX: Ensure all text is white */
+        body, .dashboard-widget, .table, .form-control, .form-select,
+        h1, h2, h3, h4, h5, h6, p, span, div, label, .text-muted {
             color: white;
         }
-        
-        /* Header with Logout */
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -26,7 +36,7 @@
             flex-wrap: wrap;
             gap: 15px;
         }
-        
+
         .logout-btn {
             background: rgba(245, 101, 101, 0.2);
             border: 1px solid rgba(245, 101, 101, 0.5);
@@ -38,69 +48,62 @@
             cursor: pointer;
             font-size: 0.9rem;
         }
-        
+
         .logout-btn:hover {
             background: rgba(245, 101, 101, 0.4);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
-        
-        /* Glass Widget */
+
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
-            border-radius: 28px;
+            border-radius: 24px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             border: 1px solid rgba(255, 255, 255, 0.2);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .dashboard-widget:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
         }
-        
+
         h2 {
             color: white;
             font-weight: 600;
             margin-bottom: 0;
-            background: linear-gradient(135deg, #fff, #4facfe);
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
-        
-        /* Form Controls */
+
+        .form-control, .form-select {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            color: white;
+            padding: 10px 16px;
+            transition: all 0.3s;
+        }
+
+        .form-control:focus, .form-select:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+            color: white;
+            outline: none;
+        }
+
         .form-label {
             color: rgba(255, 255, 255, 0.9);
             font-weight: 500;
             margin-bottom: 0.5rem;
             display: block;
         }
-        
-        .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
-            transition: all 0.3s;
-        }
-        
-        .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.2);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.3);
-            color: white;
-            outline: none;
-        }
-        
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-        
-        /* Button Styles */
+
         .btn-primary {
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             border: none;
@@ -110,138 +113,94 @@
             color: white;
             transition: all 0.3s;
         }
-        
+
         .btn-primary:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
         }
-        
-        /* Table Styles */
+
         .table-responsive {
             overflow-x: auto;
         }
-        
+
         .table {
+            width: 100%;
             color: white;
-            margin-bottom: 0;
+            border-collapse: collapse;
         }
-        
+
         .table thead th {
             border-bottom: 2px solid rgba(79, 172, 254, 0.5);
-            color: #4facfe;
-            font-weight: 600;
             padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #4facfe;
         }
-        
+
         .table tbody td {
             padding: 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             vertical-align: middle;
         }
-        
+
         .table tbody tr:hover {
             background: rgba(79, 172, 254, 0.1);
         }
-        
-        /* Badge Styles */
+
         .badge {
+            display: inline-block;
             padding: 5px 12px;
             border-radius: 20px;
             font-size: 0.75rem;
             font-weight: 500;
         }
-        
+
         .bg-secondary {
-            background: rgba(79, 172, 254, 0.3) !important;
+            background: rgba(79, 172, 254, 0.3);
             color: #4facfe;
         }
-        
-        /* Text Colors */
-        .text-center {
-            text-align: center;
-        }
-        
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
-        
-        .text-danger {
-            color: #f56565 !important;
-        }
-        
-        /* Grid System */
+
         .row {
             display: flex;
             flex-wrap: wrap;
             margin-right: -0.75rem;
             margin-left: -0.75rem;
         }
-        
+
         .col-md-3 {
             flex: 0 0 auto;
             width: 25%;
             padding-right: 0.75rem;
             padding-left: 0.75rem;
         }
-        
-        .mb-4 {
-            margin-bottom: 1.5rem;
-        }
-        
-        .mt-3 {
-            margin-top: 1rem;
-        }
-        
-        .w-100 {
-            width: 100%;
-        }
-        
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-        
-        /* Responsive */
+
         @media (max-width: 768px) {
-            .dashboard-widget {
-                padding: 1rem;
-            }
-            
             .col-md-3 {
                 width: 100%;
                 margin-bottom: 1rem;
             }
-            
-            h2 {
-                font-size: 1.5rem;
-            }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
-        
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+
+        .text-center {
+            text-align: center;
         }
-        
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
+
+        .mb-4 {
+            margin-bottom: 1.5rem;
         }
-        
-        ::-webkit-scrollbar-thumb {
-            background: #4facfe;
-            border-radius: 10px;
+
+        .w-100 {
+            width: 100%;
         }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: #00f2fe;
+
+        .me-2 {
+            margin-right: 0.5rem;
         }
-        
-        /* Loading Spinner */
+
         .loading-spinner {
             display: inline-block;
             width: 30px;
@@ -251,20 +210,29 @@
             border-top-color: #4facfe;
             animation: spin 0.8s linear infinite;
         }
-        
+
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-        
-        /* Filter Row Gap */
-        .gap-3 {
-            gap: 1rem;
+
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4facfe;
+            border-radius: 10px;
         }
     </style>
 </head>
 <body>
     <div>
-        <!-- Header with Logout Button -->
         <div class="header-with-logout">
             <h2><i class="fas fa-history me-2"></i> Activity Logs</h2>
             <button class="logout-btn" onclick="logout()">
@@ -272,9 +240,8 @@
             </button>
         </div>
         
-        <!-- Filters -->
         <div class="dashboard-widget mb-4">
-            <div class="row g-3">
+            <div class="row">
                 <div class="col-md-3">
                     <label class="form-label">Action Type</label>
                     <select class="form-select" id="actionFilter">
@@ -305,7 +272,6 @@
             </div>
         </div>
         
-        <!-- Logs Table -->
         <div class="dashboard-widget">
             <div class="table-responsive">
                 <table class="table">
@@ -322,10 +288,10 @@
                             <td colspan="4" class="text-center">
                                 <div class="loading-spinner"></div>
                                 <p class="mt-2 text-muted">Loading activity logs...</p>
-                            </td>
+                            </td
                         </tr>
                     </tbody>
-                </table>
+                </table
             </div>
         </div>
     </div>
@@ -348,7 +314,7 @@
             if (to) url += `&to_date=${to}`;
             
             const tbody = document.getElementById('logsTable');
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center"><div class="loading-spinner"></div><p class="mt-2 text-muted">Loading...</p></td></tr>';
+            tbody.innerHTML = '<tr><td colspan="4" class="text-center"><div class="loading-spinner"></div><p class="mt-2 text-muted">Loading...</p></tr';
             
             try {
                 const response = await fetch(url, {
@@ -364,13 +330,12 @@
                                 <td colspan="4" class="text-center">
                                     <i class="fas fa-inbox fa-2x text-muted mb-2 d-block"></i>
                                     <p class="text-muted">No activity logs found</p>
-                                 </td>
-                             </tr>
+                                </td
+                            </tr>
                         `;
                         return;
                     }
                     
-                    // Group logs by date for better readability
                     const groupedLogs = logs.reduce((acc, log) => {
                         const date = new Date(log.timestamp).toLocaleDateString();
                         if (!acc[date]) acc[date] = [];
@@ -383,11 +348,10 @@
                         html += `<tr style="background: rgba(79, 172, 254, 0.1);">
                                     <td colspan="4" style="font-weight: 600;">
                                         <i class="fas fa-calendar-day me-2"></i> ${date}
-                                    </td>
+                                    </td
                                 </tr>`;
                         
                         dateLogs.forEach(log => {
-                            // Get icon based on action
                             let actionIcon = 'fa-circle-info';
                             let actionColor = '#4facfe';
                             
@@ -404,20 +368,10 @@
                             
                             html += `
                                 <tr>
-                                    <td>
-                                        <i class="fas fa-user-circle me-2" style="color: #4facfe;"></i>
-                                        ${log.user_email}
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-secondary">
-                                            <i class="fas ${actionIcon} me-1"></i> ${log.action.replace(/_/g, ' ')}
-                                        </span>
-                                    </td>
-                                    <td>${log.details || 'No details'}</td>
-                                    <td>
-                                        <i class="far fa-clock me-1"></i>
-                                        ${new Date(log.timestamp).toLocaleTimeString()}
-                                    </td>
+                                    <td><i class="fas fa-user-circle me-2" style="color: #4facfe;"></i> ${log.user_email}</td
+                                    <td><span class="badge bg-secondary"><i class="fas ${actionIcon} me-1"></i> ${log.action.replace(/_/g, ' ')}</span></td
+                                    <td>${log.details || 'No details'}</td
+                                    <td><i class="far fa-clock me-1"></i> ${new Date(log.timestamp).toLocaleTimeString()}</td
                                 </tr>
                             `;
                         });
@@ -435,13 +389,12 @@
                             <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2 d-block"></i>
                             <p class="text-danger">Failed to load activity logs</p>
                             <small class="text-muted">Please check if the backend server is running</small>
-                        </td>
+                        </td
                     </tr>
                 `;
             }
         }
         
-        // Add event listeners for Enter key on date inputs
         document.getElementById('fromDate')?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') loadActivityLogs();
         });
@@ -450,7 +403,6 @@
             if (e.key === 'Enter') loadActivityLogs();
         });
         
-        // Load logs on page load
         loadActivityLogs();
     </script>
 </body>

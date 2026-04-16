@@ -18,7 +18,16 @@
             line-height: 1.5;
         }
 
-        /* Header with Logout */
+        /* FIX: Ensure all text is white */
+        body, .dashboard-widget, .form-control, .modal-content,
+        h1, h2, h3, h4, h5, h6, p, span, div, label, small, .text-muted {
+            color: white;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -46,7 +55,6 @@
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
 
-        /* Glass Widget */
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -82,7 +90,6 @@
             margin-bottom: 1rem;
         }
 
-        /* User Avatar */
         .user-avatar-lg {
             width: 120px;
             height: 120px;
@@ -106,7 +113,6 @@
             color: #4facfe;
         }
 
-        /* Form Controls */
         .form-control {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -142,7 +148,6 @@
             display: block;
         }
 
-        /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             border: none;
@@ -160,7 +165,6 @@
             box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
         }
 
-        /* Grid System */
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -186,20 +190,14 @@
             .col-md-4, .col-md-8 {
                 width: 100%;
             }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
 
-        /* Utility Classes */
         .text-center {
             text-align: center;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
         }
 
         .mb-2 {
@@ -214,20 +212,10 @@
             margin-bottom: 1.5rem;
         }
 
-        .mt-3 {
-            margin-top: 1rem;
-        }
-
-        .mx-auto {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
         .me-2 {
             margin-right: 0.5rem;
         }
 
-        /* Role Badge */
         .role-badge {
             display: inline-block;
             padding: 4px 16px;
@@ -238,7 +226,6 @@
             margin-top: 0.5rem;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -254,7 +241,6 @@
             border-radius: 10px;
         }
 
-        /* Toast Notification */
         .toast-glass {
             background: rgba(15, 32, 39, 0.95);
             backdrop-filter: blur(12px);
@@ -263,38 +249,31 @@
             color: white;
         }
 
-        /* Divider */
         .divider {
             height: 1px;
             background: linear-gradient(90deg, transparent, rgba(79, 172, 254, 0.5), transparent);
             margin: 1rem 0;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .dashboard-widget {
                 padding: 1rem;
             }
-            
             .user-avatar-lg {
                 width: 80px;
                 height: 80px;
             }
-            
             .user-avatar-lg i {
                 font-size: 2.5rem;
             }
-            
             h2 {
                 font-size: 1.5rem;
             }
-            
             .btn-primary {
                 width: 100%;
             }
         }
 
-        /* Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -313,7 +292,6 @@
 </head>
 <body>
     <div>
-        <!-- Header with Logout Button -->
         <div class="header-with-logout">
             <h2><i class="fas fa-user-circle me-2"></i> My Profile</h2>
             <button class="logout-btn" onclick="logout()">
@@ -388,7 +366,6 @@
             document.getElementById('email').value = user.email || '';
             document.getElementById('department').value = user.department || 'Not specified';
             
-            // Load additional employee details
             try {
                 const response = await fetch('http://localhost:8000/api/employees/', {
                     headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
@@ -423,7 +400,6 @@
                 skills: document.getElementById('skills').value
             };
             
-            // Show loading state on button
             const btn = event.target;
             const originalText = btn.innerHTML;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Updating...';
@@ -441,7 +417,6 @@
                 
                 if (response.ok) {
                     showNotification('Profile updated successfully!', 'success');
-                    // Update local storage
                     const user = JSON.parse(localStorage.getItem('user') || '{}');
                     user.full_name = data.full_name;
                     localStorage.setItem('user', JSON.stringify(user));
@@ -478,23 +453,13 @@
             setTimeout(() => toastDiv.remove(), 3000);
         }
         
-        // Add toast styles if not exists
         if (!document.querySelector('#toast-styles')) {
             const style = document.createElement('style');
             style.id = 'toast-styles';
-            style.textContent = `
-                .toast-glass {
-                    background: rgba(15, 32, 39, 0.95);
-                    backdrop-filter: blur(12px);
-                    border: 1px solid rgba(79, 172, 254, 0.3);
-                    border-radius: 16px;
-                    color: white;
-                }
-            `;
+            style.textContent = `.toast-glass { background: rgba(15, 32, 39, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(79, 172, 254, 0.3); border-radius: 16px; color: white; }`;
             document.head.appendChild(style);
         }
         
-        // Load profile on page load
         loadProfile();
     </script>
 </body>

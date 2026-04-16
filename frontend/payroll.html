@@ -18,7 +18,16 @@
             line-height: 1.5;
         }
 
-        /* Header with Logout */
+        /* FIX: Ensure all text is white */
+        body, .dashboard-widget, .table, .empty-state,
+        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted {
+            color: white;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -46,7 +55,6 @@
             box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
         }
 
-        /* Glass Widget */
         .dashboard-widget {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(12px);
@@ -88,7 +96,6 @@
             font-weight: 600;
         }
 
-        /* Table Styles */
         .table-responsive {
             overflow-x: auto;
         }
@@ -117,7 +124,6 @@
             background: rgba(79, 172, 254, 0.1);
         }
 
-        /* Badge Styles */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -136,7 +142,6 @@
             color: #ed8936;
         }
 
-        /* Grid System */
         .row {
             display: flex;
             flex-wrap: wrap;
@@ -155,14 +160,12 @@
             .col-md-6 {
                 width: 100%;
             }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
         }
 
-        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -195,11 +198,6 @@
             margin-right: 0.5rem;
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
-
-        /* Salary Card Specific */
         .salary-card {
             text-align: center;
             position: relative;
@@ -232,7 +230,6 @@
             z-index: 1;
         }
 
-        /* Loading Spinner */
         .loading-spinner {
             display: inline-block;
             width: 40px;
@@ -247,7 +244,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Empty State */
         .empty-state {
             text-align: center;
             padding: 2rem;
@@ -259,7 +255,6 @@
             margin-bottom: 1rem;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -275,22 +270,18 @@
             border-radius: 10px;
         }
 
-        /* Amount Highlight */
         .amount-highlight {
             font-weight: 700;
             color: #4facfe;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .dashboard-widget {
                 padding: 1rem;
             }
-            
             h3 {
                 font-size: 1.8rem;
             }
-            
             .table thead th,
             .table tbody td {
                 padding: 8px;
@@ -301,7 +292,6 @@
 </head>
 <body>
     <div>
-        <!-- Header with Logout Button -->
         <div class="header-with-logout">
             <h2><i class="fas fa-money-bill-wave me-2"></i> Payroll Management</h2>
             <button class="logout-btn" onclick="logout()">
@@ -309,7 +299,6 @@
             </button>
         </div>
         
-        <!-- Salary Summary Card -->
         <div class="row mb-4">
             <div class="col-md-6">
                 <div class="dashboard-widget salary-card">
@@ -326,7 +315,6 @@
             </div>
         </div>
         
-        <!-- Payroll History -->
         <div class="dashboard-widget">
             <h5 class="mb-3"><i class="fas fa-history me-2"></i> Payroll History</h5>
             <div class="table-responsive">
@@ -346,10 +334,10 @@
                             <td colspan="6" class="text-center">
                                 <div class="loading-spinner"></div>
                                 <p class="mt-2">Loading payroll records...</p>
-                            </td
-                        </tr>
-                    </tbody>
-                </table>
+                            </tr
+                        </tbody>
+                    </table
+                </div>
             </div>
         </div>
     </div>
@@ -380,7 +368,7 @@
                                         <p>No payroll records found</p>
                                         <small class="text-muted">Payroll data will appear here once processed</small>
                                     </div>
-                                </td>
+                                </td
                             </tr>
                         `;
                         document.getElementById('currentSalary').innerHTML = `
@@ -393,10 +381,8 @@
                         return;
                     }
                     
-                    // Show current month (first record)
                     const latest = payrolls[0];
                     const formattedNetSalary = formatCurrency(latest.net_salary || 0);
-                    const formattedBasic = formatCurrency(latest.basic_salary || 0);
                     
                     document.getElementById('currentSalary').innerHTML = `
                         <div class="salary-amount">
@@ -413,8 +399,7 @@
                         </div>
                     `;
                     
-                    // Animate the salary number
-                    animateValue('currentSalaryAmount', 0, latest.net_salary || 0, 1000);
+                    animateSalary(latest.net_salary || 0);
                     
                     tbody.innerHTML = payrolls.map(p => {
                         let statusIcon = '';
@@ -429,26 +414,14 @@
                             statusIcon = 'fa-clock';
                             statusClass = 'bg-warning';
                         }
-                        
                         return `
                             <tr>
-                                <td>
-                                    <i class="fas fa-calendar-alt me-1" style="color: #4facfe;"></i>
-                                    ${p.month}
-                                </td>
-                                <td>
-                                    <span class="amount-highlight">${formatCurrency(p.basic_salary || 0)}</span>
-                                </td>
-                                <td>${formatCurrency(p.allowances || 0)}</td>
-                                <td>${formatCurrency(p.deductions || 0)}</td>
-                                <td>
-                                    <strong style="color: #4facfe;">${formatCurrency(p.net_salary || 0)}</strong>
-                                </td>
-                                <td>
-                                    <span class="badge ${statusClass}">
-                                        <i class="fas ${statusIcon} me-1"></i>${p.status}
-                                    </span>
-                                </td>
+                                <td><i class="fas fa-calendar-alt me-1" style="color: #4facfe;"></i> ${p.month}</td
+                                <td><span class="amount-highlight">${formatCurrency(p.basic_salary || 0)}</span></td
+                                <td>${formatCurrency(p.allowances || 0)}</td
+                                <td>${formatCurrency(p.deductions || 0)}</td
+                                <td><strong style="color: #4facfe;">${formatCurrency(p.net_salary || 0)}</strong></td
+                                <td><span class="badge ${statusClass}"><i class="fas ${statusIcon} me-1"></i>${p.status}</span></td
                             </tr>
                         `;
                     }).join('');
@@ -465,7 +438,7 @@
                                 <p class="text-danger">Failed to load payroll data</p>
                                 <small class="text-muted">Please check your connection and try again</small>
                             </div>
-                        </td>
+                        </td
                     </tr>
                 `;
                 document.getElementById('currentSalary').innerHTML = `
@@ -487,16 +460,14 @@
             }).format(amount);
         }
         
-        function animateValue(elementId, start, end, duration) {
-            // This is a placeholder - the actual salary display doesn't have a specific element ID
-            // We'll animate the text content of the h3 element
+        function animateSalary(end) {
             const h3Element = document.querySelector('#currentSalary h3');
             if (!h3Element) return;
-            
+            const start = 0;
+            const duration = 1000;
             const range = end - start;
             const increment = range / (duration / 16);
             let current = start;
-            
             const timer = setInterval(() => {
                 current += increment;
                 if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
@@ -508,46 +479,7 @@
             }, 16);
         }
         
-        // Helper function to show toast notifications (optional)
-        function showNotification(message, type) {
-            const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed top-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
-                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px; background: rgba(15,32,39,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(79,172,254,0.3); border-radius: 16px; color: white;">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(toastDiv);
-            setTimeout(() => toastDiv.remove(), 3000);
-        }
-        
-        // Add toast styles if not exists
-        if (!document.querySelector('#toast-styles')) {
-            const style = document.createElement('style');
-            style.id = 'toast-styles';
-            style.textContent = `
-                .toast-glass {
-                    background: rgba(15, 32, 39, 0.95);
-                    backdrop-filter: blur(12px);
-                    border: 1px solid rgba(79, 172, 254, 0.3);
-                    border-radius: 16px;
-                    color: white;
-                }
-            `;
-            document.head.appendChild(style);
-        }
-        
-        // Load payroll data on page load
         loadMyPayroll();
-        
-        // Auto-refresh every 60 seconds
         setInterval(loadMyPayroll, 60000);
     </script>
 </body>

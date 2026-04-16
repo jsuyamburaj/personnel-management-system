@@ -18,7 +18,16 @@
             line-height: 1.5;
         }
 
-        /* Header with Logout */
+        /* FIX: Ensure all text is white */
+        body, .kanban-column, .task-card, .modal-content, .form-control, .form-select,
+        h1, h2, h3, h4, h5, h6, p, span, div, label, .text-muted, .dropdown-item {
+            color: white;
+        }
+
+        .text-muted {
+            color: rgba(255, 255, 255, 0.7) !important;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
@@ -56,7 +65,6 @@
             color: transparent;
         }
 
-        /* Kanban Board */
         .kanban-board {
             display: flex;
             gap: 24px;
@@ -65,7 +73,6 @@
             min-height: 550px;
         }
 
-        /* Kanban Column - Glass */
         .kanban-column {
             flex: 1;
             min-width: 320px;
@@ -110,7 +117,6 @@
             color: #4facfe;
         }
 
-        /* Task Card - Improved Styling */
         .task-card {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(8px);
@@ -135,12 +141,6 @@
             border-color: rgba(79, 172, 254, 0.3);
         }
 
-        .task-card.dragging {
-            opacity: 0.5;
-            cursor: grabbing;
-        }
-
-        /* Task Title */
         .task-title {
             font-weight: 600;
             font-size: 0.95rem;
@@ -149,7 +149,6 @@
             line-height: 1.4;
         }
 
-        /* Task Description */
         .task-description {
             font-size: 0.75rem;
             color: rgba(255, 255, 255, 0.6);
@@ -157,7 +156,6 @@
             line-height: 1.4;
         }
 
-        /* Priority Badges - Improved */
         .task-priority {
             display: inline-flex;
             align-items: center;
@@ -167,23 +165,25 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
+
         .priority-high { 
             background: rgba(220, 38, 38, 0.2); 
             color: #f56565; 
             border: 1px solid rgba(220, 38, 38, 0.3);
         }
+
         .priority-medium { 
             background: rgba(237, 137, 54, 0.2); 
             color: #ed8936; 
             border: 1px solid rgba(237, 137, 54, 0.3);
         }
+
         .priority-low { 
             background: rgba(72, 187, 120, 0.2); 
             color: #48bb78; 
             border: 1px solid rgba(72, 187, 120, 0.3);
         }
 
-        /* Task Meta Info */
         .task-meta {
             display: flex;
             justify-content: space-between;
@@ -218,7 +218,6 @@
             color: #f56565;
         }
 
-        /* Task Actions Dropdown */
         .task-actions {
             position: absolute;
             top: 12px;
@@ -240,7 +239,6 @@
             color: white;
         }
 
-        /* Add Task Button */
         .add-task-btn {
             width: 100%;
             margin-top: 12px;
@@ -265,7 +263,6 @@
             transform: translateY(-2px);
         }
 
-        /* Buttons */
         .btn-primary {
             background: linear-gradient(135deg, #4facfe, #00f2fe);
             border: none;
@@ -297,7 +294,6 @@
             transform: translateY(-1px);
         }
 
-        /* Badge */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -311,7 +307,6 @@
             color: #4facfe;
         }
 
-        /* Modal Styles - Glass */
         .modal-content {
             background: rgba(15, 32, 39, 0.95);
             backdrop-filter: blur(12px);
@@ -338,7 +333,6 @@
             filter: invert(1);
         }
 
-        /* Form Controls */
         .form-control, .form-select {
             background: rgba(255, 255, 255, 0.15);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -367,7 +361,6 @@
             display: block;
         }
 
-        /* Dropdown Menu */
         .dropdown-menu {
             background: rgba(15, 32, 39, 0.95);
             backdrop-filter: blur(12px);
@@ -390,7 +383,6 @@
             background: rgba(245, 101, 101, 0.3);
         }
 
-        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -403,8 +395,8 @@
             align-items: center;
         }
 
-        .align-items-start {
-            align-items: flex-start;
+        .justify-content-end {
+            justify-content: flex-end;
         }
 
         .mb-1 {
@@ -439,15 +431,18 @@
             margin-top: 0.5rem;
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
+        .mt-3 {
+            margin-top: 1rem;
         }
 
-        .small {
-            font-size: 0.75rem;
+        .toast-glass {
+            background: rgba(15, 32, 39, 0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(79, 172, 254, 0.3);
+            border-radius: 16px;
+            color: white;
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -463,29 +458,16 @@
             border-radius: 10px;
         }
 
-        /* Toast Notification */
-        .toast-glass {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 16px;
-            color: white;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
             .kanban-board {
                 flex-direction: column;
             }
-            
             .kanban-column {
                 min-width: 100%;
             }
-            
             h2 {
                 font-size: 1.5rem;
             }
-            
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
@@ -495,7 +477,6 @@
 </head>
 <body>
     <div>
-        <!-- Header with Logout Button -->
         <div class="header-with-logout">
             <h2><i class="fas fa-tasks me-2"></i> Task Management</h2>
             <button class="logout-btn" onclick="logout()">
@@ -503,20 +484,15 @@
             </button>
         </div>
         
-        <!-- New Task Button Row -->
         <div class="d-flex justify-content-end mb-4">
             <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal" onclick="openAddTaskModal()">
                 <i class="fas fa-plus me-2"></i> New Task
             </button>
         </div>
         
-        <!-- Kanban Board -->
-        <div class="kanban-board" id="kanbanBoard">
-            <!-- Columns will be populated here -->
-        </div>
+        <div class="kanban-board" id="kanbanBoard"></div>
     </div>
     
-    <!-- Task Modal -->
     <div class="modal fade" id="taskModal" tabindex="-1">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -669,7 +645,6 @@
                 `;
             }).join('');
             
-            // Add drag and drop listeners
             document.querySelectorAll('.tasks-container').forEach(container => {
                 container.addEventListener('dragover', dragOver);
                 container.addEventListener('drop', drop);
@@ -701,11 +676,9 @@
             event.preventDefault();
             const targetColumn = event.target.closest('.kanban-column');
             if (!targetColumn || !draggedItem) return;
-            
             const newStatus = targetColumn.dataset.status;
             const taskId = parseInt(event.dataTransfer.getData('text/plain'));
             const task = tasks.find(t => t.id === taskId);
-            
             if (task && task.status !== newStatus) {
                 task.status = newStatus;
                 renderKanban();
@@ -754,19 +727,16 @@
                 project: document.getElementById('taskProject').value,
                 status: document.getElementById('taskStatus').value
             };
-            
             if (!task.title) {
                 showToast('Please enter a task title', 'error');
                 return;
             }
-            
             if (id) {
                 const index = tasks.findIndex(t => t.id === parseInt(id));
                 if (index !== -1) tasks[index] = task;
             } else {
                 tasks.push(task);
             }
-            
             bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
             renderKanban();
             showToast('Task saved successfully!', 'success');
@@ -809,7 +779,6 @@
             });
         }
         
-        // Initialize kanban board
         renderKanban();
     </script>
 </body>
