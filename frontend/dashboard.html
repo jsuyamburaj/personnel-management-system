@@ -78,6 +78,17 @@
             color: white;
         }
 
+        .notification-badge {
+            background: #ef4444;
+            color: white;
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 10px;
+            margin-left: auto;
+            min-width: 18px;
+            text-align: center;
+        }
+
         /* Main Content */
         .main-content {
             margin-left: 260px;
@@ -150,15 +161,31 @@
         }
 
         /* Scrollbar */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 10px; }
-        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
 
         @media (max-width: 768px) {
-            .sidebar { left: -260px; }
-            .sidebar.show { left: 0; }
-            .main-content { margin-left: 0; }
-            .menu-toggle { display: block; }
+            .sidebar {
+                left: -260px;
+            }
+            .sidebar.show {
+                left: 0;
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .menu-toggle {
+                display: block;
+            }
         }
 
         .dropdown-menu {
@@ -222,16 +249,48 @@
             border-top: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        .d-flex { display: flex; }
-        .align-items-center { align-items: center; }
-        .gap-2 { gap: 0.5rem; }
-        .me-2 { margin-right: 0.5rem; }
-        .mt-3 { margin-top: 1rem; }
-        .flex-column { flex-direction: column; }
-        .nav { display: flex; flex-wrap: wrap; padding-left: 0; margin-bottom: 0; list-style: none; }
-        .d-md-none { display: none; }
-        @media (max-width: 768px) { .d-md-none { display: block !important; } }
-        .text-danger { color: #dc2626 !important; }
+        .d-flex {
+            display: flex;
+        }
+        .align-items-center {
+            align-items: center;
+        }
+        .gap-2 {
+            gap: 0.5rem;
+        }
+        .me-2 {
+            margin-right: 0.5rem;
+        }
+        .mt-3 {
+            margin-top: 1rem;
+        }
+        .flex-column {
+            flex-direction: column;
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none;
+        }
+        .d-md-none {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .d-md-none {
+                display: block !important;
+            }
+        }
+        .text-danger {
+            color: #dc2626 !important;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
     </style>
 </head>
 <body>
@@ -263,51 +322,84 @@
             </div>
         </div>
         <div class="page-content" id="pageContent">
-            <!-- Content will be loaded here -->
-            <div class="loading-spinner" style="text-align: center; padding: 50px;">
+            <div style="text-align: center; padding: 50px;">
                 <div style="width: 40px; height: 40px; border: 3px solid #e2e8f0; border-top-color: #3b82f6; border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto;"></div>
                 <p style="margin-top: 16px; color: #64748b;">Loading dashboard...</p>
             </div>
         </div>
     </div>
 
-    <style>
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-    </style>
-
     <script>
-        function logout() { 
-            localStorage.clear(); 
-            window.location.href = 'index.html'; 
+        let notificationCheckInterval = null;
+        
+        function logout() {
+            if (notificationCheckInterval) {
+                clearInterval(notificationCheckInterval);
+            }
+            localStorage.clear();
+            window.location.href = 'index.html';
         }
         
         const userDropdownBtn = document.getElementById('userDropdown');
         const dropdownMenu = document.getElementById('dropdownMenu');
         if (userDropdownBtn) {
-            userDropdownBtn.addEventListener('click', function(e) { 
-                e.stopPropagation(); 
-                dropdownMenu.style.display = dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '' ? 'block' : 'none'; 
+            userDropdownBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dropdownMenu.style.display = dropdownMenu.style.display === 'none' || dropdownMenu.style.display === '' ? 'block' : 'none';
             });
-            document.addEventListener('click', function() { 
-                dropdownMenu.style.display = 'none'; 
+            document.addEventListener('click', function() {
+                dropdownMenu.style.display = 'none';
             });
         }
         
         const menuToggle = document.getElementById('menuToggle');
         const sidebar = document.getElementById('sidebar');
-        if (menuToggle) { 
-            menuToggle.addEventListener('click', function() { 
-                sidebar.classList.toggle('show'); 
-            }); 
+        if (menuToggle) {
+            menuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('show');
+            });
+        }
+        
+        async function fetchWithAuth(endpoint, options = {}) {
+            const token = localStorage.getItem('token');
+            const res = await fetch(`http://localhost:8000/api${endpoint}`, {
+                ...options,
+                headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+            });
+            if (!res.ok) throw new Error(`HTTP ${res.status}`);
+            return res.json();
+        }
+        
+        async function updateNotificationCount() {
+            try {
+                const notifs = await fetchWithAuth('/notifications/');
+                const unreadCount = notifs.filter(n => !n.is_read).length;
+                const notificationLink = document.querySelector('.nav-link[data-page="notifications.html"]');
+                if (notificationLink) {
+                    const existingBadge = notificationLink.querySelector('.notification-badge');
+                    if (unreadCount > 0) {
+                        if (existingBadge) {
+                            existingBadge.innerText = unreadCount > 99 ? '99+' : unreadCount;
+                        } else {
+                            notificationLink.innerHTML = `🔔 Notifications <span class="notification-badge">${unreadCount > 99 ? '99+' : unreadCount}</span>`;
+                        }
+                    } else {
+                        if (existingBadge) {
+                            existingBadge.remove();
+                        }
+                        notificationLink.innerHTML = `🔔 Notifications`;
+                    }
+                }
+            } catch (error) {
+                console.error('Error fetching notification count:', error);
+            }
         }
         
         async function init() {
             const token = localStorage.getItem('token');
-            if (!token) { 
-                window.location.href = 'index.html'; 
-                return; 
+            if (!token) {
+                window.location.href = 'index.html';
+                return;
             }
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             document.getElementById('userName').innerText = user.full_name || user.email;
@@ -317,51 +409,69 @@
             // Load the appropriate dashboard based on role
             const defaultPage = user.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
             loadPageContent(defaultPage);
+            
+            // Start notification polling
+            await updateNotificationCount();
+            if (notificationCheckInterval) {
+                clearInterval(notificationCheckInterval);
+            }
+            notificationCheckInterval = setInterval(updateNotificationCount, 30000);
         }
         
         function loadSidebar(role) {
-            const menu = { 
+            const menu = {
                 admin: [
-                    { text:'Dashboard', page:'admin-dashboard.html' },
-                    { text:'Employees', page:'employee-management.html' },
-                    { text:'Projects', page:'project-management.html' },
-                    { text:'Tasks', page:'task-management.html' },
-                    { text:'Attendance', page:'attendance.html' },
-                    { text:'Leaves', page:'leave-management.html' },
-                    { text:'Payroll', page:'payroll.html' },
-                    { text:'Reports', page:'reports-analytics.html' },
-                    { text:'Activity Logs', page:'activity-logs.html' },
-                    { text:'Notifications', page:'notifications.html' }
-                ], 
+                    { text: 'Dashboard', page: 'admin-dashboard.html' },
+                    { text: 'Employees', page: 'employee-management.html' },
+                    { text: 'Projects', page: 'project-management.html' },
+                    { text: 'Tasks', page: 'task-management.html' },
+                    { text: 'Attendance', page: 'attendance.html' },
+                    { text: 'Leaves', page: 'leave-management.html' },
+                    { text: 'Payroll', page: 'payroll.html' },
+                    { text: 'Reports', page: 'reports-analytics.html' },
+                    { text: 'Activity Logs', page: 'activity-logs.html' },
+                    { text: 'Notifications', page: 'notifications.html' }
+                ],
                 manager: [
-                    { text:'Dashboard', page:'employee-dashboard.html' },
-                    { text:'Team', page:'employee-management.html' },
-                    { text:'Projects', page:'project-management.html' },
-                    { text:'Tasks', page:'task-management.html' },
-                    { text:'Attendance', page:'attendance.html' }
-                ], 
+                    { text: 'Dashboard', page: 'employee-dashboard.html' },
+                    { text: 'Team', page: 'employee-management.html' },
+                    { text: 'Projects', page: 'project-management.html' },
+                    { text: 'Tasks', page: 'task-management.html' },
+                    { text: 'Attendance', page: 'attendance.html' },
+                    { text: 'Leaves', page: 'leave-management.html' },
+                    { text: 'Notifications', page: 'notifications.html' }
+                ],
+                hr: [
+                    { text: 'Dashboard', page: 'employee-dashboard.html' },
+                    { text: 'Employees', page: 'employee-management.html' },
+                    { text: 'Leaves', page: 'leave-management.html' },
+                    { text: 'Payroll', page: 'payroll.html' },
+                    { text: 'Attendance', page: 'attendance.html' },
+                    { text: 'Notifications', page: 'notifications.html' }
+                ],
                 employee: [
-                    { text:'Dashboard', page:'employee-dashboard.html' },
-                    { text:'My Tasks', page:'task-management.html' },
-                    { text:'Attendance', page:'attendance.html' },
-                    { text:'Apply Leave', page:'leave-management.html' },
-                    { text:'Profile', page:'profile.html' }
-                ] 
+                    { text: 'Dashboard', page: 'employee-dashboard.html' },
+                    { text: 'My Tasks', page: 'task-management.html' },
+                    { text: 'Attendance', page: 'attendance.html' },
+                    { text: 'Apply Leave', page: 'leave-management.html' },
+                    { text: 'Profile', page: 'profile.html' },
+                    { text: 'Notifications', page: 'notifications.html' }
+                ]
             };
             const items = menu[role] || menu.employee;
             const nav = document.getElementById('sidebarNav');
-            if (nav) { 
-                nav.innerHTML = items.map(item => `<a class="nav-link" data-page="${item.page}">💧 ${item.text}</a>`).join(''); 
+            if (nav) {
+                nav.innerHTML = items.map(item => `<a class="nav-link" data-page="${item.page}">💧 ${item.text}</a>`).join('');
             }
             document.querySelectorAll('[data-page]').forEach(link => {
-                link.addEventListener('click', (e) => { 
-                    e.preventDefault(); 
-                    loadPageContent(link.dataset.page); 
-                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active')); 
-                    link.classList.add('active'); 
-                    if (window.innerWidth < 768 && sidebar) { 
-                        sidebar.classList.remove('show'); 
-                    } 
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    loadPageContent(link.dataset.page);
+                    document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    if (window.innerWidth < 768 && sidebar) {
+                        sidebar.classList.remove('show');
+                    }
                 });
             });
         }
@@ -400,19 +510,20 @@
                     newScript.textContent = oldScript.textContent;
                     document.body.appendChild(newScript);
                 });
-            } catch (error) { 
-                contentDiv.innerHTML = '<div class="error-card" style="text-align: center; padding: 50px;"><p style="color: #dc2626;">Page not found. Please make sure all HTML files are in the same directory.</p></div>'; 
+            } catch (error) {
+                contentDiv.innerHTML = '<div style="text-align: center; padding: 50px;"><p style="color: #dc2626;">Page not found. Please make sure all HTML files are in the same directory.</p></div>';
             }
         }
         
-        document.getElementById('logoutBtn')?.addEventListener('click', (e) => { 
-            e.preventDefault(); 
-            logout(); 
+        document.getElementById('logoutBtn')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            logout();
         });
         
         init();
         window.loadPageContent = loadPageContent;
         window.logout = logout;
+        window.updateNotificationCount = updateNotificationCount;
     </script>
 </body>
 </html>
