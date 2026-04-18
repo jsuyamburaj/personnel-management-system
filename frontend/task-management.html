@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Management - Kanban | Glass Theme</title>
+    <title>Task Management - Kanban | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,59 +12,46 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
         }
 
-        /* FIX: Ensure all text is white */
-        body, .kanban-column, .task-card, .modal-content, .form-control, .form-select,
-        h1, h2, h3, h4, h5, h6, p, span, div, label, .text-muted, .dropdown-item {
-            color: white;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
-        }
-
+        /* Header with Logout */
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
         h2 {
-            color: white;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
             margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
 
+        /* Kanban Board */
         .kanban-board {
             display: flex;
             gap: 24px;
@@ -73,32 +60,32 @@
             min-height: 550px;
         }
 
+        /* Kanban Column */
         .kanban-column {
             flex: 1;
             min-width: 320px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             border-radius: 20px;
             padding: 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.5);
             transition: all 0.3s;
         }
 
         .kanban-column:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         .kanban-header {
             font-weight: 600;
             padding-bottom: 12px;
             margin-bottom: 16px;
-            border-bottom: 2px solid rgba(79, 172, 254, 0.4);
+            border-bottom: 2px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            color: white;
+            color: #0f172a;
             font-size: 1rem;
         }
 
@@ -109,24 +96,24 @@
         }
 
         .column-badge {
-            background: rgba(79, 172, 254, 0.3);
+            background: #dbeafe;
             padding: 2px 10px;
             border-radius: 30px;
             font-size: 0.75rem;
             font-weight: 500;
-            color: #4facfe;
+            color: #3b82f6;
         }
 
+        /* Task Card - Modern Design */
         .task-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(8px);
+            background: white;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 12px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
             cursor: grab;
             transition: all 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            border: 1px solid #e2e8f0;
             position: relative;
         }
 
@@ -136,26 +123,27 @@
 
         .task-card:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            background: rgba(255, 255, 255, 0.15);
-            border-color: rgba(79, 172, 254, 0.3);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-color: #cbd5e1;
         }
 
         .task-title {
             font-weight: 600;
             font-size: 0.95rem;
-            color: white;
+            color: #0f172a;
             margin-bottom: 8px;
             line-height: 1.4;
+            padding-right: 24px;
         }
 
         .task-description {
             font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.6);
+            color: #64748b;
             margin-bottom: 12px;
             line-height: 1.4;
         }
 
+        /* Priority Badges - Modern */
         .task-priority {
             display: inline-flex;
             align-items: center;
@@ -167,30 +155,28 @@
         }
 
         .priority-high { 
-            background: rgba(220, 38, 38, 0.2); 
-            color: #f56565; 
-            border: 1px solid rgba(220, 38, 38, 0.3);
+            background: #fee2e2; 
+            color: #dc2626; 
         }
 
         .priority-medium { 
-            background: rgba(237, 137, 54, 0.2); 
-            color: #ed8936; 
-            border: 1px solid rgba(237, 137, 54, 0.3);
+            background: #ffedd5; 
+            color: #f97316; 
         }
 
         .priority-low { 
-            background: rgba(72, 187, 120, 0.2); 
-            color: #48bb78; 
-            border: 1px solid rgba(72, 187, 120, 0.3);
+            background: #dcfce7; 
+            color: #22c55e; 
         }
 
+        /* Task Meta Info */
         .task-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: 12px;
             padding-top: 10px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #f1f5f9;
         }
 
         .task-assignee {
@@ -198,26 +184,22 @@
             align-items: center;
             gap: 6px;
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .task-assignee i {
-            font-size: 0.65rem;
-            color: #4facfe;
+            color: #64748b;
         }
 
         .task-due {
             font-size: 0.65rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #94a3b8;
             display: flex;
             align-items: center;
             gap: 4px;
         }
 
         .task-due.overdue {
-            color: #f56565;
+            color: #dc2626;
         }
 
+        /* Task Actions Dropdown */
         .task-actions {
             position: absolute;
             top: 12px;
@@ -227,7 +209,7 @@
         .task-actions .dropdown-toggle {
             background: none;
             border: none;
-            color: rgba(255, 255, 255, 0.5);
+            color: #94a3b8;
             cursor: pointer;
             padding: 4px;
             border-radius: 8px;
@@ -235,18 +217,19 @@
         }
 
         .task-actions .dropdown-toggle:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            background: #f1f5f9;
+            color: #3b82f6;
         }
 
+        /* Add Task Button */
         .add-task-btn {
             width: 100%;
             margin-top: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px dashed rgba(255, 255, 255, 0.25);
+            background: white;
+            border: 1px dashed #cbd5e1;
             border-radius: 40px;
             padding: 10px;
-            color: rgba(255, 255, 255, 0.7);
+            color: #64748b;
             transition: all 0.3s;
             cursor: pointer;
             display: flex;
@@ -257,14 +240,15 @@
         }
 
         .add-task-btn:hover {
-            background: rgba(79, 172, 254, 0.2);
-            border-color: #4facfe;
-            color: white;
-            transform: translateY(-2px);
+            background: #f8fafc;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-1px);
         }
 
+        /* Buttons - Modern */
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             border-radius: 40px;
             padding: 10px 24px;
@@ -272,28 +256,31 @@
             color: white;
             transition: all 0.3s;
             cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
             border-radius: 40px;
             padding: 8px 20px;
-            color: white;
+            color: #475569;
             transition: all 0.3s;
             cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: #e2e8f0;
             transform: translateY(-1px);
         }
 
+        /* Badge */
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -303,86 +290,104 @@
         }
 
         .bg-secondary {
-            background: rgba(79, 172, 254, 0.3);
-            color: #4facfe;
+            background: #dbeafe;
+            color: #3b82f6;
         }
 
+        /* Modal Styles */
         .modal-content {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            color: white;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            border: none;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .modal-header {
-            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
+            border-bottom: 1px solid #e2e8f0;
             padding: 1.2rem 1.5rem;
+            background: #f8fafc;
         }
 
         .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid #e2e8f0;
             padding: 1rem 1.5rem;
+            background: #f8fafc;
         }
 
         .modal-title {
-            color: white;
+            color: #0f172a;
+            font-weight: 600;
         }
 
         .btn-close {
-            filter: invert(1);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #94a3b8;
         }
 
+        /* Form Controls */
         .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #0f172a;
+            padding: 10px 14px;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
             outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: #94a3b8;
         }
 
         .form-label {
-            color: rgba(255, 255, 255, 0.9);
+            color: #334155;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px;
             display: block;
         }
 
+        /* Dropdown Menu */
         .dropdown-menu {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 8px 0;
+            min-width: 140px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 100;
         }
 
         .dropdown-item {
-            color: white;
+            color: #334155;
+            padding: 8px 16px;
+            text-decoration: none;
+            display: block;
             transition: all 0.3s;
             cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .dropdown-item:hover {
-            background: rgba(79, 172, 254, 0.3);
-            color: white;
+            background: #f1f5f9;
+            color: #3b82f6;
         }
 
         .dropdown-item.text-danger:hover {
-            background: rgba(245, 101, 101, 0.3);
+            background: #fee2e2;
+            color: #dc2626;
         }
 
+        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -400,64 +405,73 @@
         }
 
         .mb-1 {
-            margin-bottom: 0.25rem;
+            margin-bottom: 4px;
         }
 
         .mb-2 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         .mb-3 {
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
         }
 
         .mb-4 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .me-1 {
-            margin-right: 0.25rem;
+            margin-right: 4px;
         }
 
         .me-2 {
-            margin-right: 0.5rem;
+            margin-right: 8px;
         }
 
         .ms-2 {
-            margin-left: 0.5rem;
+            margin-left: 8px;
         }
 
         .mt-2 {
-            margin-top: 0.5rem;
+            margin-top: 8px;
         }
 
         .mt-3 {
-            margin-top: 1rem;
+            margin-top: 12px;
         }
 
+        /* Toast Notification */
         .toast-glass {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 16px;
-            color: white;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #4facfe;
+            background: #3b82f6;
             border-radius: 10px;
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .kanban-board {
                 flex-direction: column;
@@ -478,29 +492,23 @@
 <body>
     <div>
         <div class="header-with-logout">
-            <h2><i class="fas fa-tasks me-2"></i> Task Management</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <h2>📋 Task Management</h2>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
         <div class="d-flex justify-content-end mb-4">
-            <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#taskModal" onclick="openAddTaskModal()">
-                <i class="fas fa-plus me-2"></i> New Task
-            </button>
+            <button class="btn-primary" onclick="openAddTaskModal()">+ New Task</button>
         </div>
         
         <div class="kanban-board" id="kanbanBoard"></div>
     </div>
     
-    <div class="modal fade" id="taskModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal" id="taskModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1050; align-items: center; justify-content: center;">
+        <div class="modal-dialog" style="width: 550px; max-width: 90%;">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="taskModalTitle">
-                        <i class="fas fa-plus-circle me-2"></i> Add Task
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title" id="taskModalTitle">➕ Add Task</h5>
+                    <button class="btn-close" onclick="closeTaskModal()">×</button>
                 </div>
                 <div class="modal-body">
                     <form id="taskForm">
@@ -558,22 +566,15 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-primary" onclick="saveTask()">
-                        <i class="fas fa-save me-2"></i> Save Task
-                    </button>
+                    <button class="btn-secondary" onclick="closeTaskModal()">Cancel</button>
+                    <button class="btn-primary" onclick="saveTask()">💾 Save Task</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
+        function logout() { localStorage.clear(); window.location.href = 'index.html'; }
         
         let tasks = [
             { id: 1, title: 'Design Homepage', description: 'Create responsive homepage design with modern UI', priority: 'High', status: 'Pending', assignee: 'John Doe', dueDate: '2024-12-20', project: 'Website Redesign' },
@@ -590,57 +591,37 @@
             const board = document.getElementById('kanbanBoard');
             board.innerHTML = columns.map(status => {
                 const statusTasks = tasks.filter(t => t.status === status);
-                const icon = status === 'Pending' ? 'fa-clock' : status === 'In Progress' ? 'fa-spinner fa-pulse' : 'fa-check-circle';
+                const icon = status === 'Pending' ? '⏳' : status === 'In Progress' ? '🔄' : '✅';
                 return `
                     <div class="kanban-column" data-status="${status}">
                         <div class="kanban-header">
-                            <span>
-                                <i class="fas ${icon} me-2"></i>
-                                ${status}
-                            </span>
+                            <span>${icon} ${status}</span>
                             <span class="column-badge">${statusTasks.length}</span>
                         </div>
                         <div class="tasks-container" id="tasks-${status.replace(/\s/g, '')}">
                             ${statusTasks.map(task => {
                                 const isOverdue = new Date(task.dueDate) < new Date() && task.status !== 'Completed';
-                                const priorityIcon = task.priority === 'High' ? 'fa-arrow-up' : task.priority === 'Medium' ? 'fa-minus' : 'fa-arrow-down';
                                 return `
                                     <div class="task-card" draggable="true" data-task-id="${task.id}" ondragstart="dragStart(event)" ondragend="dragEnd(event)">
                                         <div class="task-actions">
-                                            <div class="dropdown">
-                                                <button class="dropdown-toggle" data-bs-toggle="dropdown">
-                                                    <i class="fas fa-ellipsis-v"></i>
-                                                </button>
-                                                <ul class="dropdown-menu dropdown-menu-end">
-                                                    <li><a class="dropdown-item" href="#" onclick="editTask(${task.id})"><i class="fas fa-edit me-2"></i>Edit</a></li>
-                                                    <li><hr class="dropdown-divider"></li>
-                                                    <li><a class="dropdown-item text-danger" href="#" onclick="deleteTask(${task.id})"><i class="fas fa-trash me-2"></i>Delete</a></li>
-                                                </ul>
+                                            <button class="dropdown-toggle" onclick="toggleDropdown(event, ${task.id})">⋮</button>
+                                            <div id="dropdown-${task.id}" class="dropdown-menu" style="display:none; position:absolute; right:0;">
+                                                <a class="dropdown-item" onclick="editTask(${task.id})">✏️ Edit</a>
+                                                <a class="dropdown-item text-danger" onclick="deleteTask(${task.id})">🗑️ Delete</a>
                                             </div>
                                         </div>
                                         <div class="task-title">${escapeHtml(task.title)}</div>
                                         <div class="task-description">${escapeHtml(task.description.substring(0, 80))}${task.description.length > 80 ? '...' : ''}</div>
                                         <div class="task-meta">
-                                            <span class="task-priority priority-${task.priority.toLowerCase()}">
-                                                <i class="fas ${priorityIcon} me-1"></i> ${task.priority}
-                                            </span>
-                                            <div class="task-assignee">
-                                                <i class="fas fa-user-circle"></i>
-                                                <span>${task.assignee}</span>
-                                            </div>
+                                            <span class="task-priority priority-${task.priority.toLowerCase()}">${task.priority === 'High' ? '🔴' : task.priority === 'Medium' ? '🟠' : '🟢'} ${task.priority}</span>
+                                            <div class="task-assignee">👤 ${task.assignee}</div>
                                         </div>
-                                        <div class="task-due ${isOverdue ? 'overdue' : ''}">
-                                            <i class="fas fa-calendar-alt"></i>
-                                            <span>Due: ${task.dueDate}</span>
-                                            ${isOverdue ? '<span class="ms-2">⚠️ Overdue</span>' : ''}
-                                        </div>
+                                        <div class="task-due ${isOverdue ? 'overdue' : ''}">📅 Due: ${task.dueDate}${isOverdue ? ' ⚠️ Overdue' : ''}</div>
                                     </div>
                                 `;
                             }).join('')}
                         </div>
-                        <button class="add-task-btn" onclick="openAddTaskWithStatus('${status}')">
-                            <i class="fas fa-plus"></i> Add Task
-                        </button>
+                        <button class="add-task-btn" onclick="openAddTaskWithStatus('${status}')">+ Add Task</button>
                     </div>
                 `;
             }).join('');
@@ -651,133 +632,32 @@
             });
         }
         
-        function dragStart(event) {
-            draggedItem = event.target.closest('.task-card');
-            if (draggedItem) {
-                event.dataTransfer.setData('text/plain', draggedItem.dataset.taskId);
-                draggedItem.style.opacity = '0.5';
-                draggedItem.classList.add('dragging');
-            }
+        function toggleDropdown(event, id) {
+            event.stopPropagation();
+            document.querySelectorAll('.dropdown-menu').forEach(menu => menu.style.display = 'none');
+            const menu = document.getElementById(`dropdown-${id}`);
+            menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+            document.addEventListener('click', () => menu.style.display = 'none');
         }
         
-        function dragEnd(event) {
-            if (draggedItem) {
-                draggedItem.style.opacity = '';
-                draggedItem.classList.remove('dragging');
-            }
-            draggedItem = null;
-        }
+        function dragStart(event) { draggedItem = event.target.closest('.task-card'); if (draggedItem) { event.dataTransfer.setData('text/plain', draggedItem.dataset.taskId); draggedItem.style.opacity = '0.5'; } }
+        function dragEnd(event) { if (draggedItem) { draggedItem.style.opacity = ''; } draggedItem = null; }
+        function dragOver(event) { event.preventDefault(); }
+        function drop(event) { event.preventDefault(); const targetColumn = event.target.closest('.kanban-column'); if (!targetColumn || !draggedItem) return; const newStatus = targetColumn.dataset.status; const taskId = parseInt(event.dataTransfer.getData('text/plain')); const task = tasks.find(t => t.id === taskId); if (task && task.status !== newStatus) { task.status = newStatus; renderKanban(); showToast(`Task moved to ${newStatus}`); } }
         
-        function dragOver(event) {
-            event.preventDefault();
-        }
+        function openAddTaskModal() { document.getElementById('taskModalTitle').innerHTML = '➕ Add Task'; document.getElementById('taskForm').reset(); document.getElementById('taskId').value = ''; document.getElementById('taskDueDate').value = new Date().toISOString().split('T')[0]; document.getElementById('taskModal').style.display = 'flex'; }
+        function closeTaskModal() { document.getElementById('taskModal').style.display = 'none'; }
+        function openAddTaskWithStatus(status) { openAddTaskModal(); document.getElementById('taskStatus').value = status; }
         
-        function drop(event) {
-            event.preventDefault();
-            const targetColumn = event.target.closest('.kanban-column');
-            if (!targetColumn || !draggedItem) return;
-            const newStatus = targetColumn.dataset.status;
-            const taskId = parseInt(event.dataTransfer.getData('text/plain'));
-            const task = tasks.find(t => t.id === taskId);
-            if (task && task.status !== newStatus) {
-                task.status = newStatus;
-                renderKanban();
-                showToast(`Task "${task.title}" moved to ${newStatus}`, 'success');
-            }
-        }
+        function editTask(id) { const task = tasks.find(t => t.id === id); if (task) { document.getElementById('taskModalTitle').innerHTML = '✏️ Edit Task'; document.getElementById('taskId').value = task.id; document.getElementById('taskTitle').value = task.title; document.getElementById('taskDesc').value = task.description; document.getElementById('taskPriority').value = task.priority; document.getElementById('taskAssignee').value = task.assignee; document.getElementById('taskDueDate').value = task.dueDate; document.getElementById('taskProject').value = task.project; document.getElementById('taskStatus').value = task.status; document.getElementById('taskModal').style.display = 'flex'; } }
         
-        function openAddTaskModal() {
-            document.getElementById('taskModalTitle').innerHTML = '<i class="fas fa-plus-circle me-2"></i> Add Task';
-            document.getElementById('taskForm').reset();
-            document.getElementById('taskId').value = '';
-            document.getElementById('taskDueDate').value = new Date().toISOString().split('T')[0];
-            new bootstrap.Modal(document.getElementById('taskModal')).show();
-        }
+        function saveTask() { const id = document.getElementById('taskId').value; const task = { id: id ? parseInt(id) : tasks.length + 1, title: document.getElementById('taskTitle').value, description: document.getElementById('taskDesc').value || 'No description', priority: document.getElementById('taskPriority').value, assignee: document.getElementById('taskAssignee').value, dueDate: document.getElementById('taskDueDate').value, project: document.getElementById('taskProject').value, status: document.getElementById('taskStatus').value }; if (!task.title) { showToast('Please enter a task title', 'error'); return; } if (id) { const index = tasks.findIndex(t => t.id === parseInt(id)); if (index !== -1) tasks[index] = task; } else { tasks.push(task); } closeTaskModal(); renderKanban(); showToast('Task saved successfully!'); }
         
-        function openAddTaskWithStatus(status) {
-            openAddTaskModal();
-            document.getElementById('taskStatus').value = status;
-        }
+        function deleteTask(id) { if (confirm('Delete this task?')) { tasks = tasks.filter(t => t.id !== id); renderKanban(); showToast('Task deleted successfully'); } }
         
-        function editTask(id) {
-            const task = tasks.find(t => t.id === id);
-            if (task) {
-                document.getElementById('taskModalTitle').innerHTML = '<i class="fas fa-edit me-2"></i> Edit Task';
-                document.getElementById('taskId').value = task.id;
-                document.getElementById('taskTitle').value = task.title;
-                document.getElementById('taskDesc').value = task.description;
-                document.getElementById('taskPriority').value = task.priority;
-                document.getElementById('taskAssignee').value = task.assignee;
-                document.getElementById('taskDueDate').value = task.dueDate;
-                document.getElementById('taskProject').value = task.project;
-                document.getElementById('taskStatus').value = task.status;
-                new bootstrap.Modal(document.getElementById('taskModal')).show();
-            }
-        }
+        function showToast(message, type = 'success') { const toast = document.createElement('div'); toast.className = 'toast-glass'; toast.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}<button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;margin-left:8px;">×</button>`; document.body.appendChild(toast); setTimeout(() => toast.remove(), 3000); }
         
-        function saveTask() {
-            const id = document.getElementById('taskId').value;
-            const task = {
-                id: id ? parseInt(id) : tasks.length + 1,
-                title: document.getElementById('taskTitle').value,
-                description: document.getElementById('taskDesc').value || 'No description',
-                priority: document.getElementById('taskPriority').value,
-                assignee: document.getElementById('taskAssignee').value,
-                dueDate: document.getElementById('taskDueDate').value,
-                project: document.getElementById('taskProject').value,
-                status: document.getElementById('taskStatus').value
-            };
-            if (!task.title) {
-                showToast('Please enter a task title', 'error');
-                return;
-            }
-            if (id) {
-                const index = tasks.findIndex(t => t.id === parseInt(id));
-                if (index !== -1) tasks[index] = task;
-            } else {
-                tasks.push(task);
-            }
-            bootstrap.Modal.getInstance(document.getElementById('taskModal')).hide();
-            renderKanban();
-            showToast('Task saved successfully!', 'success');
-        }
-        
-        function deleteTask(id) {
-            if (confirm('Are you sure you want to delete this task?')) {
-                tasks = tasks.filter(t => t.id !== id);
-                renderKanban();
-                showToast('Task deleted successfully!', 'success');
-            }
-        }
-        
-        function showToast(message, type) {
-            const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed bottom-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
-                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px;">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-            `;
-            document.body.appendChild(toastDiv);
-            setTimeout(() => toastDiv.remove(), 3000);
-        }
-        
-        function escapeHtml(str) {
-            if (!str) return '';
-            return str.replace(/[&<>]/g, function(m) {
-                if (m === '&') return '&amp;';
-                if (m === '<') return '&lt;';
-                if (m === '>') return '&gt;';
-                return m;
-            });
-        }
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[m])); }
         
         renderKanban();
     </script>

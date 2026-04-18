@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Activity Logs | Glass Theme</title>
+    <title>Activity Logs | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,221 +12,213 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
-        }
-
-        /* FIX: Ensure all text is white */
-        body, .dashboard-widget, .table, .form-control, .form-select,
-        h1, h2, h3, h4, h5, h6, p, span, div, label, .text-muted {
-            color: white;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
         }
 
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0;
+        }
+
+        /* Modern Glass Card */
         .dashboard-widget {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .dashboard-widget:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
-        h2 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
+        /* Form Controls */
         .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #0f172a;
+            padding: 10px 14px;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
             outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .form-label {
-            color: rgba(255, 255, 255, 0.9);
+            color: #334155;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px;
             display: block;
         }
 
+        /* Button */
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             border-radius: 40px;
-            padding: 10px 24px;
+            padding: 10px 20px;
             font-weight: 600;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
+        /* Table Styles */
         .table-responsive {
             overflow-x: auto;
         }
 
         .table {
             width: 100%;
-            color: white;
             border-collapse: collapse;
+            font-size: 0.85rem;
         }
 
         .table thead th {
-            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
+            border-bottom: 2px solid #e2e8f0;
             padding: 12px;
             text-align: left;
             font-weight: 600;
-            color: #4facfe;
+            color: #64748b;
         }
 
         .table tbody td {
             padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
+            color: #334155;
         }
 
         .table tbody tr:hover {
-            background: rgba(79, 172, 254, 0.1);
+            background: #f8fafc;
         }
 
+        /* Badges */
         .badge {
             display: inline-block;
-            padding: 5px 12px;
+            padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
         }
 
-        .bg-secondary {
-            background: rgba(79, 172, 254, 0.3);
-            color: #4facfe;
+        .badge-secondary {
+            background: #dbeafe;
+            color: #3b82f6;
         }
 
+        /* Grid */
         .row {
             display: flex;
             flex-wrap: wrap;
-            margin-right: -0.75rem;
-            margin-left: -0.75rem;
+            margin: 0 -12px;
         }
 
         .col-md-3 {
-            flex: 0 0 auto;
-            width: 25%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+            padding: 0 12px;
+            flex: 0 0 25%;
+            max-width: 25%;
         }
 
         @media (max-width: 768px) {
             .col-md-3 {
-                width: 100%;
-                margin-bottom: 1rem;
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 12px;
             }
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .dashboard-widget {
+                padding: 20px;
+            }
         }
 
-        .text-center {
-            text-align: center;
-        }
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-4 { margin-bottom: 20px; }
+        .mt-2 { margin-top: 8px; }
+        .me-2 { margin-right: 8px; }
+        .w-100 { width: 100%; }
+        .text-muted { color: #64748b !important; }
+        .text-danger { color: #dc2626 !important; }
 
-        .mb-4 {
-            margin-bottom: 1.5rem;
-        }
-
-        .w-100 {
-            width: 100%;
-        }
-
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-
+        /* Loading Spinner */
         .loading-spinner {
-            display: inline-block;
-            width: 30px;
-            height: 30px;
-            border: 3px solid rgba(79, 172, 254, 0.3);
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
             border-radius: 50%;
-            border-top-color: #4facfe;
+            border-top-color: #3b82f6;
             animation: spin 0.8s linear infinite;
+            display: inline-block;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #4facfe;
+            background: #3b82f6;
             border-radius: 10px;
         }
     </style>
@@ -234,25 +226,23 @@
 <body>
     <div>
         <div class="header-with-logout">
-            <h2><i class="fas fa-history me-2"></i> Activity Logs</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <h2>📜 Activity Logs</h2>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
-        <div class="dashboard-widget mb-4">
+        <div class="dashboard-widget">
             <div class="row">
                 <div class="col-md-3">
                     <label class="form-label">Action Type</label>
                     <select class="form-select" id="actionFilter">
                         <option value="">All Actions</option>
-                        <option value="login">Login</option>
-                        <option value="create_employee">Create Employee</option>
-                        <option value="update_task">Update Task</option>
-                        <option value="check_in">Check In</option>
-                        <option value="check_out">Check Out</option>
-                        <option value="create_project">Create Project</option>
-                        <option value="delete_employee">Delete Employee</option>
+                        <option value="login">🔑 Login</option>
+                        <option value="create_employee">👤 Create Employee</option>
+                        <option value="update_task">✏️ Update Task</option>
+                        <option value="check_in">✅ Check In</option>
+                        <option value="check_out">🚪 Check Out</option>
+                        <option value="create_project">📁 Create Project</option>
+                        <option value="delete_employee">🗑️ Delete Employee</option>
                     </select>
                 </div>
                 <div class="col-md-3">
@@ -266,7 +256,7 @@
                 <div class="col-md-3">
                     <label class="form-label">&nbsp;</label>
                     <button class="btn-primary w-100" onclick="loadActivityLogs()">
-                        <i class="fas fa-search me-2"></i> Filter Logs
+                        🔍 Filter Logs
                     </button>
                 </div>
             </div>
@@ -277,10 +267,10 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><i class="fas fa-user me-1"></i> User</th>
-                            <th><i class="fas fa-tag me-1"></i> Action</th>
-                            <th><i class="fas fa-info-circle me-1"></i> Details</th>
-                            <th><i class="fas fa-clock me-1"></i> Timestamp</th>
+                            <th>👤 User</th>
+                            <th>🏷️ Action</th>
+                            <th>📝 Details</th>
+                            <th>⏰ Timestamp</th>
                         </tr>
                     </thead>
                     <tbody id="logsTable">
@@ -291,12 +281,11 @@
                             </td
                         </tr>
                     </tbody>
-                </table
+                </table>
             </div>
         </div>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
     <script>
         function logout() {
             localStorage.clear();
@@ -314,7 +303,7 @@
             if (to) url += `&to_date=${to}`;
             
             const tbody = document.getElementById('logsTable');
-            tbody.innerHTML = '<tr><td colspan="4" class="text-center"><div class="loading-spinner"></div><p class="mt-2 text-muted">Loading...</p></tr';
+            tbody.innerHTML = '<td><td colspan="4" class="text-center"><div class="loading-spinner"></div><p class="mt-2 text-muted">Loading...</p></tr';
             
             try {
                 const response = await fetch(url, {
@@ -328,7 +317,7 @@
                         tbody.innerHTML = `
                             <tr>
                                 <td colspan="4" class="text-center">
-                                    <i class="fas fa-inbox fa-2x text-muted mb-2 d-block"></i>
+                                    <span style="font-size: 2rem;">📭</span>
                                     <p class="text-muted">No activity logs found</p>
                                 </td
                             </tr>
@@ -345,33 +334,29 @@
                     
                     let html = '';
                     for (const [date, dateLogs] of Object.entries(groupedLogs)) {
-                        html += `<tr style="background: rgba(79, 172, 254, 0.1);">
-                                    <td colspan="4" style="font-weight: 600;">
-                                        <i class="fas fa-calendar-day me-2"></i> ${date}
-                                    </td
-                                </tr>`;
+                        html += `<tr style="background: #f8fafc;"><td colspan="4" style="font-weight: 600; padding: 12px;">📅 ${date}</td></tr>`;
                         
                         dateLogs.forEach(log => {
-                            let actionIcon = 'fa-circle-info';
-                            let actionColor = '#4facfe';
+                            let actionIcon = '🔔';
+                            let actionText = log.action.replace(/_/g, ' ');
                             
                             switch(log.action) {
-                                case 'login': actionIcon = 'fa-sign-in-alt'; actionColor = '#48bb78'; break;
-                                case 'check_in': actionIcon = 'fa-clock'; actionColor = '#48bb78'; break;
-                                case 'check_out': actionIcon = 'fa-clock'; actionColor = '#ed8936'; break;
-                                case 'create_employee': actionIcon = 'fa-user-plus'; actionColor = '#48bb78'; break;
-                                case 'delete_employee': actionIcon = 'fa-user-minus'; actionColor = '#f56565'; break;
-                                case 'update_task': actionIcon = 'fa-edit'; actionColor = '#4299e1'; break;
-                                case 'create_project': actionIcon = 'fa-project-diagram'; actionColor = '#48bb78'; break;
-                                default: actionIcon = 'fa-circle-info'; actionColor = '#4facfe';
+                                case 'login': actionIcon = '🔑'; break;
+                                case 'check_in': actionIcon = '✅'; break;
+                                case 'check_out': actionIcon = '🚪'; break;
+                                case 'create_employee': actionIcon = '👤'; break;
+                                case 'delete_employee': actionIcon = '🗑️'; break;
+                                case 'update_task': actionIcon = '✏️'; break;
+                                case 'create_project': actionIcon = '📁'; break;
+                                default: actionIcon = '🔔';
                             }
                             
                             html += `
                                 <tr>
-                                    <td><i class="fas fa-user-circle me-2" style="color: #4facfe;"></i> ${log.user_email}</td
-                                    <td><span class="badge bg-secondary"><i class="fas ${actionIcon} me-1"></i> ${log.action.replace(/_/g, ' ')}</span></td
+                                    <td>👤 ${log.user_email}</td
+                                    <td><span class="badge badge-secondary">${actionIcon} ${actionText}</span></td
                                     <td>${log.details || 'No details'}</td
-                                    <td><i class="far fa-clock me-1"></i> ${new Date(log.timestamp).toLocaleTimeString()}</td
+                                    <td>⏰ ${new Date(log.timestamp).toLocaleString()}</td
                                 </tr>
                             `;
                         });
@@ -386,7 +371,7 @@
                 tbody.innerHTML = `
                     <tr>
                         <td colspan="4" class="text-center">
-                            <i class="fas fa-exclamation-triangle fa-2x text-danger mb-2 d-block"></i>
+                            <span style="font-size: 2rem;">❌</span>
                             <p class="text-danger">Failed to load activity logs</p>
                             <small class="text-muted">Please check if the backend server is running</small>
                         </td

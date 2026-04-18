@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leave Management | Glass Theme</title>
+    <title>Leave Management | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,255 +12,334 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
-        }
-
-        /* FIX: Ensure all text is white */
-        body, .dashboard-widget, .table, .modal-content, .form-control, .form-select,
-        h1, h2, h3, h4, h5, h6, p, span, div, label, .text-muted {
-            color: white;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
         }
 
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0;
+        }
+
+        /* Modern Glass Card */
         .dashboard-widget {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .dashboard-widget:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
-        h2 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        /* Balance Card - Special Design */
+        .balance-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.9));
+        }
+
+        .balance-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.08), transparent);
+            animation: rotate 15s linear infinite;
+            z-index: 0;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .balance-card > * {
+            position: relative;
+            z-index: 1;
         }
 
         h3 {
             font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         h5 {
-            color: white;
-            margin-bottom: 1rem;
+            color: #0f172a;
+            margin-bottom: 16px;
+            font-weight: 600;
+            font-size: 1rem;
         }
 
+        /* Buttons */
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             border-radius: 40px;
             padding: 10px 24px;
             font-weight: 600;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
         .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
             border-radius: 40px;
             padding: 8px 20px;
-            color: white;
+            color: #475569;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: #e2e8f0;
             transform: translateY(-1px);
         }
 
+        /* Table Styles */
         .table-responsive {
             overflow-x: auto;
         }
 
         .table {
             width: 100%;
-            color: white;
             border-collapse: collapse;
+            font-size: 0.85rem;
         }
 
         .table thead th {
-            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
+            border-bottom: 2px solid #e2e8f0;
             padding: 12px;
             text-align: left;
             font-weight: 600;
-            color: #4facfe;
+            color: #64748b;
         }
 
         .table tbody td {
             padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #f1f5f9;
             vertical-align: middle;
+            color: #334155;
         }
 
         .table tbody tr:hover {
-            background: rgba(79, 172, 254, 0.1);
+            background: #f8fafc;
         }
 
+        /* Badges */
         .badge {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
             padding: 4px 12px;
             border-radius: 20px;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 500;
         }
 
-        .bg-success {
-            background: rgba(72, 187, 120, 0.3);
-            color: #48bb78;
+        .badge-success {
+            background: #dcfce7;
+            color: #22c55e;
         }
 
-        .bg-danger {
-            background: rgba(245, 101, 101, 0.3);
-            color: #f56565;
+        .badge-danger {
+            background: #fee2e2;
+            color: #dc2626;
         }
 
-        .bg-warning {
-            background: rgba(237, 137, 54, 0.3);
-            color: #ed8936;
+        .badge-warning {
+            background: #ffedd5;
+            color: #f97316;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1050;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-dialog {
+            width: 500px;
+            max-width: 90%;
         }
 
         .modal-content {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            color: white;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
         .modal-header {
-            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
-            padding: 1.2rem 1.5rem;
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-body {
+            padding: 20px;
+            max-height: 500px;
+            overflow-y: auto;
         }
 
         .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 1.5rem;
+            padding: 16px 20px;
+            border-top: 1px solid #e2e8f0;
+            background: #f8fafc;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
         }
 
         .modal-title {
-            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
         }
 
         .btn-close {
-            filter: invert(1);
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            cursor: pointer;
+            color: #94a3b8;
         }
 
+        /* Form Controls */
         .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #0f172a;
+            padding: 10px 14px;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
             outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: #94a3b8;
         }
 
         .form-label {
-            color: rgba(255, 255, 255, 0.9);
+            color: #334155;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px;
             display: block;
         }
 
+        /* Grid */
         .row {
             display: flex;
             flex-wrap: wrap;
-            margin-right: -0.75rem;
-            margin-left: -0.75rem;
+            margin: 0 -12px;
+        }
+
+        .col-md-4, .col-md-6 {
+            padding: 0 12px;
         }
 
         .col-md-4 {
-            flex: 0 0 auto;
-            width: 33.333%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
         }
 
         .col-md-6 {
-            flex: 0 0 auto;
-            width: 50%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+            flex: 0 0 50%;
+            max-width: 50%;
         }
 
         @media (max-width: 768px) {
             .col-md-4, .col-md-6 {
-                width: 100%;
-                margin-bottom: 1rem;
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 16px;
             }
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .dashboard-widget {
+                padding: 20px;
+            }
+            h3 {
+                font-size: 1.8rem;
+            }
         }
 
+        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -281,126 +360,149 @@
             text-align: center;
         }
 
+        .text-muted {
+            color: #64748b !important;
+        }
+
         .mb-3 {
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
         }
 
         .mb-4 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .mt-2 {
+            margin-top: 8px;
+        }
+
+        .me-1 {
+            margin-right: 4px;
         }
 
         .me-2 {
-            margin-right: 0.5rem;
+            margin-right: 8px;
         }
 
+        /* Loading Spinner */
         .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(79, 172, 254, 0.2);
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
             border-radius: 50%;
-            border-top-color: #4facfe;
+            border-top-color: #3b82f6;
             animation: spin 0.8s linear infinite;
+            display: inline-block;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        .toast-glass {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 16px;
-            color: white;
+        /* Balance Icon */
+        .balance-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
         }
 
+        .balance-icon span {
+            font-size: 2rem;
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #4facfe;
+            background: #3b82f6;
             border-radius: 10px;
         }
 
-        .balance-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 15px;
-            background: rgba(79, 172, 254, 0.2);
-            border-radius: 50%;
+        /* Toast Notification */
+        .toast-glass {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 8px;
         }
     </style>
 </head>
 <body>
     <div>
         <div class="header-with-logout">
-            <h2><i class="fas fa-umbrella-beach me-2"></i> Leave Management</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <h2>🏖️ Leave Management</h2>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
         <div class="d-flex justify-content-end mb-4">
-            <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#leaveModal" onclick="openRequestModal()">
-                <i class="fas fa-plus me-2"></i> Request Leave
-            </button>
+            <button class="btn-primary" onclick="openRequestModal()">+ Request Leave</button>
         </div>
         
         <div class="row mb-4">
             <div class="col-md-4">
-                <div class="dashboard-widget text-center">
+                <div class="dashboard-widget balance-card">
                     <div class="balance-icon">
-                        <i class="fas fa-calendar-alt fa-2x" style="color: #4facfe;"></i>
+                        <span>🏖️</span>
                     </div>
                     <h3 id="leaveBalance">--</h3>
-                    <p class="text-muted"><i class="fas fa-clock me-1"></i> Available Leave Days</p>
+                    <p class="text-muted">Available Leave Days</p>
                 </div>
             </div>
         </div>
         
         <div class="dashboard-widget">
-            <h5 class="mb-3"><i class="fas fa-list-alt me-2"></i> My Leave Requests</h5>
+            <h5 class="mb-3">📋 My Leave Requests</h5>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr>
-                            <th><i class="fas fa-calendar-alt me-1"></i> From</th>
-                            <th><i class="fas fa-calendar-alt me-1"></i> To</th>
-                            <th><i class="fas fa-tag me-1"></i> Type</th>
-                            <th><i class="fas fa-comment me-1"></i> Reason</th>
-                            <th><i class="fas fa-chart-simple me-1"></i> Status</th>
+                            <th>📅 From</th>
+                            <th>📅 To</th>
+                            <th>🏷️ Type</th>
+                            <th>💬 Reason</th>
+                            <th>📊 Status</th>
                         </tr>
                     </thead>
                     <tbody id="leaveRequests">
-                        <tr><td colspan="5" class="text-center">
-                            <div class="loading-spinner"></div>
-                            <p class="mt-2">Loading leave requests...</p>
-                        </tr
+                        <tr>
+                            <td colspan="5" class="text-center">
+                                <div class="loading-spinner"></div>
+                                <p class="mt-2 text-muted">Loading leave requests...</p>
+                            </td
+                        </tr>
                     </tbody>
-                </table
+                </table>
             </div>
         </div>
     </div>
     
-    <div class="modal fade" id="leaveModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
+    <div class="modal" id="leaveModal">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fas fa-paper-plane me-2"></i> Request Leave
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title">📝 Request Leave</h5>
+                    <button class="btn-close" onclick="closeLeaveModal()">×</button>
                 </div>
                 <div class="modal-body">
                     <form id="leaveForm">
@@ -430,22 +532,15 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-primary" onclick="submitLeave()">
-                        <i class="fas fa-paper-plane me-2"></i> Submit Request
-                    </button>
+                    <button class="btn-secondary" onclick="closeLeaveModal()">Cancel</button>
+                    <button class="btn-primary" onclick="submitLeave()">📤 Submit Request</button>
                 </div>
             </div>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
     <script>
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
+        function logout() { localStorage.clear(); window.location.href = 'index.html'; }
         
         async function loadLeaveBalance() {
             try {
@@ -490,29 +585,28 @@
                     const leaves = await response.json();
                     const tbody = document.getElementById('leaveRequests');
                     if (leaves.length === 0) {
-                        tbody.innerHTML = '<tr><td colspan="5" class="text-center"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No leave requests found</tr';
+                        tbody.innerHTML = '<tr><td colspan="5" class="text-center">📭 No leave requests found</tr';
                         return;
                     }
                     tbody.innerHTML = leaves.map(leave => {
-                        let statusIcon = '';
-                        let statusClass = '';
+                        let statusClass = '', statusIcon = '';
                         if (leave.status === 'Approved') {
-                            statusIcon = 'fa-check-circle';
-                            statusClass = 'bg-success';
+                            statusClass = 'badge-success';
+                            statusIcon = '✅';
                         } else if (leave.status === 'Rejected') {
-                            statusIcon = 'fa-times-circle';
-                            statusClass = 'bg-danger';
+                            statusClass = 'badge-danger';
+                            statusIcon = '❌';
                         } else {
-                            statusIcon = 'fa-clock';
-                            statusClass = 'bg-warning';
+                            statusClass = 'badge-warning';
+                            statusIcon = '⏳';
                         }
                         return `
                             <tr>
-                                <td><i class="fas fa-calendar-day me-1"></i>${new Date(leave.start_date).toLocaleDateString()}</td
-                                <td><i class="fas fa-calendar-day me-1"></i>${new Date(leave.end_date).toLocaleDateString()}</td
+                                <td>📅 ${new Date(leave.start_date).toLocaleDateString()}</td
+                                <td>📅 ${new Date(leave.end_date).toLocaleDateString()}</td
                                 <td>${leave.leave_type}</td
                                 <td>${leave.reason || '-'}</td
-                                <td><span class="badge ${statusClass}"><i class="fas ${statusIcon} me-1"></i>${leave.status}</span></td
+                                <td><span class="badge ${statusClass}">${statusIcon} ${leave.status}</span></td
                             </tr>
                         `;
                     }).join('');
@@ -555,7 +649,7 @@
                 });
                 
                 if (response.ok) {
-                    bootstrap.Modal.getInstance(document.getElementById('leaveModal')).hide();
+                    closeLeaveModal();
                     showNotification('Leave request submitted successfully!', 'success');
                     loadLeaveRequests();
                     loadLeaveBalance();
@@ -575,23 +669,17 @@
             document.getElementById('startDate').value = today;
             const nextWeek = new Date(Date.now() + 7 * 86400000).toISOString().split('T')[0];
             document.getElementById('endDate').value = nextWeek;
+            document.getElementById('leaveModal').classList.add('show');
         }
         
-        function showNotification(message, type) {
+        function closeLeaveModal() {
+            document.getElementById('leaveModal').classList.remove('show');
+        }
+        
+        function showNotification(message, type = 'success') {
             const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed top-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
-                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px;">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-            `;
+            toastDiv.className = 'toast-glass';
+            toastDiv.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}<button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;margin-left:8px;">×</button>`;
             document.body.appendChild(toastDiv);
             setTimeout(() => toastDiv.remove(), 3000);
         }

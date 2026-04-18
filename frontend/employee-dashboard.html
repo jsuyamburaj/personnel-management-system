@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Management | Glass Theme</title>
+    <title>Employee Dashboard | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,776 +12,697 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
         }
 
-        /* FIX: Ensure all text is white */
-        body, .glass-container, .glass-card, .table, .form-control, .form-select,
-        h1, h2, h3, h4, h5, h6, p, span, div, label, td, th, li, .text-muted {
-            color: white;
+        .dashboard-container {
+            padding: 0;
+            animation: fadeInUp 0.4s ease-out;
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
+        .dashboard-header {
+            margin-bottom: 24px;
         }
 
-        /* Header with Logout */
+        .dashboard-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 4px;
+        }
+
+        .dashboard-header p {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
-        .glass-container {
-            background: transparent;
-        }
-
-        h2 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.1);
+        /* Modern Glass Card */
+        .dashboard-widget {
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .glass-card:hover {
+        .dashboard-widget:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
-        .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
+        .section-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #0f172a;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .task-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             transition: all 0.3s;
         }
 
-        .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
-            outline: none;
+        .task-item:hover {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding-left: 8px;
         }
 
-        .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+        .task-item:last-child {
+            border-bottom: none;
         }
 
-        label {
-            color: rgba(255, 255, 255, 0.9);
+        .task-check {
+            width: 18px;
+            height: 18px;
+            border-radius: 5px;
+            border: 2px solid #cbd5e1;
+            background: white;
+            cursor: pointer;
+        }
+
+        /* Badges */
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
             font-weight: 500;
-            margin-bottom: 0.5rem;
-            display: block;
+        }
+
+        .badge-danger { background: #fee2e2; color: #dc2626; }
+        .badge-warning { background: #ffedd5; color: #f97316; }
+        .badge-success { background: #dcfce7; color: #22c55e; }
+
+        .leave-status-badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: 500;
+        }
+        .status-approved { background: #dcfce7; color: #22c55e; }
+        .status-pending { background: #ffedd5; color: #f97316; }
+        .status-rejected { background: #fee2e2; color: #dc2626; }
+
+        /* Announcements */
+        .announcement-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+            transition: all 0.3s;
+        }
+
+        .announcement-item:hover {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding-left: 8px;
+        }
+
+        .announcement-item:last-child { border-bottom: none; }
+
+        /* Attendance */
+        .attendance-time {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+        }
+
+        /* Buttons */
+        .btn-outline-custom {
+            border-radius: 40px;
+            padding: 6px 16px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-outline-custom:hover {
+            background: #f8fafc;
+            border-color: #cbd5e1;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
+            padding: 6px 16px;
             border-radius: 40px;
-            padding: 10px 24px;
-            font-weight: 600;
+            font-size: 0.8rem;
+            font-weight: 500;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
-        }
-
-        .btn-outline-secondary {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            padding: 10px 24px;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-secondary:hover {
-            background: rgba(79, 172, 254, 0.3);
-            border-color: #4facfe;
-            transform: translateY(-2px);
-        }
-
-        .btn-outline-primary {
-            background: rgba(79, 172, 254, 0.2);
-            border: 1px solid #4facfe;
-            border-radius: 30px;
-            padding: 5px 12px;
-            color: #4facfe;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-primary:hover {
-            background: #4facfe;
-            color: white;
             transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
-        .btn-outline-danger {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid #f56565;
-            border-radius: 30px;
-            padding: 5px 12px;
-            color: #f56565;
-            transition: all 0.3s;
-        }
-
-        .btn-outline-danger:hover {
-            background: #f56565;
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .btn-secondary:hover {
-            background: rgba(255, 255, 255, 0.3);
-            transform: translateY(-1px);
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #f56565, #dc2626);
-            border: none;
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: white;
-            transition: all 0.3s;
-        }
-
-        .btn-danger:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(245, 101, 101, 0.4);
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
+        /* Table */
         .table {
             width: 100%;
-            color: white;
             border-collapse: collapse;
         }
 
-        .table thead th {
-            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
-            padding: 12px;
-            text-align: left;
+        .table th {
+            font-size: 0.7rem;
             font-weight: 600;
-            color: #4facfe;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 10px 8px;
+            text-align: left;
+            border-bottom: 2px solid #e2e8f0;
         }
 
-        .table tbody td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            vertical-align: middle;
+        .table td {
+            font-size: 0.8rem;
+            padding: 10px 8px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
         }
 
-        .table tbody tr:hover {
-            background: rgba(79, 172, 254, 0.1);
-        }
-
-        .badge {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.75rem;
+        .text-decoration-none {
+            color: #3b82f6;
+            text-decoration: none;
             font-weight: 500;
+            font-size: 0.85rem;
         }
 
-        .bg-secondary {
-            background: rgba(79, 172, 254, 0.3);
-            color: #4facfe;
+        .text-decoration-none:hover {
+            color: #2563eb;
         }
 
-        .bg-success {
-            background: rgba(72, 187, 120, 0.3);
-            color: #48bb78;
-        }
-
-        .bg-warning {
-            background: rgba(237, 137, 54, 0.3);
-            color: #ed8936;
-        }
-
-        .bg-danger {
-            background: rgba(245, 101, 101, 0.3);
-            color: #f56565;
-        }
-
-        .user-avatar {
-            width: 35px;
-            height: 35px;
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
             border-radius: 50%;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: white;
-        }
-
-        .modal-content {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 24px;
-            color: white;
-        }
-
-        .modal-header {
-            border-bottom: 1px solid rgba(79, 172, 254, 0.3);
-            padding: 1.2rem 1.5rem;
-        }
-
-        .modal-footer {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 1rem 1.5rem;
-        }
-
-        .modal-title {
-            color: white;
-        }
-
-        .btn-close {
-            filter: invert(1);
-        }
-
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            margin-right: -0.75rem;
-            margin-left: -0.75rem;
-        }
-
-        .col-md-2 {
-            flex: 0 0 auto;
-            width: 16.666%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
-        }
-
-        .col-md-3 {
-            flex: 0 0 auto;
-            width: 25%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
-        }
-
-        .col-md-6 {
-            flex: 0 0 auto;
-            width: 50%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
-        }
-
-        @media (max-width: 768px) {
-            .col-md-2, .col-md-3, .col-md-6 {
-                width: 100%;
-                margin-bottom: 1rem;
-            }
-            .header-with-logout {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
-        .d-flex {
-            display: flex;
-        }
-
-        .justify-content-between {
-            justify-content: space-between;
-        }
-
-        .align-items-center {
-            align-items: center;
-        }
-
-        .mb-4 {
-            margin-bottom: 1.5rem;
-        }
-
-        .mb-3 {
-            margin-bottom: 1rem;
-        }
-
-        .mt-3 {
-            margin-top: 1rem;
-        }
-
-        .me-1 {
-            margin-right: 0.25rem;
-        }
-
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            gap: 0.5rem;
-        }
-
-        .page-item .page-link {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: white;
-            border-radius: 8px;
-            padding: 8px 12px;
-            transition: all 0.3s;
-        }
-
-        .page-item .page-link:hover {
-            background: rgba(79, 172, 254, 0.3);
-            border-color: #4facfe;
-        }
-
-        .toast-glass {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 16px;
-            color: white;
-        }
-
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #4facfe;
-            border-radius: 10px;
+            border-top-color: #3b82f6;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Grid */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -12px;
+        }
+
+        .col-lg-7, .col-lg-5 {
+            padding: 0 12px;
+        }
+
+        .col-lg-7 { flex: 0 0 58.333%; max-width: 58.333%; }
+        .col-lg-5 { flex: 0 0 41.666%; max-width: 41.666%; }
+
+        @media (max-width: 992px) {
+            .col-lg-7, .col-lg-5 {
+                flex: 0 0 100%;
+                max-width: 100%;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-4 { margin-bottom: 20px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mt-2 { margin-top: 8px; }
+        .me-1 { margin-right: 4px; }
+        .me-2 { margin-right: 8px; }
+        .text-muted { color: #64748b !important; }
+        .d-flex { display: flex; }
+        .justify-content-between { justify-content: space-between; }
+        .align-items-center { align-items: center; }
+        .flex-wrap { flex-wrap: wrap; }
+        .gap-2 { gap: 8px; }
+        .gap-3 { gap: 12px; }
+
+        /* Balance Card */
+        .balance-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 12px;
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2);
+        }
+
+        h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 4px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1050;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show { display: flex; }
+        .modal-dialog { width: 500px; max-width: 90%; }
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        .modal-header {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+        .modal-body { padding: 20px; }
+        .modal-footer {
+            padding: 16px 20px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            background: #f8fafc;
+        }
+        .modal-title { font-size: 1.2rem; font-weight: 600; color: #0f172a; }
+        .btn-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #94a3b8;
+        }
+        .btn-secondary {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            padding: 8px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            color: #475569;
+        }
+        .form-control, .form-select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            background: white;
+        }
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            color: #334155;
+        }
+
+        /* Toast */
+        .toast-glass {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
     </style>
 </head>
 <body>
-    <div class="glass-container">
-        <div class="header-with-logout">
-            <h2><i class="fas fa-users me-2"></i> Employee Management</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+<div class="dashboard-container">
+    <div class="header-with-logout">
+        <div class="dashboard-header">
+            <h2>Welcome, <span id="userNameDisplay">Loading...</span>!</h2>
+            <p>Here's what's happening with your work today.</p>
         </div>
-        
-        <div class="d-flex justify-content-end mb-4">
-            <button class="btn-primary" data-bs-toggle="modal" data-bs-target="#employeeModal" onclick="openAddEmployeeModal()">
-                <i class="fas fa-plus me-2"></i> Add Employee
-            </button>
-        </div>
-        
-        <div class="glass-card">
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="text" class="form-control" id="searchInput" placeholder="🔍 Search by name, email...">
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" id="departmentFilter">
-                        <option value="">All Departments</option>
-                        <option>Engineering</option>
-                        <option>Product</option>
-                        <option>HR</option>
-                        <option>Sales</option>
-                        <option>Marketing</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" id="roleFilter">
-                        <option value="">All Roles</option>
-                        <option>Admin</option>
-                        <option>Manager</option>
-                        <option>Developer</option>
-                        <option>Tester</option>
-                        <option>HR</option>
-                        <option>Employee</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <select class="form-select" id="statusFilter">
-                        <option value="">All Status</option>
-                        <option>Active</option>
-                        <option>On Leave</option>
-                        <option>Inactive</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <button class="btn-outline-secondary w-100" onclick="resetFilters()">
-                        <i class="fas fa-undo-alt me-2"></i> Reset Filters
-                    </button>
-                </div>
-            </div>
-        </div>
-        
-        <div class="glass-card">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Employee</th>
-                            <th>Department</th>
-                            <th>Role</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Join Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="employeeTableBody">
-                        <tr><td colspan="8" class="text-center">
-                            <div class="loading-spinner" style="display: inline-block; width: 40px; height: 40px; border: 3px solid rgba(79,172,254,0.2); border-radius: 50%; border-top-color: #4facfe; animation: spin 0.8s linear infinite;"></div>
-                            <p class="mt-2">Loading employees...</p>
-                        </td</tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        
-        <nav class="mt-3">
-            <ul class="pagination justify-content-center" id="pagination"></ul>
-        </nav>
+        <button class="logout-btn" onclick="logout()">🚪 Logout</button>
     </div>
-    
-    <div class="modal fade" id="employeeModal" tabindex="-1">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalTitle">
-                        <i class="fas fa-user-plus me-2"></i> Add Employee
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+
+    <div class="row">
+        <div class="col-lg-7">
+            <div class="dashboard-widget">
+                <div class="section-title">
+                    <span>📋 My Tasks</span>
+                    <a href="task-management.html" class="text-decoration-none">View All Tasks →</a>
                 </div>
-                <div class="modal-body">
-                    <form id="employeeForm">
-                        <input type="hidden" id="employeeId">
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>First Name</label>
-                                <input type="text" class="form-control" id="firstName" required placeholder="Enter first name">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Last Name</label>
-                                <input type="text" class="form-control" id="lastName" required placeholder="Enter last name">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label>Email</label>
-                            <input type="email" class="form-control" id="email" required placeholder="employee@company.com">
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>Department</label>
-                                <select class="form-select" id="department">
-                                    <option>Engineering</option>
-                                    <option>Product</option>
-                                    <option>HR</option>
-                                    <option>Sales</option>
-                                    <option>Marketing</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Role</label>
-                                <select class="form-select" id="role">
-                                    <option>Developer</option>
-                                    <option>Tester</option>
-                                    <option>Manager</option>
-                                    <option>HR</option>
-                                    <option>Employee</option>
-                                    <option>Admin</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label>Phone</label>
-                                <input type="text" class="form-control" id="phone" placeholder="+1 234 567 8900">
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label>Join Date</label>
-                                <input type="date" class="form-control" id="joinDate">
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label>Skills (comma separated)</label>
-                            <input type="text" class="form-control" id="skills" placeholder="React, Python, MongoDB">
-                        </div>
-                        <div class="mb-3">
-                            <label>Salary ($)</label>
-                            <input type="number" class="form-control" id="salary" placeholder="50000">
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-primary" onclick="saveEmployee()">
-                        <i class="fas fa-save me-2"></i> Save Employee
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <div class="modal fade" id="deleteModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">
-                        <i class="fas fa-exclamation-triangle me-2"></i> Confirm Delete
-                    </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
-                <div class="modal-body">
-                    <p>Are you sure you want to delete this employee?</p>
-                    <small class="text-muted">This action cannot be undone.</small>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn-danger" id="confirmDeleteBtn">
-                        <i class="fas fa-trash me-2"></i> Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
-    <script>
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
-        
-        let currentPage = 1;
-        let deleteId = null;
-        let employeesData = [];
-        
-        const sampleEmployees = [
-            { id: 1, firstName: 'John', lastName: 'Doe', email: 'john@spms.com', department: 'Engineering', role: 'Developer', status: 'Active', joinDate: '2023-01-15', phone: '1234567890', skills: 'React,Python', salary: 75000 },
-            { id: 2, firstName: 'Jane', lastName: 'Smith', email: 'jane@spms.com', department: 'Product', role: 'Manager', status: 'Active', joinDate: '2022-06-20', phone: '1234567891', skills: 'Product Management', salary: 95000 },
-            { id: 3, firstName: 'Mike', lastName: 'Johnson', email: 'mike@spms.com', department: 'Engineering', role: 'Tester', status: 'Active', joinDate: '2023-03-10', phone: '1234567892', skills: 'Selenium,Java', salary: 65000 },
-            { id: 4, firstName: 'Sarah', lastName: 'Williams', email: 'sarah@spms.com', department: 'HR', role: 'HR', status: 'Active', joinDate: '2021-11-01', phone: '1234567893', skills: 'Recruitment', salary: 70000 },
-            { id: 5, firstName: 'David', lastName: 'Brown', email: 'david@spms.com', department: 'Marketing', role: 'Employee', status: 'On Leave', joinDate: '2023-05-15', phone: '1234567894', skills: 'SEO,Content', salary: 60000 }
-        ];
-        
-        function loadEmployees() {
-            employeesData = sampleEmployees;
-            renderTable();
-        }
-        
-        function renderTable() {
-            const search = document.getElementById('searchInput')?.value.toLowerCase() || '';
-            const dept = document.getElementById('departmentFilter')?.value || '';
-            const role = document.getElementById('roleFilter')?.value || '';
-            const status = document.getElementById('statusFilter')?.value || '';
-            
-            let filtered = employeesData.filter(emp => {
-                const fullName = `${emp.firstName} ${emp.lastName}`.toLowerCase();
-                const matchesSearch = fullName.includes(search) || emp.email.toLowerCase().includes(search);
-                const matchesDept = !dept || emp.department === dept;
-                const matchesRole = !role || emp.role === role;
-                const matchesStatus = !status || emp.status === status;
-                return matchesSearch && matchesDept && matchesRole && matchesStatus;
-            });
-            
-            const tbody = document.getElementById('employeeTableBody');
-            if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="8" class="text-center"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>No employees found</td></tr>';
-                return;
-            }
-            
-            tbody.innerHTML = filtered.map(emp => `
-                <tr>
-                    <td>${emp.id}</td
-                    <td>
-                        <div class="d-flex align-items-center">
-                            <div class="user-avatar me-2">
-                                ${emp.firstName[0]}${emp.lastName[0]}
-                            </div>
-                            <div><strong>${emp.firstName} ${emp.lastName}</strong></div>
-                        </div>
-                    </td
-                    <td>${emp.department}</td
-                    <td><span class="badge bg-secondary">${emp.role}</span></td
-                    <td>${emp.email}</td
-                    <td><span class="badge ${emp.status === 'Active' ? 'bg-success' : emp.status === 'On Leave' ? 'bg-warning' : 'bg-danger'}">${emp.status}</span></td
-                    <td>${emp.joinDate}</td
-                    <td>
-                        <button class="btn-outline-primary me-1" onclick="editEmployee(${emp.id})" style="padding: 5px 10px;">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn-outline-danger" onclick="confirmDelete(${emp.id})" style="padding: 5px 10px;">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td
-                </tr>
-            `).join('');
-        }
-        
-        function openAddEmployeeModal() {
-            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-plus me-2"></i> Add Employee';
-            document.getElementById('employeeForm').reset();
-            document.getElementById('employeeId').value = '';
-            new bootstrap.Modal(document.getElementById('employeeModal')).show();
-        }
-        
-        function editEmployee(id) {
-            const emp = employeesData.find(e => e.id === id);
-            if (emp) {
-                document.getElementById('modalTitle').innerHTML = '<i class="fas fa-user-edit me-2"></i> Edit Employee';
-                document.getElementById('employeeId').value = emp.id;
-                document.getElementById('firstName').value = emp.firstName;
-                document.getElementById('lastName').value = emp.lastName;
-                document.getElementById('email').value = emp.email;
-                document.getElementById('department').value = emp.department;
-                document.getElementById('role').value = emp.role;
-                document.getElementById('phone').value = emp.phone || '';
-                document.getElementById('joinDate').value = emp.joinDate;
-                document.getElementById('skills').value = emp.skills || '';
-                document.getElementById('salary').value = emp.salary || '';
-                new bootstrap.Modal(document.getElementById('employeeModal')).show();
-            }
-        }
-        
-        function saveEmployee() {
-            const id = document.getElementById('employeeId').value;
-            const employee = {
-                id: id ? parseInt(id) : employeesData.length + 1,
-                firstName: document.getElementById('firstName').value,
-                lastName: document.getElementById('lastName').value,
-                email: document.getElementById('email').value,
-                department: document.getElementById('department').value,
-                role: document.getElementById('role').value,
-                phone: document.getElementById('phone').value,
-                joinDate: document.getElementById('joinDate').value,
-                skills: document.getElementById('skills').value,
-                salary: parseInt(document.getElementById('salary').value) || 0,
-                status: 'Active'
-            };
-            
-            if (id) {
-                const index = employeesData.findIndex(e => e.id === parseInt(id));
-                if (index !== -1) employeesData[index] = employee;
-            } else {
-                employeesData.push(employee);
-            }
-            
-            bootstrap.Modal.getInstance(document.getElementById('employeeModal')).hide();
-            renderTable();
-            showToast('Employee saved successfully!', 'success');
-        }
-        
-        function confirmDelete(id) {
-            deleteId = id;
-            new bootstrap.Modal(document.getElementById('deleteModal')).show();
-        }
-        
-        document.getElementById('confirmDeleteBtn')?.addEventListener('click', () => {
-            if (deleteId) {
-                employeesData = employeesData.filter(e => e.id !== deleteId);
-                renderTable();
-                bootstrap.Modal.getInstance(document.getElementById('deleteModal')).hide();
-                showToast('Employee deleted successfully!', 'success');
-            }
-        });
-        
-        function resetFilters() {
-            document.getElementById('searchInput').value = '';
-            document.getElementById('departmentFilter').value = '';
-            document.getElementById('roleFilter').value = '';
-            document.getElementById('statusFilter').value = '';
-            renderTable();
-        }
-        
-        function showToast(message, type) {
-            const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed bottom-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
-                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 250px;">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'trash'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+                <div id="tasksList">
+                    <div class="text-center py-3">
+                        <div class="loading-spinner"></div>
+                        <p class="mt-2 text-muted">Loading tasks...</p>
                     </div>
                 </div>
-            `;
-            document.body.appendChild(toastDiv);
-            setTimeout(() => toastDiv.remove(), 3000);
+            </div>
+
+            <div class="dashboard-widget">
+                <div class="section-title">
+                    <span>📅 Recent Leave Requests</span>
+                    <button class="btn-primary" onclick="openLeaveRequestModal()">+ Request Leave</button>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr><th>From</th><th>To</th><th>Type</th><th>Status</th></tr>
+                        </thead>
+                        <tbody id="leaveRequestsTable">
+                            <tr><td colspan="4" class="text-center"><div class="loading-spinner"></div><p class="mt-2 text-muted">Loading...</p></tr
+                        </tbody>
+                    </table
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-5">
+            <div class="dashboard-widget text-center">
+                <div class="balance-icon">🏖️</div>
+                <h3 id="leaveBalanceValue">--</h3>
+                <p class="text-muted">Days Available</p>
+            </div>
+
+            <div class="dashboard-widget">
+                <div class="section-title">
+                    <span>📢 Announcements</span>
+                </div>
+                <div id="announcementsList">
+                    <div class="text-center py-3">
+                        <div class="loading-spinner"></div>
+                        <p class="mt-2 text-muted">Loading announcements...</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-widget">
+                <div class="section-title">
+                    <span>⏰ My Attendance</span>
+                    <a href="attendance.html" class="text-decoration-none">View All →</a>
+                </div>
+                <div class="text-center">
+                    <div class="mb-3">
+                        <small class="text-muted">Checked In</small>
+                        <div class="attendance-time" id="checkInTime">--:-- --</div>
+                    </div>
+                    <div>
+                        <small class="text-muted">Checked Out</small>
+                        <div class="attendance-time" id="checkOutTime">--:-- --</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal" id="leaveModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Request Leave</h5>
+                <button class="btn-close" onclick="closeLeaveModal()">×</button>
+            </div>
+            <div class="modal-body">
+                <form id="leaveRequestForm">
+                    <div class="mb-3">
+                        <label class="form-label">Leave Type</label>
+                        <select class="form-select" id="leaveType" required>
+                            <option>Annual</option><option>Sick</option><option>Personal</option><option>Unpaid</option>
+                        </select>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">From Date</label>
+                            <input type="date" class="form-control" id="leaveFrom" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">To Date</label>
+                            <input type="date" class="form-control" id="leaveTo" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Reason</label>
+                        <textarea class="form-control" id="leaveReason" rows="3" placeholder="Please provide reason for leave..."></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeLeaveModal()">Cancel</button>
+                <button class="btn-primary" onclick="submitLeaveRequest()">Submit Request</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function logout() {
+        localStorage.clear();
+        window.location.href = 'index.html';
+    }
+
+    const API_BASE = 'http://localhost:8000/api';
+    let currentUser = null;
+
+    async function fetchWithAuth(endpoint, options = {}) {
+        const token = localStorage.getItem('token');
+        const res = await fetch(`${API_BASE}${endpoint}`, {
+            ...options,
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+    }
+
+    async function loadDashboard() {
+        try {
+            const user = JSON.parse(localStorage.getItem('user') || '{}');
+            document.getElementById('userNameDisplay').innerText = user.full_name || user.email?.split('@')[0] || 'Employee';
+            currentUser = user;
+
+            const tasks = await fetchWithAuth('/tasks/my-tasks');
+            const tasksContainer = document.getElementById('tasksList');
+            if (tasks.length === 0) {
+                tasksContainer.innerHTML = '<div class="text-muted text-center py-3">✅ No tasks assigned. Great job!</div>';
+            } else {
+                tasksContainer.innerHTML = tasks.slice(0, 3).map(task => `
+                    <div class="task-item">
+                        <div class="task-check"></div>
+                        <div class="flex-grow-1"><strong>${escapeHtml(task.title)}</strong></div>
+                        <span class="badge ${task.priority === 'High' ? 'badge-danger' : task.priority === 'Medium' ? 'badge-warning' : 'badge-success'}">${task.priority}</span>
+                    </div>
+                `).join('');
+                if (tasks.length > 3) {
+                    tasksContainer.innerHTML += '<div class="text-center mt-2"><small class="text-muted">+ ' + (tasks.length-3) + ' more tasks</small></div>';
+                }
+            }
+
+            const balance = await fetchWithAuth('/leaves/balance');
+            animateValue('leaveBalanceValue', 0, balance.available ?? 0, 1000);
+
+            const leaves = await fetchWithAuth('/leaves/my-requests');
+            const leavesTable = document.getElementById('leaveRequestsTable');
+            if (leaves.length === 0) {
+                leavesTable.innerHTML = '<tr><td colspan="4" class="text-muted text-center">No leave requests found.</tr';
+            } else {
+                leavesTable.innerHTML = leaves.slice(0, 3).map(leave => `
+                    <tr>
+                        <td>${formatDate(leave.start_date)}</td
+                        <td>${formatDate(leave.end_date)}</td
+                        <td>${leave.leave_type}</td
+                        <td><span class="leave-status-badge status-${leave.status.toLowerCase()}">${leave.status}</span></td
+                    </tr>
+                `).join('');
+            }
+
+            const announcements = await fetchWithAuth('/announcements');
+            const annContainer = document.getElementById('announcementsList');
+            if (announcements.length === 0) {
+                annContainer.innerHTML = '<div class="text-muted text-center py-3">📭 No announcements at the moment.</div>';
+            } else {
+                annContainer.innerHTML = announcements.map(ann => `
+                    <div class="announcement-item">
+                        <div>📢</div>
+                        <div>
+                            <div>${escapeHtml(ann.message)}</div>
+                            <small class="text-muted">${formatDate(ann.created_at)}</small>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            const attendance = await fetchWithAuth('/attendance/today');
+            document.getElementById('checkInTime').innerText = attendance.check_in ? new Date(attendance.check_in).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not checked in';
+            document.getElementById('checkOutTime').innerText = attendance.check_out ? new Date(attendance.check_out).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Not checked out';
+
+        } catch (error) {
+            console.error('Dashboard load error:', error);
+            document.getElementById('tasksList').innerHTML = '<div class="alert alert-warning">Could not load tasks.</div>';
+            document.getElementById('leaveBalanceValue').innerText = '12';
+            document.getElementById('leaveRequestsTable').innerHTML = '<td><td colspan="4" class="text-danger text-center">Error loading leaves</tr';
+            document.getElementById('announcementsList').innerHTML = '<div class="alert alert-warning">Announcements unavailable</div>';
+        }
+    }
+
+    function animateValue(elementId, start, end, duration) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        const range = end - start;
+        const increment = range / (duration / 16);
+        let current = start;
+        const timer = setInterval(() => {
+            current += increment;
+            if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                element.innerText = end;
+                clearInterval(timer);
+            } else {
+                element.innerText = Math.round(current);
+            }
+        }, 16);
+    }
+
+    async function submitLeaveRequest() {
+        const data = {
+            leave_type: document.getElementById('leaveType').value,
+            start_date: document.getElementById('leaveFrom').value,
+            end_date: document.getElementById('leaveTo').value,
+            reason: document.getElementById('leaveReason').value
+        };
+        
+        if (!data.start_date || !data.end_date) {
+            showToast('Please select both start and end dates', 'error');
+            return;
         }
         
-        document.getElementById('searchInput')?.addEventListener('input', renderTable);
-        document.getElementById('departmentFilter')?.addEventListener('change', renderTable);
-        document.getElementById('roleFilter')?.addEventListener('change', renderTable);
-        document.getElementById('statusFilter')?.addEventListener('change', renderTable);
-        
-        loadEmployees();
-    </script>
+        try {
+            await fetchWithAuth('/leaves/', { method: 'POST', body: JSON.stringify(data) });
+            closeLeaveModal();
+            showToast('Leave request submitted successfully!', 'success');
+            loadDashboard();
+        } catch (err) {
+            showToast('Failed to submit leave request.', 'error');
+        }
+    }
+
+    function openLeaveRequestModal() {
+        document.getElementById('leaveRequestForm').reset();
+        document.getElementById('leaveModal').classList.add('show');
+    }
+
+    function closeLeaveModal() {
+        document.getElementById('leaveModal').classList.remove('show');
+    }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function showToast(message, type = 'success') {
+        const toast = document.createElement('div');
+        toast.className = 'toast-glass';
+        toast.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}<button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;margin-left:8px;">×</button>`;
+        document.body.appendChild(toast);
+        setTimeout(() => toast.remove(), 3000);
+    }
+
+    loadDashboard();
+</script>
 </body>
 </html>

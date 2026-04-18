@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard | Glass Theme</title>
+    <title>Admin Dashboard | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,290 +12,127 @@
         }
 
         body {
-            background: transparent;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            color: white;
+            background: transparent !important;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.5;
-            min-height: 100vh;
         }
 
-        /* FIX: Ensure all text is white */
-        body, .dashboard-container, .dashboard-header, .stat-card, .chart-container,
-        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted {
-            color: white;
+        /* Modern Glass Cards */
+        .glass-card, .dashboard-widget, .stat-card, .chart-container {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
+        .glass-card:hover, .dashboard-widget:hover, .stat-card:hover, .chart-container:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: rgba(59, 130, 246, 0.4);
         }
 
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            border-radius: 10px;
-        }
-
-        .dashboard-container {
-            padding: 20px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .dashboard-header h2 {
-            font-size: 2rem;
+        h2 {
+            font-size: 1.8rem;
             font-weight: 700;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #1e40af, #1d4ed8);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 8px;
+            margin-bottom: 0;
         }
 
         .dashboard-header p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.95rem;
+            color: #475569;
+            font-size: 0.9rem;
+            margin-top: 4px;
         }
 
+        /* Stats Row */
         .stats-row {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 24px;
-            margin-bottom: 32px;
+            margin-bottom: 28px;
         }
 
         .stat-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 24px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .stat-card:hover::before {
-            left: 100%;
-        }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .stat-card .stat-label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 8px;
-        }
-
-        .stat-card .stat-value {
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 4px;
-        }
-
-        .stat-card .stat-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 16px;
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .stat-icon.primary { background: rgba(79, 172, 254, 0.2); color: #4facfe; }
-        .stat-icon.success { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
-        .stat-icon.info { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
-        .stat-icon.warning { background: rgba(237, 137, 54, 0.2); color: #ed8936; }
-
-        .chart-container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 24px;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .chart-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
-        }
-
-        .chart-container h5 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 20px;
-            color: white;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .chart-container h5 i {
-            color: #4facfe;
-            font-size: 1.2rem;
-        }
-
-        .recent-activity {
-            max-height: 350px;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .activity-item {
-            padding: 14px;
-            border-radius: 16px;
-            margin-bottom: 12px;
-            background: rgba(255, 255, 255, 0.08);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 15px;
+            justify-content: space-between;
+            align-items: flex-start;
             cursor: pointer;
         }
 
-        .activity-item:hover {
-            background: rgba(79, 172, 254, 0.2);
-            transform: translateX(5px);
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            margin-bottom: 8px;
         }
 
-        .activity-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 14px;
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 4px;
+            line-height: 1.2;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
+            transition: all 0.3s;
         }
 
-        .activity-icon.bg-success-light { background: rgba(72, 187, 120, 0.2); color: #48bb78; }
-        .activity-icon.bg-info-light { background: rgba(66, 153, 225, 0.2); color: #4299e1; }
-        .activity-icon.bg-warning-light { background: rgba(237, 137, 54, 0.2); color: #ed8936; }
-        .activity-icon.bg-primary-light { background: rgba(79, 172, 254, 0.2); color: #4facfe; }
-        .activity-icon.bg-secondary-light { background: rgba(113, 128, 150, 0.2); color: #a0aec0; }
-
-        .activity-content {
-            flex: 1;
+        .stat-card:hover .stat-icon {
+            transform: scale(1.05);
         }
 
-        .activity-text {
-            font-weight: 500;
-            color: white;
-            margin-bottom: 4px;
-        }
+        .stat-icon.primary { background: linear-gradient(135deg, #dbeafe, #bfdbfe); color: #3b82f6; }
+        .stat-icon.success { background: linear-gradient(135deg, #dcfce7, #bbf7d0); color: #22c55e; }
+        .stat-icon.info { background: linear-gradient(135deg, #cffafe, #a5f3fc); color: #06b6d4; }
+        .stat-icon.warning { background: linear-gradient(135deg, #ffedd5, #fed7aa); color: #f97316; }
 
-        .activity-time {
-            font-size: 0.75rem;
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(79, 172, 254, 0.2);
-            border-radius: 50%;
-            border-top-color: #4facfe;
-            animation: spin 0.8s linear infinite;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .stats-row {
-                gap: 16px;
-            }
-            .stat-card {
-                padding: 18px;
-            }
-            .stat-value {
-                font-size: 1.8rem;
-            }
-            .chart-container {
-                padding: 18px;
-            }
-            .header-with-logout {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-        }
-
+        /* Charts Grid */
         .charts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(480px, 1fr));
             gap: 24px;
             margin-bottom: 24px;
         }
@@ -306,152 +143,204 @@
             }
         }
 
-        .text-muted {
-            color: rgba(255, 255, 255, 0.6) !important;
-        }
-        
-        .text-center {
-            text-align: center;
-        }
-        
-        .py-3 {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
-        }
-        
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
-        
-        .d-flex {
+        .chart-container h5 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #0f172a;
             display: flex;
-        }
-        
-        .justify-content-between {
-            justify-content: space-between;
-        }
-        
-        .align-items-start {
-            align-items: flex-start;
-        }
-        
-        .align-items-center {
             align-items: center;
+            gap: 10px;
         }
-        
-        .gap-2 {
-            gap: 0.5rem;
+
+        /* Recent Activity */
+        .recent-activity {
+            max-height: 360px;
+            overflow-y: auto;
+            padding-right: 4px;
         }
-        
-        .me-2 {
-            margin-right: 0.5rem;
+
+        .activity-item {
+            padding: 14px;
+            border-radius: 14px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+        }
+
+        .activity-item:hover {
+            background: white;
+            transform: translateX(4px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+        }
+
+        .activity-icon.bg-success-light { background: #dcfce7; color: #22c55e; }
+        .activity-icon.bg-info-light { background: #cffafe; color: #06b6d4; }
+        .activity-icon.bg-warning-light { background: #ffedd5; color: #f97316; }
+        .activity-icon.bg-primary-light { background: #dbeafe; color: #3b82f6; }
+        .activity-icon.bg-secondary-light { background: #f1f5f9; color: #64748b; }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-weight: 500;
+            color: #0f172a;
+            margin-bottom: 4px;
+            font-size: 0.85rem;
+        }
+
+        .activity-time {
+            font-size: 0.7rem;
+            color: #64748b;
+        }
+
+        /* Loading Spinner */
+        .loading-spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
+            border-radius: 50%;
+            border-top-color: #3b82f6;
+            animation: spin 0.8s linear infinite;
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .py-3 { padding-top: 12px; padding-bottom: 12px; }
+        .mt-2 { margin-top: 8px; }
+        .d-flex { display: flex; }
+        .justify-content-between { justify-content: space-between; }
+        .align-items-start { align-items: flex-start; }
+        .me-2 { margin-right: 8px; }
+        .text-muted { color: #64748b !important; }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-row { gap: 16px; }
+            .stat-card { padding: 18px; }
+            .stat-value { font-size: 1.6rem; }
+            .charts-grid { grid-template-columns: 1fr; }
+            .header-with-logout { flex-direction: column; align-items: flex-start; }
+            .glass-card, .dashboard-widget, .stat-card, .chart-container { padding: 18px; }
         }
     </style>
 </head>
 <body>
-    <div class="dashboard-container">
+    <div class="dashboard-container" style="padding: 0;">
         <div class="header-with-logout">
             <div class="dashboard-header">
-                <h2><i class="fas fa-chart-line"></i> Admin Dashboard</h2>
+                <h2>📊 Admin Dashboard</h2>
                 <p>Welcome back! Here's what's happening with your organization today.</p>
             </div>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
         <div class="stats-row">
             <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="stat-label">Total Employees</div>
-                        <div class="stat-value" id="totalEmployees">0</div>
-                        <small class="text-muted">Active workforce</small>
-                    </div>
-                    <div class="stat-icon primary">
-                        <i class="fas fa-users"></i>
-                    </div>
+                <div>
+                    <div class="stat-label">Total Employees</div>
+                    <div class="stat-value" id="totalEmployees">0</div>
+                    <small class="text-muted">Active workforce</small>
                 </div>
+                <div class="stat-icon primary">👥</div>
             </div>
-            
             <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="stat-label">Active Projects</div>
-                        <div class="stat-value" id="activeProjects">0</div>
-                        <small class="text-muted">In progress</small>
-                    </div>
-                    <div class="stat-icon success">
-                        <i class="fas fa-project-diagram"></i>
-                    </div>
+                <div>
+                    <div class="stat-label">Active Projects</div>
+                    <div class="stat-value" id="activeProjects">0</div>
+                    <small class="text-muted">In progress</small>
                 </div>
+                <div class="stat-icon success">📁</div>
             </div>
-            
             <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="stat-label">Tasks Completed</div>
-                        <div class="stat-value" id="completedTasks">0</div>
-                        <small class="text-muted">This month</small>
-                    </div>
-                    <div class="stat-icon info">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
+                <div>
+                    <div class="stat-label">Tasks Completed</div>
+                    <div class="stat-value" id="completedTasks">0</div>
+                    <small class="text-muted">This month</small>
                 </div>
+                <div class="stat-icon info">✅</div>
             </div>
-            
             <div class="stat-card">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="stat-label">Present Today</div>
-                        <div class="stat-value" id="presentToday">0</div>
-                        <small class="text-muted">Checked in</small>
-                    </div>
-                    <div class="stat-icon warning">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
+                <div>
+                    <div class="stat-label">Present Today</div>
+                    <div class="stat-value" id="presentToday">0</div>
+                    <small class="text-muted">Checked in</small>
                 </div>
+                <div class="stat-icon warning">📅</div>
             </div>
         </div>
         
         <div class="charts-grid">
             <div class="chart-container">
-                <h5><i class="fas fa-building"></i> Employee Distribution by Department</h5>
+                <h5>🏢 Employee Distribution by Department</h5>
                 <canvas id="deptChart" height="250"></canvas>
             </div>
-            
             <div class="chart-container">
-                <h5><i class="fas fa-tasks"></i> Task Status Overview</h5>
+                <h5>📋 Task Status Overview</h5>
                 <canvas id="taskStatusChart" height="250"></canvas>
             </div>
         </div>
         
         <div class="charts-grid">
             <div class="chart-container">
-                <h5><i class="fas fa-chart-line"></i> Monthly Attendance Trend</h5>
+                <h5>📈 Monthly Attendance Trend</h5>
                 <canvas id="attendanceTrendChart" height="220"></canvas>
             </div>
-            
             <div class="chart-container">
-                <h5><i class="fas fa-history"></i> Recent Activity</h5>
+                <h5>🕐 Recent Activity</h5>
                 <div class="recent-activity" id="recentActivity">
-                    <div class="text-center text-muted py-3">
+                    <div class="text-center py-3">
                         <div class="loading-spinner"></div>
-                        <p class="mt-2">Loading activities...</p>
+                        <p class="mt-2 text-muted">Loading activities...</p>
                     </div>
                 </div>
             </div>
         </div>
         
         <div class="chart-container">
-            <h5><i class="fas fa-chart-bar"></i> Project Progress Overview</h5>
+            <h5>📊 Project Progress Overview</h5>
             <div id="projectProgressChart"></div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         function logout() {
             localStorage.clear();
@@ -486,10 +375,11 @@
         }
         
         function setFallbackStats() {
-            animateValue('totalEmployees', 0, 156, 1000);
-            animateValue('activeProjects', 0, 12, 1000);
-            animateValue('completedTasks', 0, 342, 1000);
-            animateValue('presentToday', 0, 89, 1000);
+            // Only use fallback if API fails - shows 0 instead of fake data
+            animateValue('totalEmployees', 0, 0, 1000);
+            animateValue('activeProjects', 0, 0, 1000);
+            animateValue('completedTasks', 0, 0, 1000);
+            animateValue('presentToday', 0, 0, 1000);
         }
         
         function animateValue(elementId, start, end, duration) {
@@ -510,60 +400,171 @@
         }
         
         async function loadCharts() {
-            const deptCtx = document.getElementById('deptChart').getContext('2d');
-            new Chart(deptCtx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Development', 'Testing', 'HR', 'Management', 'Sales', 'Marketing'],
-                    datasets: [{
-                        data: [65, 28, 12, 8, 15, 10],
-                        backgroundColor: ['rgba(79, 172, 254, 0.8)', 'rgba(72, 187, 120, 0.8)', 'rgba(237, 137, 54, 0.8)', 'rgba(66, 153, 225, 0.8)', 'rgba(159, 122, 234, 0.8)', 'rgba(245, 101, 101, 0.8)'],
-                        borderWidth: 0,
-                        hoverOffset: 8
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: true,
-                    plugins: {
-                        legend: { position: 'bottom', labels: { font: { size: 12 }, usePointStyle: true, pointStyle: 'circle', color: 'white' } }
-                    },
-                    cutout: '60%'
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://localhost:8000/api/analytics/dashboard', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    
+                    // Department Chart - using real data
+                    const deptLabels = Object.keys(data.department_distribution || {});
+                    const deptValues = Object.values(data.department_distribution || {});
+                    
+                    const deptCtx = document.getElementById('deptChart').getContext('2d');
+                    new Chart(deptCtx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: deptLabels.length ? deptLabels : ['No Data'],
+                            datasets: [{
+                                data: deptValues.length ? deptValues : [1],
+                                backgroundColor: ['#3b82f6', '#06b6d4', '#8b5cf6', '#10b981', '#f97316', '#ef4444'],
+                                borderWidth: 0,
+                                hoverOffset: 8
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: { position: 'bottom', labels: { font: { size: 11 }, usePointStyle: true, pointStyle: 'circle' } }
+                            },
+                            cutout: '60%'
+                        }
+                    });
+                } else {
+                    throw new Error('Failed to load analytics');
                 }
-            });
+            } catch (error) {
+                console.error('Error loading charts:', error);
+                // Show empty chart
+                const deptCtx = document.getElementById('deptChart').getContext('2d');
+                new Chart(deptCtx, {
+                    type: 'doughnut',
+                    data: { labels: ['No Data'], datasets: [{ data: [1], backgroundColor: ['#cbd5e1'] }] },
+                    options: { plugins: { legend: { position: 'bottom' } }, cutout: '60%' }
+                });
+            }
             
-            const taskCtx = document.getElementById('taskStatusChart').getContext('2d');
-            new Chart(taskCtx, {
-                type: 'doughnut',
-                data: { labels: ['Completed', 'In Progress', 'Pending'], datasets: [{ data: [124, 67, 43], backgroundColor: ['#48bb78', '#4299e1', '#ed8936'], borderWidth: 0, hoverOffset: 8 }] },
-                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom', labels: { color: 'white', usePointStyle: true, pointStyle: 'circle' } } }, cutout: '60%' }
-            });
+            // Task Status Chart
+            try {
+                const token = localStorage.getItem('token');
+                const taskRes = await fetch('http://localhost:8000/api/tasks/my-tasks', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const tasks = await taskRes.json();
+                const statusCount = { Pending: 0, 'In Progress': 0, Completed: 0 };
+                tasks.forEach(t => statusCount[t.status]++);
+                
+                const taskCtx = document.getElementById('taskStatusChart').getContext('2d');
+                new Chart(taskCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: Object.keys(statusCount),
+                        datasets: [{
+                            data: Object.values(statusCount),
+                            backgroundColor: ['#f97316', '#3b82f6', '#22c55e'],
+                            borderWidth: 0,
+                            hoverOffset: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: { position: 'bottom', labels: { font: { size: 11 }, usePointStyle: true, pointStyle: 'circle' } }
+                        },
+                        cutout: '60%'
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading task chart:', error);
+            }
             
-            const attendCtx = document.getElementById('attendanceTrendChart').getContext('2d');
-            const gradient = attendCtx.createLinearGradient(0, 0, 0, 250);
-            gradient.addColorStop(0, 'rgba(79, 172, 254, 0.4)');
-            gradient.addColorStop(1, 'rgba(79, 172, 254, 0.02)');
+            // Attendance Trend Chart
+            try {
+                const token = localStorage.getItem('token');
+                const attendRes = await fetch('http://localhost:8000/api/attendance/history', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const history = await attendRes.json();
+                const last7Days = history.slice(-7);
+                
+                const attendCtx = document.getElementById('attendanceTrendChart').getContext('2d');
+                new Chart(attendCtx, {
+                    type: 'line',
+                    data: {
+                        labels: last7Days.map(d => d.date) || ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Present Days',
+                            data: last7Days.map(d => d.total_hours || 0) || [0, 0, 0, 0],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            borderWidth: 2,
+                            tension: 0.4,
+                            fill: true,
+                            pointBackgroundColor: '#3b82f6',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 2,
+                            pointRadius: 4,
+                            pointHoverRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: { legend: { position: 'top' } },
+                        scales: {
+                            y: { beginAtZero: true, grid: { color: '#e2e8f0' }, title: { display: true, text: 'Hours', font: { size: 11 } } },
+                            x: { grid: { display: false } }
+                        }
+                    }
+                });
+            } catch (error) {
+                console.error('Error loading attendance chart:', error);
+                const attendCtx = document.getElementById('attendanceTrendChart').getContext('2d');
+                new Chart(attendCtx, {
+                    type: 'line',
+                    data: { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], datasets: [{ label: 'Present Days', data: [0, 0, 0, 0], borderColor: '#3b82f6' }] }
+                });
+            }
             
-            new Chart(attendCtx, {
-                type: 'line',
-                data: { labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'], datasets: [{ label: 'Present Days', data: [85, 88, 92, 90], borderColor: '#4facfe', backgroundColor: gradient, borderWidth: 3, tension: 0.4, fill: true, pointBackgroundColor: '#4facfe', pointBorderColor: '#fff', pointBorderWidth: 2, pointRadius: 5, pointHoverRadius: 7 }] },
-                options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'top', labels: { color: 'white' } } }, scales: { y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } }, x: { ticks: { color: 'white' } } } }
-            });
-            
-            const options = {
-                series: [{ name: 'Completion Rate', data: [75, 45, 90, 60, 30, 85, 70] }],
-                chart: { type: 'bar', height: 350, toolbar: { show: false }, animations: { enabled: true, easing: 'easeinout', speed: 800 }, background: 'transparent' },
-                plotOptions: { bar: { borderRadius: 10, borderRadiusApplication: 'end', horizontal: false, columnWidth: '55%' } },
-                dataLabels: { enabled: true, offsetY: -20, style: { fontSize: '12px', colors: ['white'] } },
-                xaxis: { categories: ['Alpha', 'Beta', 'Gamma', 'Delta', 'Epsilon', 'Zeta', 'Eta'], labels: { style: { fontSize: '12px', fontWeight: 500, colors: 'white' } } },
-                yaxis: { title: { text: 'Progress (%)', style: { fontSize: '12px', color: 'white' } }, max: 100, labels: { formatter: (val) => `${val}%`, style: { colors: 'white' } } },
-                colors: ['#4facfe'],
-                fill: { type: 'gradient', gradient: { shade: 'light', type: 'vertical', shadeIntensity: 0.3, gradientToColors: ['#00f2fe'], opacityFrom: 0.85, opacityTo: 0.95 } },
-                grid: { borderColor: 'rgba(255,255,255,0.1)' },
-                tooltip: { theme: 'dark', y: { formatter: (val) => `${val}% Complete` } }
-            };
-            const chart = new ApexCharts(document.querySelector("#projectProgressChart"), options);
-            chart.render();
+            // Project Progress Chart
+            try {
+                const token = localStorage.getItem('token');
+                const projRes = await fetch('http://localhost:8000/api/projects/', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const projects = await projRes.json();
+                const projectNames = projects.slice(0, 7).map(p => p.name);
+                const projectProgress = projects.slice(0, 7).map(p => p.progress || 0);
+                
+                const options = {
+                    series: [{ name: 'Completion Rate', data: projectProgress.length ? projectProgress : [0] }],
+                    chart: { type: 'bar', height: 350, toolbar: { show: false }, animations: { enabled: true, easing: 'easeinout', speed: 800 } },
+                    plotOptions: { bar: { borderRadius: 8, borderRadiusApplication: 'end', horizontal: false, columnWidth: '55%' } },
+                    dataLabels: { enabled: true, offsetY: -20, style: { fontSize: '11px', colors: ['#334155'] } },
+                    xaxis: { categories: projectNames.length ? projectNames : ['No Projects'], labels: { style: { fontSize: '11px', fontWeight: 500, rotate: -45 } } },
+                    yaxis: { title: { text: 'Progress (%)', style: { fontSize: '11px' } }, max: 100, labels: { formatter: (val) => `${val}%` } },
+                    colors: ['#3b82f6'],
+                    grid: { borderColor: '#e2e8f0' },
+                    tooltip: { theme: 'light', y: { formatter: (val) => `${val}% Complete` } }
+                };
+                const chart = new ApexCharts(document.querySelector("#projectProgressChart"), options);
+                chart.render();
+            } catch (error) {
+                console.error('Error loading project chart:', error);
+                const options = {
+                    series: [{ name: 'Completion Rate', data: [0] }],
+                    chart: { type: 'bar', height: 350, toolbar: { show: false } },
+                    xaxis: { categories: ['No Projects'] },
+                    colors: ['#3b82f6']
+                };
+                const chart = new ApexCharts(document.querySelector("#projectProgressChart"), options);
+                chart.render();
+            }
         }
         
         async function loadRecentActivity() {
@@ -576,26 +577,26 @@
                 if (response.ok) {
                     const logs = await response.json();
                     if (logs && logs.length > 0) {
-                        const activities = logs.map(log => ({ icon: getActivityIcon(log.action), text: log.details, time: getRelativeTime(log.timestamp), color: getActivityColor(log.action) }));
+                        const activities = logs.map(log => ({
+                            icon: getActivityIcon(log.action),
+                            text: log.details,
+                            time: getRelativeTime(log.timestamp),
+                            color: getActivityColor(log.action)
+                        }));
                         renderActivities(container, activities);
                         return;
                     }
                 }
-            } catch (error) {}
-            
-            const activities = [
-                { icon: 'fa-user-plus', text: 'New employee John Doe joined the team', time: '2 hours ago', color: 'success' },
-                { icon: 'fa-check-circle', text: 'Project "Mobile App" completed successfully', time: '5 hours ago', color: 'info' },
-                { icon: 'fa-calendar-alt', text: 'Leave request approved for Sarah Williams', time: '1 day ago', color: 'warning' },
-                { icon: 'fa-edit', text: 'Task "Update documentation" status changed to Completed', time: '1 day ago', color: 'primary' },
-                { icon: 'fa-chart-line', text: 'Monthly performance report generated', time: '2 days ago', color: 'secondary' }
-            ];
-            renderActivities(container, activities);
+                container.innerHTML = '<div class="text-center py-3 text-muted">No recent activities</div>';
+            } catch (error) {
+                console.error('Error loading activities:', error);
+                container.innerHTML = '<div class="text-center py-3 text-muted">Failed to load activities</div>';
+            }
         }
         
         function getActivityIcon(action) {
-            const icons = { 'login': 'fa-sign-in-alt', 'create_employee': 'fa-user-plus', 'update_task': 'fa-edit', 'check_in': 'fa-clock', 'check_out': 'fa-clock', 'delete_project': 'fa-trash' };
-            return icons[action] || 'fa-bell';
+            const icons = { 'login': '🔑', 'create_employee': '👤', 'update_task': '✏️', 'check_in': '✅', 'check_out': '🚪', 'delete_project': '🗑️' };
+            return icons[action] || '🔔';
         }
         
         function getActivityColor(action) {
@@ -618,7 +619,15 @@
         }
         
         function renderActivities(container, activities) {
-            container.innerHTML = activities.map(act => `<div class="activity-item"><div class="activity-icon bg-${act.color}-light"><i class="fas ${act.icon}"></i></div><div class="activity-content"><div class="activity-text">${act.text}</div><div class="activity-time">${act.time}</div></div></div>`).join('');
+            container.innerHTML = activities.map(act => `
+                <div class="activity-item">
+                    <div class="activity-icon bg-${act.color}-light">${act.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-text">${act.text}</div>
+                        <div class="activity-time">${act.time}</div>
+                    </div>
+                </div>
+            `).join('');
         }
     </script>
 </body>

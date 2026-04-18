@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Notifications | Glass Theme</title>
+    <title>Notifications | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,115 +12,80 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
         }
 
-        /* FIX: Ensure all text is white */
-        body, .dashboard-widget, .notification-item, .empty-state,
-        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted, .btn-link {
-            color: white;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
-        }
-
+        /* Header with Logout */
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
-        }
-
-        .dashboard-widget {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 0;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
-            overflow: hidden;
-        }
-
-        .dashboard-widget:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
         h2 {
-            color: white;
-            font-weight: 600;
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
             margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
 
         .btn-outline-primary {
-            background: rgba(79, 172, 254, 0.2);
-            border: 1px solid #4facfe;
+            background: #dbeafe;
+            border: 1px solid #bfdbfe;
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #4facfe;
+            padding: 8px 20px;
+            color: #3b82f6;
             font-weight: 600;
             transition: all 0.3s;
+            cursor: pointer;
         }
 
         .btn-outline-primary:hover {
-            background: #4facfe;
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
-        }
-
-        .btn-link {
-            background: rgba(79, 172, 254, 0.2);
-            border: none;
-            border-radius: 20px;
-            padding: 5px 12px;
-            color: #4facfe;
-            font-size: 0.75rem;
-            transition: all 0.3s;
-            text-decoration: none;
-        }
-
-        .btn-link:hover {
-            background: #4facfe;
+            background: #3b82f6;
             color: white;
             transform: translateY(-1px);
         }
 
+        .dashboard-widget {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+        }
+
+        .dashboard-widget:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
         .notification-item {
-            padding: 1.2rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
             transition: all 0.3s;
             position: relative;
-            overflow: hidden;
         }
 
         .notification-item:last-child {
@@ -128,30 +93,28 @@
         }
 
         .notification-item:hover {
-            background: rgba(79, 172, 254, 0.1);
-            transform: translateX(5px);
+            background: #f8fafc;
         }
 
         .notification-item.unread {
-            background: rgba(79, 172, 254, 0.15);
-            border-left: 3px solid #4facfe;
+            background: #eff6ff;
+            border-left: 3px solid #3b82f6;
         }
 
         .notification-icon {
-            width: 45px;
-            height: 45px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
-            background: rgba(79, 172, 254, 0.2);
+            background: #dbeafe;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
+            margin-right: 12px;
             flex-shrink: 0;
         }
 
-        .notification-icon i {
+        .notification-icon span {
             font-size: 1.2rem;
-            color: #4facfe;
         }
 
         .notification-content {
@@ -160,19 +123,19 @@
 
         .notification-title {
             font-weight: 600;
-            margin-bottom: 0.25rem;
-            color: white;
+            margin-bottom: 4px;
+            color: #0f172a;
         }
 
         .notification-message {
             font-size: 0.85rem;
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 0.5rem;
+            color: #64748b;
+            margin-bottom: 6px;
         }
 
         .notification-time {
             font-size: 0.7rem;
-            color: rgba(255, 255, 255, 0.5);
+            color: #94a3b8;
         }
 
         .unread-badge {
@@ -180,25 +143,40 @@
             width: 8px;
             height: 8px;
             border-radius: 50%;
-            background: #4facfe;
+            background: #3b82f6;
             margin-left: 8px;
             animation: pulse 2s infinite;
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(79, 172, 254, 0.7); }
-            70% { box-shadow: 0 0 0 6px rgba(79, 172, 254, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(79, 172, 254, 0); }
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            70% { box-shadow: 0 0 0 6px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        }
+
+        .btn-link {
+            background: none;
+            border: none;
+            color: #3b82f6;
+            font-size: 0.7rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .btn-link:hover {
+            background: #dbeafe;
         }
 
         .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(79, 172, 254, 0.2);
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
             border-radius: 50%;
-            border-top-color: #4facfe;
+            border-top-color: #3b82f6;
             animation: spin 0.8s linear infinite;
+            display: inline-block;
         }
 
         @keyframes spin {
@@ -207,15 +185,20 @@
 
         .empty-state {
             text-align: center;
-            padding: 3rem;
+            padding: 48px 20px;
         }
 
-        .empty-state i {
-            font-size: 4rem;
-            color: rgba(255, 255, 255, 0.3);
-            margin-bottom: 1rem;
+        .empty-state span {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 12px;
         }
 
+        .empty-state p {
+            color: #64748b;
+        }
+
+        /* Utility Classes */
         .d-flex {
             display: flex;
         }
@@ -236,20 +219,16 @@
             justify-content: flex-end;
         }
 
-        .mb-1 {
-            margin-bottom: 0.25rem;
-        }
-
         .mb-4 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .me-2 {
-            margin-right: 0.5rem;
+            margin-right: 8px;
         }
 
         .ms-2 {
-            margin-left: 0.5rem;
+            margin-left: 8px;
         }
 
         .text-center {
@@ -257,28 +236,49 @@
         }
 
         .py-5 {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
+            padding-top: 48px;
+            padding-bottom: 48px;
         }
 
+        .mt-3 {
+            margin-top: 12px;
+        }
+
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #4facfe;
+            background: #3b82f6;
             border-radius: 10px;
         }
 
+        /* Toast Notification */
+        .toast-glass {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Responsive */
         @media (max-width: 768px) {
             .notification-item {
-                padding: 1rem;
+                padding: 12px 16px;
             }
             .notification-icon {
                 width: 35px;
@@ -307,16 +307,12 @@
 <body>
     <div>
         <div class="header-with-logout">
-            <h2><i class="fas fa-bell me-2"></i> Notifications</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <h2>🔔 Notifications</h2>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
         <div class="d-flex justify-content-end mb-4">
-            <button class="btn-outline-primary" onclick="markAllRead()">
-                <i class="fas fa-check-double me-2"></i> Mark All Read
-            </button>
+            <button class="btn-outline-primary" onclick="markAllRead()">✅ Mark All Read</button>
         </div>
         
         <div class="dashboard-widget">
@@ -328,8 +324,7 @@
             </div>
         </div>
     </div>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+
     <script>
         function logout() {
             localStorage.clear();
@@ -348,7 +343,7 @@
                     if (notifs.length === 0) {
                         container.innerHTML = `
                             <div class="empty-state">
-                                <i class="fas fa-bell-slash"></i>
+                                <span>🔕</span>
                                 <p>No notifications yet</p>
                                 <small class="text-muted">When you receive notifications, they will appear here</small>
                             </div>
@@ -361,31 +356,31 @@
                     const allNotifs = [...unreadNotifs, ...readNotifs];
                     
                     container.innerHTML = allNotifs.map(notif => {
-                        let icon = 'fa-bell';
-                        let iconColor = '#4facfe';
+                        let icon = '🔔';
+                        let iconBg = '#dbeafe';
                         
                         if (notif.type === 'success') {
-                            icon = 'fa-check-circle';
-                            iconColor = '#48bb78';
+                            icon = '✅';
+                            iconBg = '#dcfce7';
                         } else if (notif.type === 'warning') {
-                            icon = 'fa-exclamation-triangle';
-                            iconColor = '#ed8936';
+                            icon = '⚠️';
+                            iconBg = '#ffedd5';
                         } else if (notif.type === 'danger') {
-                            icon = 'fa-times-circle';
-                            iconColor = '#f56565';
+                            icon = '❌';
+                            iconBg = '#fee2e2';
                         } else if (notif.title?.toLowerCase().includes('leave')) {
-                            icon = 'fa-calendar-alt';
+                            icon = '🏖️';
                         } else if (notif.title?.toLowerCase().includes('task')) {
-                            icon = 'fa-tasks';
+                            icon = '📋';
                         } else if (notif.title?.toLowerCase().includes('project')) {
-                            icon = 'fa-project-diagram';
+                            icon = '📁';
                         }
                         
                         return `
                             <div class="notification-item ${!notif.is_read ? 'unread' : ''}">
                                 <div class="d-flex align-items-start">
-                                    <div class="notification-icon" style="background: rgba(${iconColor === '#4facfe' ? '79,172,254' : iconColor === '#48bb78' ? '72,187,120' : iconColor === '#ed8936' ? '237,137,54' : '245,101,101'}, 0.2);">
-                                        <i class="fas ${icon}" style="color: ${iconColor};"></i>
+                                    <div class="notification-icon" style="background: ${iconBg};">
+                                        <span>${icon}</span>
                                     </div>
                                     <div class="notification-content">
                                         <div class="notification-title">
@@ -393,13 +388,11 @@
                                             ${!notif.is_read ? '<span class="unread-badge"></span>' : ''}
                                         </div>
                                         <div class="notification-message">${notif.message}</div>
-                                        <div class="notification-time">
-                                            <i class="far fa-clock me-1"></i>${formatTime(notif.created_at)}
-                                        </div>
+                                        <div class="notification-time">⏰ ${formatTime(notif.created_at)}</div>
                                     </div>
                                     ${!notif.is_read ? `
                                         <button class="btn-link ms-2" onclick="markRead('${notif.id}')">
-                                            <i class="fas fa-check me-1"></i> Mark Read
+                                            ✓ Mark Read
                                         </button>
                                     ` : ''}
                                 </div>
@@ -411,7 +404,7 @@
                 console.error('Error loading notifications:', error);
                 document.getElementById('notificationsList').innerHTML = `
                     <div class="empty-state">
-                        <i class="fas fa-exclamation-triangle" style="color: #f56565;"></i>
+                        <span>❌</span>
                         <p class="text-danger">Failed to load notifications</p>
                         <small class="text-muted">Please check your connection</small>
                     </div>
@@ -445,7 +438,6 @@
                     showToast('Notification marked as read', 'success');
                 }
             } catch (error) {
-                console.error('Error marking as read:', error);
                 showToast('Failed to mark as read', 'error');
             }
         }
@@ -461,26 +453,14 @@
                     showToast('All notifications marked as read', 'success');
                 }
             } catch (error) {
-                console.error('Error marking all as read:', error);
                 showToast('Failed to mark all as read', 'error');
             }
         }
         
         function showToast(message, type) {
             const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed top-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
-                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px; background: rgba(15,32,39,0.95); backdrop-filter: blur(12px); border: 1px solid rgba(79,172,254,0.3); border-radius: 16px; color: white;">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-            `;
+            toastDiv.className = 'toast-glass';
+            toastDiv.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}<button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;margin-left:8px;">×</button>`;
             document.body.appendChild(toastDiv);
             setTimeout(() => toastDiv.remove(), 3000);
         }

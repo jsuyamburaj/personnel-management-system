@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reports & Analytics | Glass Theme</title>
+    <title>Reports & Analytics | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,159 +12,152 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
-        }
-
-        /* FIX: Ensure all text is white */
-        body, .dashboard-widget, .table, .alert,
-        h1, h2, h3, h4, h5, h6, p, span, div, small, .text-muted, label {
-            color: white;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
         }
 
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
+        }
+
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0;
         }
 
         .dashboard-widget {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
         }
 
         .dashboard-widget:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        h2 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
 
         h5 {
-            color: white;
-            margin-bottom: 1rem;
+            color: #0f172a;
+            margin-bottom: 16px;
             font-weight: 600;
+            font-size: 1rem;
         }
 
         .form-control, .form-select {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
-            color: white;
-            padding: 10px 16px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #0f172a;
+            padding: 10px 14px;
             transition: all 0.3s;
+            width: 100%;
         }
 
         .form-control:focus, .form-select:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
             outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .form-label {
-            color: rgba(255, 255, 255, 0.9);
+            color: #334155;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px;
             display: block;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             border-radius: 40px;
-            padding: 10px 24px;
+            padding: 10px 20px;
             font-weight: 600;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.85rem;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
         }
 
         .btn-success {
-            background: linear-gradient(135deg, #48bb78, #38a169);
+            background: #22c55e;
             border: none;
             border-radius: 40px;
-            padding: 8px 20px;
-            font-weight: 600;
+            padding: 6px 16px;
+            font-weight: 500;
             color: white;
             transition: all 0.3s;
+            cursor: pointer;
+            font-size: 0.75rem;
         }
 
         .btn-success:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(72, 187, 120, 0.4);
+            background: #16a34a;
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 40px;
+            padding: 8px 20px;
+            color: #475569;
+            transition: all 0.3s;
+            cursor: pointer;
         }
 
         .row {
             display: flex;
             flex-wrap: wrap;
-            margin-right: -0.75rem;
-            margin-left: -0.75rem;
+            margin: 0 -12px;
         }
 
-        .col-md-3 {
-            flex: 0 0 auto;
-            width: 25%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+        .col-md-3, .col-md-4, .col-md-6 {
+            padding: 0 12px;
         }
 
-        .col-md-6 {
-            flex: 0 0 auto;
-            width: 50%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
-        }
+        .col-md-3 { flex: 0 0 25%; max-width: 25%; }
+        .col-md-4 { flex: 0 0 33.333%; max-width: 33.333%; }
+        .col-md-6 { flex: 0 0 50%; max-width: 50%; }
 
         @media (max-width: 768px) {
-            .col-md-3, .col-md-6 {
-                width: 100%;
-                margin-bottom: 1rem;
+            .col-md-3, .col-md-4, .col-md-6 {
+                flex: 0 0 100%;
+                max-width: 100%;
+                margin-bottom: 12px;
             }
             .header-with-logout {
                 flex-direction: column;
@@ -172,120 +165,104 @@
             }
         }
 
-        .text-center {
+        .text-center { text-align: center; }
+        .mb-2 { margin-bottom: 8px; }
+        .mb-3 { margin-bottom: 12px; }
+        .mb-4 { margin-bottom: 20px; }
+        .mt-2 { margin-top: 8px; }
+        .mt-3 { margin-top: 12px; }
+        .py-5 { padding-top: 48px; padding-bottom: 48px; }
+        .w-100 { width: 100%; }
+        .me-2 { margin-right: 8px; }
+
+        .table-responsive { overflow-x: auto; }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.8rem;
+        }
+        .table thead th {
+            border-bottom: 2px solid #e2e8f0;
+            padding: 10px;
+            text-align: left;
+            font-weight: 600;
+            color: #64748b;
+        }
+        .table tbody td {
+            padding: 10px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #334155;
+        }
+        .table tbody tr:hover { background: #f8fafc; }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #dc2626;
+            padding: 12px;
+            border-radius: 12px;
             text-align: center;
         }
 
-        .mb-2 {
-            margin-bottom: 0.5rem;
-        }
-
-        .mb-3 {
-            margin-bottom: 1rem;
-        }
-
-        .mb-4 {
-            margin-bottom: 1.5rem;
-        }
-
-        .mt-2 {
-            margin-top: 0.5rem;
-        }
-
-        .py-5 {
-            padding-top: 3rem;
-            padding-bottom: 3rem;
-        }
-
-        .w-100 {
-            width: 100%;
-        }
-
-        .me-2 {
-            margin-right: 0.5rem;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-
-        .table {
-            width: 100%;
-            color: white;
-            border-collapse: collapse;
-        }
-
-        .table thead th {
-            border-bottom: 2px solid rgba(79, 172, 254, 0.5);
-            padding: 12px;
-            text-align: left;
-            font-weight: 600;
-            color: #4facfe;
-        }
-
-        .table tbody td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .table tbody tr:hover {
-            background: rgba(79, 172, 254, 0.1);
-        }
-
-        .alert {
-            padding: 12px 16px;
-            border-radius: 16px;
-            margin-bottom: 1rem;
-        }
-
-        .alert-danger {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.3);
-            color: #f56565;
-        }
-
         .loading-spinner {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            border: 3px solid rgba(79, 172, 254, 0.2);
+            width: 32px;
+            height: 32px;
+            border: 3px solid #e2e8f0;
             border-radius: 50%;
-            border-top-color: #4facfe;
+            border-top-color: #3b82f6;
             animation: spin 0.8s linear infinite;
+            display: inline-block;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
-        }
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.05); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 10px; }
 
-        ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+        canvas { max-height: 250px; width: 100%; }
+
+        /* Progress bar for performance report */
+        .progress {
+            background: #e2e8f0;
             border-radius: 10px;
+            height: 6px;
+            overflow: hidden;
+            flex: 1;
+        }
+        .progress-bar { border-radius: 10px; transition: width 0.3s; }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 500;
         }
 
-        ::-webkit-scrollbar-thumb {
-            background: #4facfe;
-            border-radius: 10px;
+        .d-flex { display: flex; }
+        .justify-content-between { justify-content: space-between; }
+        .align-items-center { align-items: center; }
+        .ms-2 { margin-left: 8px; }
+        
+        /* Chart container */
+        .chart-container {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            border: 1px solid #e2e8f0;
         }
-
-        canvas {
-            max-height: 250px;
-            width: 100%;
+        .chart-container h5 {
+            margin-bottom: 12px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <div>
         <div class="header-with-logout">
-            <h2><i class="fas fa-chart-line me-2"></i> Reports & Analytics</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <h2>📊 Reports & Analytics</h2>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
         <div class="dashboard-widget">
@@ -309,53 +286,50 @@
                 </div>
                 <div class="col-md-3">
                     <label class="form-label">&nbsp;</label>
-                    <button class="btn-primary w-100" onclick="generateReport()">
-                        <i class="fas fa-chart-line me-2"></i> Generate Report
-                    </button>
+                    <button class="btn-primary w-100" onclick="generateReport()">📈 Generate Report</button>
                 </div>
             </div>
         </div>
         
         <div class="dashboard-widget" id="reportOutput">
             <div class="text-center py-5">
-                <i class="fas fa-chart-line fa-3x" style="color: rgba(255,255,255,0.3); margin-bottom: 1rem;"></i>
-                <p class="text-muted">Select report type and date range to generate analytics</p>
-                <small class="text-muted">Choose from Attendance, Performance, or Project reports</small>
+                <span style="font-size: 3rem;">📊</span>
+                <p class="text-muted mt-2">Select report type and date range to generate analytics</p>
             </div>
         </div>
     </div>
     
-    <div class="row">
+    <div class="row" id="chartsRow">
         <div class="col-md-6">
             <div class="dashboard-widget">
-                <h5><i class="fas fa-calendar-check me-2"></i> Attendance Overview</h5>
+                <h5>📅 Attendance Overview</h5>
                 <canvas id="attendanceReportChart" height="250"></canvas>
             </div>
         </div>
         <div class="col-md-6">
             <div class="dashboard-widget">
-                <h5><i class="fas fa-tasks me-2"></i> Task Completion Rate</h5>
+                <h5>✅ Task Completion Rate</h5>
                 <canvas id="taskReportChart" height="250"></canvas>
             </div>
         </div>
     </div>
-    
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script>
-        function logout() {
-            localStorage.clear();
-            window.location.href = 'index.html';
-        }
+        function logout() { localStorage.clear(); window.location.href = 'index.html'; }
         
         let attendanceChart = null;
         let taskChart = null;
+        let currentReportData = null;
+        let currentReportType = null;
         
         async function generateReport() {
             const type = document.getElementById('reportType').value;
             const from = document.getElementById('fromMonth').value;
             const to = document.getElementById('toMonth').value;
             
+            currentReportType = type;
             const output = document.getElementById('reportOutput');
             output.innerHTML = '<div class="text-center py-5"><div class="loading-spinner"></div><p class="mt-3 text-muted">Generating report...</p></div>';
             
@@ -365,38 +339,21 @@
                         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                     });
                     const data = await response.json();
+                    currentReportData = data;
                     
                     const totalPresent = data.attendance_trend?.reduce((a, b) => a + b.present, 0) || 0;
                     const avgAttendance = (totalPresent / (data.attendance_trend?.length || 1)).toFixed(1);
                     
                     output.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 style="color: #4facfe;">
-                                <i class="fas fa-calendar-alt me-2"></i>Attendance Report
-                                ${from ? `(${from} - ${to || 'Present'})` : ''}
-                            </h5>
-                            <button class="btn-success" onclick="exportReport('attendance')">
-                                <i class="fas fa-download me-2"></i> Export CSV
-                            </button>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <small class="text-muted">Total Employees</small>
-                                    <h3 style="color: #4facfe;">${data.total_employees || 0}</h3>
-                                </div>
+                        <div id="reportContent">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 style="color: #3b82f6;">📅 Attendance Report ${from ? `(${from} - ${to || 'Present'})` : ''}</h5>
+                                <button class="btn-success" onclick="downloadPDF()">📥 Download PDF</button>
                             </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <small class="text-muted">Avg Daily Attendance</small>
-                                    <h3 style="color: #48bb78;">${avgAttendance}</h3>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="text-center">
-                                    <small class="text-muted">Active Projects</small>
-                                    <h3 style="color: #ed8936;">${data.active_projects || 0}</h3>
-                                </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4 text-center"><small class="text-muted">Total Employees</small><h3 style="color:#3b82f6;">${data.total_employees || 0}</h3></div>
+                                <div class="col-md-4 text-center"><small class="text-muted">Avg Daily Attendance</small><h3 style="color:#22c55e;">${avgAttendance}</h3></div>
+                                <div class="col-md-4 text-center"><small class="text-muted">Active Projects</small><h3 style="color:#f97316;">${data.active_projects || 0}</h3></div>
                             </div>
                         </div>
                     `;
@@ -410,25 +367,24 @@
                             datasets: [{
                                 label: 'Present Employees',
                                 data: data.attendance_trend?.slice(-14).map(d => d.present) || [],
-                                borderColor: '#4facfe',
-                                backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
                                 borderWidth: 2,
                                 tension: 0.4,
                                 fill: true,
-                                pointBackgroundColor: '#4facfe',
+                                pointBackgroundColor: '#3b82f6',
                                 pointBorderColor: '#fff',
                                 pointBorderWidth: 2,
-                                pointRadius: 4,
-                                pointHoverRadius: 6
+                                pointRadius: 4
                             }]
                         },
                         options: {
                             responsive: true,
                             maintainAspectRatio: true,
-                            plugins: { legend: { labels: { color: 'white' } } },
+                            plugins: { legend: { labels: { font: { size: 11 } } } },
                             scales: {
-                                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
-                                x: { grid: { display: false }, ticks: { color: 'white', rotation: 45, maxRotation: 45 } }
+                                y: { grid: { color: '#e2e8f0' }, ticks: { color: '#334155' } },
+                                x: { ticks: { rotation: 45, maxRotation: 45, color: '#334155' } }
                             }
                         }
                     });
@@ -438,56 +394,27 @@
                         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                     });
                     const team = await response.json();
+                    currentReportData = team;
                     
                     output.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 style="color: #4facfe;">
-                                <i class="fas fa-star me-2"></i>Team Performance Report
-                            </h5>
-                            <button class="btn-success" onclick="exportReport('performance')">
-                                <i class="fas fa-download me-2"></i> Export CSV
-                            </button>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr><th>Employee</th><th>Average Rating</th><th>Performance Level</th></tr>
-                                </thead>
-                                <tbody>
-                                    ${team.map(m => {
-                                        const rating = m.average_rating || 0;
-                                        let performanceLevel = '';
-                                        let levelColor = '';
-                                        if (rating >= 4.5) {
-                                            performanceLevel = 'Excellent';
-                                            levelColor = '#48bb78';
-                                        } else if (rating >= 3.5) {
-                                            performanceLevel = 'Good';
-                                            levelColor = '#4facfe';
-                                        } else if (rating >= 2.5) {
-                                            performanceLevel = 'Average';
-                                            levelColor = '#ed8936';
-                                        } else {
-                                            performanceLevel = 'Needs Improvement';
-                                            levelColor = '#f56565';
-                                        }
-                                        return `
-                                            <tr>
-                                                <td>${m.name || m.email.split('@')[0]}</td
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <strong style="color: ${levelColor}; min-width: 40px;">${rating}/5</strong>
-                                                        <div class="progress ms-2" style="flex: 1; height: 6px;">
-                                                            <div class="progress-bar" style="width: ${(rating/5)*100}%; background: ${levelColor};"></div>
-                                                        </div>
-                                                    </div>
-                                                </td
-                                                <td><span style="color: ${levelColor};">${performanceLevel}</span></td
-                                            </tr>
-                                        `;
-                                    }).join('')}
-                                </tbody>
-                            </table
+                        <div id="reportContent">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 style="color: #3b82f6;">⭐ Team Performance Report</h5>
+                                <button class="btn-success" onclick="downloadPDF()">📥 Download PDF</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead><tr><th>Employee</th><th>Average Rating</th><th>Performance Level</th></tr></thead>
+                                    <tbody>
+                                        ${team.map(m => {
+                                            const rating = m.average_rating || 0;
+                                            let level = rating >= 4.5 ? 'Excellent' : rating >= 3.5 ? 'Good' : rating >= 2.5 ? 'Average' : 'Needs Improvement';
+                                            let color = rating >= 4.5 ? '#22c55e' : rating >= 3.5 ? '#3b82f6' : rating >= 2.5 ? '#f97316' : '#dc2626';
+                                            return `<tr><td>${m.name || m.email.split('@')[0]}</td><td><div class="d-flex align-items-center"><strong style="color:${color};min-width:40px;">${rating}/5</strong><div class="progress ms-2"><div class="progress-bar" style="width:${(rating/5)*100}%;background:${color};"></div></div></div></td><td><span style="color:${color};">${level}</span></td></tr>`;
+                                        }).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     `;
                 } else if (type === 'project') {
@@ -495,43 +422,68 @@
                         headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
                     });
                     const projects = await response.json();
+                    currentReportData = projects;
                     
                     output.innerHTML = `
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h5 style="color: #4facfe;">
-                                <i class="fas fa-project-diagram me-2"></i>Project Progress Report
-                            </h5>
-                            <button class="btn-success" onclick="exportReport('project')">
-                                <i class="fas fa-download me-2"></i> Export CSV
-                            </button>
+                        <div id="reportContent">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 style="color: #3b82f6;">📁 Project Progress Report</h5>
+                                <button class="btn-success" onclick="downloadPDF()">📥 Download PDF</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead><tr><th>Project</th><th>Progress</th><th>Status</th><th>Timeline</th></tr></thead>
+                                    <tbody>
+                                        ${projects.map(p => `
+                                            <tr>
+                                                <td><strong>${p.name}</strong></td>
+                                                <td><div class="d-flex align-items-center"><span style="min-width:45px;">${p.progress || 0}%</span><div class="progress ms-2"><div class="progress-bar" style="width:${p.progress || 0}%;background:linear-gradient(90deg,#3b82f6,#1d4ed8);"></div></div></div></td>
+                                                <td><span class="badge" style="background:${p.status === 'Active' ? '#dcfce7' : p.status === 'Completed' ? '#dbeafe' : '#f1f5f9'};color:${p.status === 'Active' ? '#22c55e' : p.status === 'Completed' ? '#3b82f6' : '#475569'};">${p.status}</span></td>
+                                                <td><small>${p.start_date?.split('T')[0] || 'N/A'} → ${p.end_date?.split('T')[0] || 'Ongoing'}</small></td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                        <div class="table-responsive">
-                            <table class="table">
-                                <thead>
-                                    <tr><th>Project</th><th>Progress</th><th>Status</th><th>Timeline</th></tr>
-                                </thead>
-                                <tbody>
-                                    ${projects.map(p => `
-                                        <tr>
-                                            <td><strong>${p.name}</strong></td
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <span style="min-width: 45px;">${p.progress || 0}%</span>
-                                                    <div class="progress ms-2" style="flex: 1; height: 6px;">
-                                                        <div class="progress-bar" style="width: ${p.progress || 0}%; background: linear-gradient(90deg, #4facfe, #00f2fe);"></div>
-                                                    </div>
-                                                </div>
-                                            </td
-                                            <td>
-                                                <span class="badge" style="background: ${p.status === 'Active' ? 'rgba(72,187,120,0.3)' : p.status === 'Completed' ? 'rgba(66,153,225,0.3)' : 'rgba(113,128,150,0.3)'}; color: ${p.status === 'Active' ? '#48bb78' : p.status === 'Completed' ? '#4299e1' : '#a0aec0'};">
-                                                    ${p.status}
-                                                </span>
-                                            </td
-                                            <td><small>${p.start_date?.split('T')[0] || 'N/A'} → ${p.end_date?.split('T')[0] || 'Ongoing'}</small></td
-                                        </tr>
-                                    `).join('')}
-                                </tbody>
-                            </table
+                    `;
+                } else if (type === 'tasks') {
+                    const response = await fetch(`http://localhost:8000/api/tasks/my-tasks`, {
+                        headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                    });
+                    const tasks = await response.json();
+                    currentReportData = tasks;
+                    
+                    const statusCount = { Pending: 0, 'In Progress': 0, Completed: 0 };
+                    tasks.forEach(t => statusCount[t.status]++);
+                    
+                    output.innerHTML = `
+                        <div id="reportContent">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 style="color: #3b82f6;">✅ Task Analytics Report</h5>
+                                <button class="btn-success" onclick="downloadPDF()">📥 Download PDF</button>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-4 text-center"><small class="text-muted">Total Tasks</small><h3 style="color:#3b82f6;">${tasks.length}</h3></div>
+                                <div class="col-md-4 text-center"><small class="text-muted">Completed</small><h3 style="color:#22c55e;">${statusCount.Completed}</h3></div>
+                                <div class="col-md-4 text-center"><small class="text-muted">In Progress</small><h3 style="color:#f97316;">${statusCount['In Progress']}</h3></div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead><tr><th>Task</th><th>Priority</th><th>Status</th><th>Assignee</th><th>Due Date</th></tr></thead>
+                                    <tbody>
+                                        ${tasks.map(t => `
+                                            <tr>
+                                                <td>${t.title}</td>
+                                                <td><span class="badge" style="background:${t.priority === 'High' ? '#fee2e2' : t.priority === 'Medium' ? '#ffedd5' : '#dcfce7'};color:${t.priority === 'High' ? '#dc2626' : t.priority === 'Medium' ? '#f97316' : '#22c55e'};">${t.priority}</span></td>
+                                                <td><span class="badge" style="background:${t.status === 'Completed' ? '#dcfce7' : t.status === 'In Progress' ? '#dbeafe' : '#ffedd5'};color:${t.status === 'Completed' ? '#22c55e' : t.status === 'In Progress' ? '#3b82f6' : '#f97316'};">${t.status}</span></td>
+                                                <td>${t.assignee || 'Unassigned'}</td>
+                                                <td>${t.dueDate || 'N/A'}</td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     `;
                 }
@@ -541,8 +493,72 @@
             }
         }
         
-        function exportReport(type) {
-            alert(`CSV export for ${type} report would download here.\n\nIn production, this would generate and download a CSV file.`);
+        function downloadPDF() {
+            const reportContent = document.getElementById('reportContent');
+            if (!reportContent) {
+                alert('No report to download. Please generate a report first.');
+                return;
+            }
+            
+            // Get the report title
+            const reportTitle = reportContent.querySelector('h5')?.innerText || 'SPMS Report';
+            const currentDate = new Date().toLocaleString();
+            
+            // Create a clone of the report content for PDF
+            const cloneContent = reportContent.cloneNode(true);
+            
+            // Add header and footer to the cloned content
+            const wrapper = document.createElement('div');
+            wrapper.style.padding = '20px';
+            wrapper.style.fontFamily = 'Arial, sans-serif';
+            wrapper.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px; border-bottom: 2px solid #3b82f6; padding-bottom: 10px;">
+                    <h1 style="color: #1e293b; margin: 0;">SPMS - ${reportTitle}</h1>
+                    <p style="color: #64748b; margin-top: 5px;">Generated on: ${currentDate}</p>
+                </div>
+                ${cloneContent.outerHTML}
+                <div style="text-align: center; margin-top: 30px; padding-top: 10px; border-top: 1px solid #e2e8f0; color: #94a3b8; font-size: 12px;">
+                    <p>Software Personnel Management System | Confidential Report</p>
+                </div>
+            `;
+            
+            // Style the cloned content for PDF
+            const styles = document.createElement('style');
+            styles.textContent = `
+                table { border-collapse: collapse; width: 100%; margin-top: 15px; }
+                th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+                th { background-color: #3b82f6; color: white; }
+                .badge { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 11px; }
+                .progress { background: #e2e8f0; border-radius: 10px; height: 6px; overflow: hidden; }
+                .progress-bar { height: 100%; border-radius: 10px; }
+                h3 { margin: 5px 0; }
+                .text-center { text-align: center; }
+                .d-flex { display: flex; }
+                .align-items-center { align-items: center; }
+                .ms-2 { margin-left: 8px; }
+                .row { display: flex; flex-wrap: wrap; }
+                .col-md-4 { flex: 0 0 33.33%; }
+            `;
+            wrapper.appendChild(styles);
+            
+            // Configure PDF options
+            const opt = {
+                margin: [0.5, 0.5, 0.5, 0.5],
+                filename: `${reportTitle.replace(/[^a-z0-9]/gi, '_').toLowerCase()}.pdf`,
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2, letterRendering: true },
+                jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+            };
+            
+            // Generate PDF
+            html2pdf().set(opt).from(wrapper).save();
+            
+            // Show success message
+            const toast = document.createElement('div');
+            toast.style.cssText = 'position:fixed;bottom:20px;right:20px;background:#22c55e;color:white;padding:10px 20px;border-radius:8px;z-index:9999;';
+            toast.innerHTML = '✅ PDF downloaded successfully!';
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
         
         async function loadDefaultCharts() {
@@ -559,8 +575,8 @@
                             datasets: [{
                                 label: 'Present Employees',
                                 data: analytics.attendance_trend?.slice(-7).map(d => d.present) || [65, 70, 68, 72, 75, 60, 55],
-                                borderColor: '#4facfe',
-                                backgroundColor: 'rgba(79, 172, 254, 0.1)',
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
                                 borderWidth: 2,
                                 tension: 0.4,
                                 fill: true
@@ -569,11 +585,8 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: true,
-                            plugins: { legend: { labels: { color: 'white' } } },
-                            scales: {
-                                y: { grid: { color: 'rgba(255,255,255,0.1)' }, ticks: { color: 'white' } },
-                                x: { ticks: { color: 'white' } }
-                            }
+                            plugins: { legend: { labels: { font: { size: 11 } } } },
+                            scales: { y: { grid: { color: '#e2e8f0' }, ticks: { color: '#334155' } }, x: { ticks: { color: '#334155' } } }
                         }
                     });
                 }
@@ -591,7 +604,7 @@
                         labels: Object.keys(statusCount),
                         datasets: [{
                             data: Object.values(statusCount),
-                            backgroundColor: ['#ed8936', '#4facfe', '#48bb78'],
+                            backgroundColor: ['#f97316', '#3b82f6', '#22c55e'],
                             borderWidth: 0,
                             hoverOffset: 8
                         }]
@@ -600,10 +613,7 @@
                         responsive: true,
                         maintainAspectRatio: true,
                         plugins: {
-                            legend: { 
-                                position: 'bottom',
-                                labels: { color: 'white', usePointStyle: true, pointStyle: 'circle' }
-                            }
+                            legend: { position: 'bottom', labels: { font: { size: 11 }, usePointStyle: true, pointStyle: 'circle' } }
                         },
                         cutout: '60%'
                     }
@@ -615,11 +625,11 @@
                 
                 attendanceChart = new Chart(document.getElementById('attendanceReportChart'), {
                     type: 'line',
-                    data: { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], datasets: [{ label: 'Present', data: [65, 70, 68, 72, 75], borderColor: '#4facfe' }] }
+                    data: { labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'], datasets: [{ label: 'Present', data: [65, 70, 68, 72, 75], borderColor: '#3b82f6' }] }
                 });
                 taskChart = new Chart(document.getElementById('taskReportChart'), {
                     type: 'doughnut',
-                    data: { labels: ['Pending', 'In Progress', 'Completed'], datasets: [{ data: [5, 3, 2], backgroundColor: ['#ed8936', '#4facfe', '#48bb78'] }] }
+                    data: { labels: ['Pending', 'In Progress', 'Completed'], datasets: [{ data: [5, 3, 2], backgroundColor: ['#f97316', '#3b82f6', '#22c55e'] }] }
                 });
             }
         }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Profile | Glass Theme</title>
+    <title>My Profile | Blue Glass Theme</title>
     <style>
         * {
             margin: 0;
@@ -12,144 +12,185 @@
         }
 
         body {
-            background: transparent;
+            background: transparent !important;
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: white;
             line-height: 1.5;
-        }
-
-        /* FIX: Ensure all text is white */
-        body, .dashboard-widget, .form-control, .modal-content,
-        h1, h2, h3, h4, h5, h6, p, span, div, label, small, .text-muted {
-            color: white;
-        }
-
-        .text-muted {
-            color: rgba(255, 255, 255, 0.7) !important;
         }
 
         .header-with-logout {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 24px;
             flex-wrap: wrap;
             gap: 15px;
         }
 
         .logout-btn {
-            background: rgba(245, 101, 101, 0.2);
-            border: 1px solid rgba(245, 101, 101, 0.5);
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.2);
             border-radius: 40px;
-            padding: 10px 24px;
-            color: #f56565;
+            padding: 8px 20px;
+            color: #dc2626;
             font-weight: 600;
             transition: all 0.3s;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
 
         .logout-btn:hover {
-            background: rgba(245, 101, 101, 0.4);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(245, 101, 101, 0.3);
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-1px);
         }
 
+        h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0;
+        }
+
+        /* Modern Glass Card */
         .dashboard-widget {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.9);
             backdrop-filter: blur(12px);
             border-radius: 24px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 24px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
         }
 
         .dashboard-widget:hover {
             transform: translateY(-3px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            border-color: rgba(59, 130, 246, 0.3);
         }
 
-        h2 {
-            color: white;
-            font-weight: 600;
-            margin-bottom: 0;
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+        /* Profile Card Specific */
+        .profile-card {
+            text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        h4 {
-            color: white;
-            margin-bottom: 0.5rem;
+        .profile-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.05), transparent);
+            animation: rotate 15s linear infinite;
+            z-index: 0;
         }
 
-        h5 {
-            color: white;
-            margin-bottom: 1rem;
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
+        .profile-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* User Avatar */
         .user-avatar-lg {
             width: 120px;
             height: 120px;
             margin: 0 auto 1rem;
-            background: linear-gradient(135deg, rgba(79, 172, 254, 0.3), rgba(0, 242, 254, 0.3));
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 3px solid rgba(79, 172, 254, 0.5);
             transition: all 0.3s;
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
 
         .user-avatar-lg:hover {
             transform: scale(1.05);
-            border-color: #4facfe;
+            box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4);
         }
 
-        .user-avatar-lg i {
-            font-size: 4rem;
-            color: #4facfe;
-        }
-
-        .form-control {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 16px;
+        .user-avatar-lg span {
+            font-size: 3rem;
             color: white;
+            font-weight: 500;
+        }
+
+        h4 {
+            color: #0f172a;
+            margin-bottom: 4px;
+            font-size: 1.3rem;
+        }
+
+        h5 {
+            color: #0f172a;
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .role-badge {
+            display: inline-block;
+            padding: 4px 16px;
+            background: #dbeafe;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #3b82f6;
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 16px 0;
+        }
+
+        /* Form Controls */
+        .form-control {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            color: #0f172a;
             padding: 12px 16px;
             transition: all 0.3s;
             width: 100%;
+            font-size: 0.9rem;
         }
 
         .form-control:focus {
-            background: rgba(255, 255, 255, 0.25);
-            border-color: #4facfe;
-            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
-            color: white;
             outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
         }
 
         .form-control::placeholder {
-            color: rgba(255, 255, 255, 0.6);
+            color: #94a3b8;
         }
 
         .form-control[readonly] {
-            background: rgba(255, 255, 255, 0.08);
+            background: #f8fafc;
             cursor: not-allowed;
-            opacity: 0.8;
+            color: #64748b;
         }
 
         label {
-            color: rgba(255, 255, 255, 0.9);
+            color: #334155;
             font-weight: 500;
-            margin-bottom: 0.5rem;
+            margin-bottom: 6px;
             display: block;
+            font-size: 0.85rem;
         }
 
+        /* Button */
         .btn-primary {
-            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
             border: none;
             border-radius: 40px;
             padding: 12px 28px;
@@ -158,122 +199,120 @@
             transition: all 0.3s;
             cursor: pointer;
             font-size: 0.9rem;
+            width: 100%;
         }
 
         .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
         }
 
+        /* Grid */
         .row {
             display: flex;
             flex-wrap: wrap;
-            margin-right: -0.75rem;
-            margin-left: -0.75rem;
+            margin: 0 -12px;
+        }
+
+        .col-md-4, .col-md-8 {
+            padding: 0 12px;
         }
 
         .col-md-4 {
-            flex: 0 0 auto;
-            width: 33.333%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+            flex: 0 0 33.333%;
+            max-width: 33.333%;
         }
 
         .col-md-8 {
-            flex: 0 0 auto;
-            width: 66.666%;
-            padding-right: 0.75rem;
-            padding-left: 0.75rem;
+            flex: 0 0 66.666%;
+            max-width: 66.666%;
         }
 
         @media (max-width: 768px) {
             .col-md-4, .col-md-8 {
-                width: 100%;
+                flex: 0 0 100%;
+                max-width: 100%;
             }
             .header-with-logout {
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .dashboard-widget {
+                padding: 20px;
+            }
+            .user-avatar-lg {
+                width: 80px;
+                height: 80px;
+            }
+            .user-avatar-lg span {
+                font-size: 2rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
         }
 
+        /* Utility Classes */
         .text-center {
             text-align: center;
         }
 
+        .text-muted {
+            color: #64748b !important;
+        }
+
         .mb-2 {
-            margin-bottom: 0.5rem;
+            margin-bottom: 8px;
         }
 
         .mb-3 {
-            margin-bottom: 1rem;
+            margin-bottom: 12px;
         }
 
         .mb-4 {
-            margin-bottom: 1.5rem;
+            margin-bottom: 20px;
         }
 
         .me-2 {
-            margin-right: 0.5rem;
+            margin-right: 8px;
         }
 
-        .role-badge {
-            display: inline-block;
-            padding: 4px 16px;
-            background: rgba(79, 172, 254, 0.2);
-            border-radius: 20px;
-            font-size: 0.8rem;
-            color: #4facfe;
-            margin-top: 0.5rem;
+        .me-1 {
+            margin-right: 4px;
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
         }
 
         ::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.05);
             border-radius: 10px;
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #4facfe;
+            background: #3b82f6;
             border-radius: 10px;
         }
 
+        /* Toast Notification */
         .toast-glass {
-            background: rgba(15, 32, 39, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(79, 172, 254, 0.3);
-            border-radius: 16px;
-            color: white;
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
-        .divider {
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(79, 172, 254, 0.5), transparent);
-            margin: 1rem 0;
-        }
-
-        @media (max-width: 768px) {
-            .dashboard-widget {
-                padding: 1rem;
-            }
-            .user-avatar-lg {
-                width: 80px;
-                height: 80px;
-            }
-            .user-avatar-lg i {
-                font-size: 2.5rem;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-            .btn-primary {
-                width: 100%;
-            }
-        }
-
+        /* Animation */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -286,59 +325,57 @@
         }
 
         .dashboard-widget {
-            animation: fadeIn 0.5s ease-out;
+            animation: fadeIn 0.4s ease-out;
         }
     </style>
 </head>
 <body>
     <div>
         <div class="header-with-logout">
-            <h2><i class="fas fa-user-circle me-2"></i> My Profile</h2>
-            <button class="logout-btn" onclick="logout()">
-                <i class="fas fa-sign-out-alt me-2"></i> Logout
-            </button>
+            <h2>👤 My Profile</h2>
+            <button class="logout-btn" onclick="logout()">🚪 Logout</button>
         </div>
         
         <div class="row">
             <div class="col-md-4">
-                <div class="dashboard-widget text-center">
+                <div class="dashboard-widget profile-card">
                     <div class="user-avatar-lg mx-auto mb-3">
-                        <i class="fas fa-user-circle"></i>
+                        <span id="avatarInitial">U</span>
                     </div>
                     <h4 id="profileName">Loading...</h4>
                     <div class="role-badge" id="profileRole"></div>
                     <div class="divider"></div>
                     <div class="text-muted">
-                        <small><i class="fas fa-calendar-alt me-1"></i> Member since 2024</small>
+                        <small>📅 Member since 2024</small>
                     </div>
                 </div>
             </div>
             <div class="col-md-8">
                 <div class="dashboard-widget">
-                    <h5 class="mb-3"><i class="fas fa-edit me-2"></i> Edit Profile</h5>
+                    <h5>✏️ Edit Profile</h5>
                     <form id="profileForm">
                         <div class="mb-3">
-                            <label><i class="fas fa-user me-2"></i> Full Name</label>
+                            <label>👤 Full Name</label>
                             <input type="text" class="form-control" id="fullName" required placeholder="Enter your full name">
                         </div>
                         <div class="mb-3">
-                            <label><i class="fas fa-envelope me-2"></i> Email Address</label>
+                            <label>📧 Email Address</label>
                             <input type="email" class="form-control" id="email" readonly placeholder="Email cannot be changed">
                         </div>
                         <div class="mb-3">
-                            <label><i class="fas fa-building me-2"></i> Department</label>
+                            <label>🏢 Department</label>
                             <input type="text" class="form-control" id="department" readonly placeholder="Department">
                         </div>
                         <div class="mb-3">
-                            <label><i class="fas fa-phone me-2"></i> Phone Number</label>
+                            <label>📞 Phone Number</label>
                             <input type="text" class="form-control" id="phone" placeholder="+1 234 567 8900">
                         </div>
                         <div class="mb-3">
-                            <label><i class="fas fa-code me-2"></i> Skills (comma separated)</label>
+                            <label>💻 Skills (comma separated)</label>
                             <input type="text" class="form-control" id="skills" placeholder="React, Python, MongoDB, AWS">
                         </div>
                         <button type="button" class="btn-primary" onclick="updateProfile()">
-                            <i class="fas fa-save me-2"></i> Update Profile
+                            💾 Update Profile
                         </button>
                     </form>
                 </div>
@@ -346,7 +383,6 @@
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
     <script>
         function logout() {
             localStorage.clear();
@@ -357,10 +393,11 @@
             const user = JSON.parse(localStorage.getItem('user') || '{}');
             const userName = user.full_name || user.email?.split('@')[0] || 'Employee';
             document.getElementById('profileName').innerText = userName;
+            document.getElementById('avatarInitial').innerText = userName.charAt(0).toUpperCase();
             
             const roleText = user.role || 'Employee';
             const roleDisplay = roleText.charAt(0).toUpperCase() + roleText.slice(1);
-            document.getElementById('profileRole').innerHTML = `<i class="fas fa-briefcase me-1"></i>${roleDisplay}`;
+            document.getElementById('profileRole').innerHTML = `💼 ${roleDisplay}`;
             
             document.getElementById('fullName').value = user.full_name || '';
             document.getElementById('email').value = user.email || '';
@@ -402,7 +439,7 @@
             
             const btn = event.target;
             const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i> Updating...';
+            btn.innerHTML = '⏳ Updating...';
             btn.disabled = true;
             
             try {
@@ -421,6 +458,7 @@
                     user.full_name = data.full_name;
                     localStorage.setItem('user', JSON.stringify(user));
                     document.getElementById('profileName').innerText = data.full_name;
+                    document.getElementById('avatarInitial').innerText = data.full_name.charAt(0).toUpperCase();
                 } else {
                     const error = await response.json();
                     showNotification(error.detail || 'Update failed', 'error');
@@ -436,28 +474,10 @@
         
         function showNotification(message, type) {
             const toastDiv = document.createElement('div');
-            toastDiv.className = 'position-fixed top-0 end-0 p-3';
-            toastDiv.style.zIndex = '9999';
-            toastDiv.innerHTML = `
-                <div class="toast-glass toast align-items-center show" role="alert" style="min-width: 300px;">
-                    <div class="d-flex">
-                        <div class="toast-body">
-                            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'} me-2" style="color: ${type === 'success' ? '#48bb78' : '#f56565'}"></i>
-                            ${message}
-                        </div>
-                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
-                    </div>
-                </div>
-            `;
+            toastDiv.className = 'toast-glass';
+            toastDiv.innerHTML = `${type === 'success' ? '✅' : '❌'} ${message}<button onclick="this.parentElement.remove()" style="background:none;border:none;cursor:pointer;margin-left:8px;">×</button>`;
             document.body.appendChild(toastDiv);
             setTimeout(() => toastDiv.remove(), 3000);
-        }
-        
-        if (!document.querySelector('#toast-styles')) {
-            const style = document.createElement('style');
-            style.id = 'toast-styles';
-            style.textContent = `.toast-glass { background: rgba(15, 32, 39, 0.95); backdrop-filter: blur(12px); border: 1px solid rgba(79, 172, 254, 0.3); border-radius: 16px; color: white; }`;
-            document.head.appendChild(style);
         }
         
         loadProfile();
