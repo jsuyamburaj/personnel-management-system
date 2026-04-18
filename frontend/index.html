@@ -23,11 +23,11 @@
 
         /* Modern Glass Card */
         .glass-card {
-            background: rgba(255, 255, 255, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             border-radius: 32px;
             padding: 2rem;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.5);
             width: 100%;
             max-width: 450px;
@@ -47,10 +47,6 @@
         .login-header span {
             font-size: 3rem;
             display: inline-block;
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
         }
 
         .login-header h2 {
@@ -144,14 +140,6 @@
             margin-bottom: 12px;
         }
 
-        .me-2 {
-            margin-right: 8px;
-        }
-
-        .ms-2 {
-            margin-left: 8px;
-        }
-
         /* Alert */
         .alert-glass {
             background: #fef2f2;
@@ -191,9 +179,6 @@
             }
             .login-header h2 {
                 font-size: 1.5rem;
-            }
-            .login-header span {
-                font-size: 2.5rem;
             }
         }
     </style>
@@ -242,29 +227,45 @@
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
             const role = document.getElementById('roleSelect').value;
+            
+            // Show loading state on button
+            const btn = document.querySelector('.btn-login');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '⏳ Loading...';
+            btn.disabled = true;
+            
             try {
                 const res = await fetch(`${API_BASE}/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password, role })
                 });
+                
                 if (res.ok) {
                     const data = await res.json();
                     localStorage.setItem('token', data.access_token);
                     localStorage.setItem('user', JSON.stringify(data.user));
                     localStorage.setItem('role', data.user.role);
-                    window.location.href = data.user.role === 'admin' ? 'admin-dashboard.html' : 'employee-dashboard.html';
+                    // Redirect to dashboard.html (main shell)
+                    window.location.href = 'dashboard.html';
                 } else {
                     showAlert('Invalid credentials. Use password: password123', 'danger');
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
                 }
             } catch (err) {
                 showAlert('Backend not running? Start FastAPI server on port 8000', 'danger');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
             }
         });
+        
         function showAlert(msg, type) {
             const box = document.getElementById('alertBox');
-            box.innerHTML = `<div class="alert-glass alert-dismissible fade show" role="alert"><span>⚠️ ${msg}</span><button type="button" class="btn-close" data-bs-dismiss="alert">×</button></div>`;
-            setTimeout(() => box.innerHTML = '', 3000);
+            box.innerHTML = `<div class="alert-glass alert-dismissible fade show" role="alert"><span>⚠️ ${msg}</span><button type="button" class="btn-close" onclick="this.parentElement.remove()">×</button></div>`;
+            setTimeout(() => {
+                if (box.firstChild) box.firstChild.remove();
+            }, 3000);
         }
     </script>
 </body>

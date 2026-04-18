@@ -1,14 +1,15 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.security import OAuth2PasswordBearer
-from datetime import datetime
+from datetime import datetime, timedelta
+from typing import List, Optional
 import logging
 
 from .config import settings
 from .database import db
-from .models import User, Token, LoginRequest
+from .models import User, UserInDB, Token, LoginRequest
 from .auth import create_access_token, verify_password, get_password_hash
-from .dependencies import require_role
+from .dependencies import get_current_user, get_current_active_user, require_role
 
 from .routers import (
     employees, projects, tasks, attendance, leaves, payroll,
@@ -46,12 +47,10 @@ app.include_router(messages.router, prefix="/api/messages", tags=["Messages"])
 app.include_router(analytics.router, prefix="/api/analytics", tags=["Analytics"])
 app.include_router(performance.router, prefix="/api/performance", tags=["Performance"])
 
-# -------------------- STARTUP / SHUTDOWN --------------------
-
 @app.on_event("startup")
 async def startup_db_client():
     await db.connect()
-    await create_default_admin()
+    await create_default_users()
     logger.info("Database connected and initialized")
 
 @app.on_event("shutdown")
@@ -59,60 +58,107 @@ async def shutdown_db_client():
     await db.close()
     logger.info("Database disconnected")
 
-# -------------------- DEFAULT ADMIN --------------------
-
-async def create_default_admin():
-    users = db.get_collection("users")
-
-    existing = await users.find_one({"email": "admin@spms.com"})
-    if not existing:
-        admin_user = {
+async def create_default_users():
+    """Create default users if not exists - FIXED VERSION"""
+    
+    # List of default users with proper data
+    default_users = [
+        {
             "email": "admin@spms.com",
             "full_name": "System Administrator",
-            "hashed_password": get_password_hash("password123"),
             "role": "admin",
-            "is_active": True,
-            "created_at": datetime.utcnow(),
-            "department": "Management"
+            "department": "Management",
+            "password": "password123"
+        },
+        {
+            "email": "manager@spms.com",
+            "full_name": "Jane Manager",
+            "role": "manager",
+            "department": "Product",
+            "password": "password123"
+        },
+        {
+            "email": "developer@spms.com",
+            "full_name": "John Developer",
+            "role": "developer",
+            "department": "Engineering",
+            "password": "password123"
+        },
+        {
+            "email": "hr@spms.com",
+            "full_name": "Sarah HR",
+            "role": "hr",
+            "department": "Human Resources",
+            "password": "password123"
+        },
+        {
+            "email": "employee@spms.com",
+            "full_name": "Mike Employee",
+            "role": "employee",
+            "department": "Sales",
+            "password": "password123"
         }
-        await users.insert_one(admin_user)
-        logger.info("Default admin user created")
+    ]
     
-    # Sample users
-    if await users.count_documents({}) < 2:
-        sample_employees = [
-            {"email": "manager@spms.com", "full_name": "Jane Manager", "role": "manager", "department": "Product"},
-            {"email": "developer@spms.com", "full_name": "John Developer", "role": "developer", "department": "Engineering"},
-            {"email": "hr@spms.com", "full_name": "Sarah HR", "role": "hr", "department": "Human Resources"},
-        ]
-
-        for emp in sample_employees:
-            emp["hashed_password"] = get_password_hash("password123")
-            emp["is_active"] = True
-            emp["created_at"] = datetime.utcnow()
-            await users.insert_one(emp)
-
-        logger.info("Sample users created")
-
-# -------------------- ROOT --------------------
+    for user_data in default_users:
+        existing = await db.users.find_one({"email": user_data["email"]})
+        if not existing:
+            user = {
+                "email": user_data["email"],
+                "full_name": user_data["full_name"],
+                "hashed_password": get_password_hash(user_data["password"]),
+                "role": user_data["role"],
+                "is_active": True,
+                "created_at": datetime.utcnow(),
+                "department": user_data["department"]
+            }
+            await db.users.insert_one(user)
+            logger.info(f"✅ User created: {user_data['email']} (Role: {user_data['role']})")
+            
+            # Also create employee record for non-admin users
+            if user_data["role"] != "admin":
+                # Get the inserted user's ID
+                db_user = await db.users.find_one({"email": user_data["email"]})
+                employee = {
+                    "user_id": str(db_user["_id"]),
+                    "first_name": user_data["full_name"].split()[0],
+                    "last_name": " ".join(user_data["full_name"].split()[1:]) if len(user_data["full_name"].split()) > 1 else "",
+                    "phone": "",
+                    "join_date": datetime.utcnow(),
+                    "skills": [],
+                    "salary": 50000 if user_data["role"] == "employee" else 70000,
+                    "status": "Active"
+                }
+                await db.employees.insert_one(employee)
+        else:
+            logger.info(f"User already exists: {user_data['email']}")
+    
+    # Verify users were created
+    user_count = await db.users.count_documents({})
+    logger.info(f"Total users in database: {user_count}")
 
 @app.get("/")
 async def root():
     return {"message": "SPMS API is running", "version": "1.0.0"}
 
-# -------------------- LOGIN (UNCHANGED LOGIC) --------------------
-
 @app.post("/api/auth/login", response_model=Token)
 async def login(login_data: LoginRequest):
-    users = db.get_collection("users")
-    failed_logins = db.get_collection("failed_logins")
-    activity_logs = db.get_collection("activity_logs")
-
-    user = await users.find_one({"email": login_data.email})
+    """Login endpoint - returns JWT token"""
+    user = await db.users.find_one({"email": login_data.email})
     
-    if not user or not verify_password(login_data.password, user["hashed_password"]):
-        await failed_logins.insert_one({
-            "email": login_data.email,
+    if not user:
+        logger.warning(f"Login failed: User not found - {login_data.email}")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Incorrect email or password",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+    
+    if not verify_password(login_data.password, user["hashed_password"]):
+        logger.warning(f"Login failed: Wrong password for {login_data.email}")
+        # Log failed attempt
+        await db.failed_logins.insert_one({
+            "user_email": login_data.email,
             "timestamp": datetime.utcnow(),
             "ip": login_data.client_ip if hasattr(login_data, 'client_ip') else "unknown"
         })
@@ -122,6 +168,7 @@ async def login(login_data: LoginRequest):
             headers={"WWW-Authenticate": "Bearer"},
         )
     
+    # Check if role matches (optional demo role check)
     if login_data.role and user["role"] != login_data.role:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
@@ -132,12 +179,15 @@ async def login(login_data: LoginRequest):
         data={"sub": user["email"], "role": user["role"]}
     )
     
-    await activity_logs.insert_one({
+    # Log successful login
+    await db.activity_logs.insert_one({
         "user_email": user["email"],
         "action": "login",
-        "timestamp": datetime.utcnow(),
-        "details": "User logged in successfully"
+        "details": f"User logged in successfully with role {user['role']}",
+        "timestamp": datetime.utcnow()
     })
+    
+    logger.info(f"Successful login: {user['email']} (Role: {user['role']})")
     
     return {
         "access_token": access_token,
@@ -150,19 +200,13 @@ async def login(login_data: LoginRequest):
         }
     }
 
-# -------------------- ADMIN STATS --------------------
-
 @app.get("/api/admin/stats")
 async def get_admin_stats(current_user: User = Depends(require_role(["admin"]))):
-    users = db.get_collection("users")
-    projects = db.get_collection("projects")
-    tasks = db.get_collection("tasks")
-    attendance_col = db.get_collection("attendance")
-
-    total_employees = await users.count_documents({"role": {"$ne": "admin"}})
-    active_projects = await projects.count_documents({"status": "Active"})
-    completed_tasks = await tasks.count_documents({"status": "Completed"})
-    present_today = await attendance_col.count_documents({
+    """Get dashboard statistics for admin"""
+    total_employees = await db.users.count_documents({"role": {"$ne": "admin"}})
+    active_projects = await db.projects.count_documents({"status": "Active"})
+    completed_tasks = await db.tasks.count_documents({"status": "Completed"})
+    present_today = await db.attendance.count_documents({
         "date": datetime.utcnow().strftime("%Y-%m-%d"),
         "check_in": {"$ne": None}
     })
@@ -173,8 +217,6 @@ async def get_admin_stats(current_user: User = Depends(require_role(["admin"])))
         "completed_tasks": completed_tasks,
         "present_today": present_today
     }
-
-# -------------------- RUN --------------------
 
 if __name__ == "__main__":
     import uvicorn
